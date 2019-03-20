@@ -1,4 +1,4 @@
-#Author: your.email@your.domain.com
+#Author: s186111@student.dtu.dk
 #Keywords Summary :
 #Feature: List of scenarios.
 #Scenario: Business rule through list of steps with arguments.
@@ -17,16 +17,27 @@
 ## (Comments)
 #Sample Feature Definition Template
 @tag
-Feature: Title of your feature
-  I want to use this template for my feature file
+Feature: Represent the different departments available in hospitals: Health Care Staff, Managment, Receptionist
 
-  @tag1
-  Scenario: Title of your scenario
-    Given I want to write a step with precondition
-    And some other precondition
-    When I complete action
-    And some other action
-    And yet another action
-    Then I validate the outcomes
-    And check more outcomes
-
+  Scenario: Available beds in Health Care department
+    Given A Health Care department has 100 beds
+    And 66 beds in use
+    When Check available beds
+    Then System displays the number of available Beds
+		
+  Scenario Outline: Staff member department is requested
+    Given A staff member <staffMember> is in the <department>
+    When I check department
+    Then The System returns the <department>
+    
+    Examples:
+    	| staffMember |    department    |
+    	|     001     | Health Care      |
+    	|     002     | Human Resources  |
+	
+  Scenario: A Patient is succesfully checked in
+    Given A staff member belongs to the Receptionist department
+    And The Health Care department has an available bed
+    When Check-in Patient
+    Then The system checks-in the patient
+    Then the system updates the available beds
