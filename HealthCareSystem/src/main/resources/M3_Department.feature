@@ -17,27 +17,33 @@
 ## (Comments)
 #Sample Feature Definition Template
 @tag
-Feature: Represent the different departments available in hospitals: Health Care Staff, Managment, Receptionist
-
-  Scenario: Available beds in Health Care department
-    Given A Health Care department has 100 beds
-    And 66 beds in use
-    When Check available beds
-    Then System displays the number of available Beds
+Feature: Represent the different departments available in hospitals: Medical, Managment, Receptionist
 		
   Scenario Outline: Staff member department is requested
-    Given A staff member <staffMember> is in the <department>
-    When I check department
-    Then The System returns the <department>
+    Given Staff member <staff> is in the <department> department
+    When I check the staff members department
+    Then The System returns the <staffDepartment>
     
     Examples:
-    	| staffMember |    department    |
-    	|     001     | Health Care      |
-    	|     002     | Human Resources  |
+    	| staff |    department    | staffDepartment |
+    	|  001  | Medical          | Medical         |
+    	|  002  | Human Resources  | Human Resources |
+    	|  003  | Receptionist     | Receptionist    |
 	
-  Scenario: A Patient is succesfully checked in
-    Given A staff member belongs to the Receptionist department
-    And The Health Care department has an available bed
+  Scenario: There are available beds in Medical department
+    Given A Medical department has 100 beds
+    And 66 beds in use
+    When Check available beds
+    Then System displays that there are 44 available Beds
+    
+  Scenario: Receptionist succesfully checks-in a new patient
+    Given The staff member belongs to the Receptionist department
+    And The Medical department has an available bed
     When Check-in Patient
-    Then The system checks-in the patient
-    Then the system updates the available beds
+    Then the number of available beds is decreased by 1
+    
+  Scenario: A
+    Given A
+    And A
+    When A
+    Then A
