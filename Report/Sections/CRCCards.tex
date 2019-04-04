@@ -1,0 +1,126 @@
+% LEFT
+\begin{minipage}[t]{0.49\textwidth}
+    \centering
+    \begin{tabular}{|l|l|}
+        \hline
+        \rowcolor[HTML]{C0C0C0}
+        \multicolumn{2}{|c|}{\cellcolor[HTML]{C0C0C0}\textbf{User}} \\ \hline
+        \rowcolor[HTML]{C0C0C0}
+        Responsibilities & Collaborators \\ \hline
+        \begin{tabular}[c]{@{}l@{}}Name\\ ID \small{(unique, final)}\\ Address\\ Phone Number\\ \\ Show Information\\ Register Patient\end{tabular} & \begin{tabular}[c]{@{}l@{}}Patient\\ Department\end{tabular} \\ \hline
+    \end{tabular}%
+    %
+    \bigbreak\noindent%
+    %
+    \begin{tabular}{|l|l|}
+        \hline
+        \rowcolor[HTML]{C0C0C0}
+        \multicolumn{2}{|c|}{\cellcolor[HTML]{C0C0C0}\textbf{Doctor}\textit{\small{ extends User}}} \\ \hline
+        \rowcolor[HTML]{C0C0C0}
+        Responsibilities & Collaborators \\ \hline
+        \begin{tabular}[c]{@{}l@{}}Name\\ ID \small{(unique, final)}\\ Address\\ Phone Number\\ Department\\ Speciality\\ \\ Show Information\\ Register Patient\\ Admit Patient\\ Discharge Patient\\ Assign Bed\\ Get Patients medical data\\ Edit patient medical data\end{tabular} & \begin{tabular}[c]{@{}l@{}}Department\\ Patient\\ Bed\end{tabular} \\ \hline
+    \end{tabular}%
+    %
+    \bigbreak\noindent%
+    %
+    \begin{tabular}{|l|l|}
+        \hline
+        \rowcolor[HTML]{C0C0C0}
+        \multicolumn{2}{|c|}{\cellcolor[HTML]{C0C0C0}\textbf{Department}\textit{\small{ Abstract}}} \\ \hline
+        \rowcolor[HTML]{C0C0C0}
+        Responsibilities & Collaborators \\ \hline
+        \begin{tabular}[c]{@{}l@{}}Name\\ ID \small{(unique, final)}\\ User List\\ \\ Add User\\ Remove User\end{tabular} & \begin{tabular}[c]{@{}l@{}}User\\ Patient\end{tabular} \\ \hline
+    \end{tabular}%
+    %
+    \bigbreak\noindent%
+    %
+    \begin{tabular}{|l|l|}
+        \hline
+        \rowcolor[HTML]{C0C0C0}
+        \multicolumn{2}{|c|}{\cellcolor[HTML]{C0C0C0}\textbf{Outpatient}\textit{\small{ extends Department}}} \\ \hline
+        \rowcolor[HTML]{C0C0C0}
+        Responsibilities & Collaborators \\ \hline
+        \begin{tabular}[c]{@{}l@{}}Name\\ ID \small{(unique, final)}\\ User List\\ Patient List\\ Capacity\\ \\ Add User\\ Remove User\\ Add Patient\\ Remove Patient\end{tabular} & \begin{tabular}[c]{@{}l@{}}User\\ Patient\end{tabular} \\ \hline
+    \end{tabular}%
+\end{minipage}%
+% RIGHT
+\begin{minipage}[t]{0.49\textwidth}
+    \centering
+    \begin{tabular}{|l|l|}
+        \hline
+        \rowcolor[HTML]{C0C0C0}
+        \multicolumn{2}{|c|}{\cellcolor[HTML]{C0C0C0}\textbf{Nurse}\textit{\small{ extends User}}} \\ \hline
+        \rowcolor[HTML]{C0C0C0}
+        Responsibilities & Collaborators \\ \hline
+        \begin{tabular}[c]{@{}l@{}}Name\\ ID \small{(unique, final)}\\ Address\\ Phone Number\\ Department\\ \\ Show Information\\ Register Patient\\ Admit Patient\\ Discharge Patient\\ Assign Bed\\ Get Patients medical data\\ Edit patient medical data\end{tabular} & \begin{tabular}[c]{@{}l@{}}Department\\ Patient\\ Bed\end{tabular} \\ \hline
+    \end{tabular}%
+    %
+    \bigbreak\noindent%
+    %
+    \begin{tabular}{|l|l|}
+        \hline
+        \rowcolor[HTML]{C0C0C0}
+        \multicolumn{2}{|c|}{\cellcolor[HTML]{C0C0C0}\textbf{Admin}\textit{\small{ extends User}}} \\ \hline
+        \rowcolor[HTML]{C0C0C0}
+        Responsibilities & Collaborators \\ \hline
+        \begin{tabular}[c]{@{}l@{}}Name\\ ID \small{(unique, final)}\\ Address\\ Phone Number\\ Department\\ \\ Show Information\\ Register Patient\\ Admit Patient\\ Discharge Patient\\ Assign Bed\\ Add User\\ Remove User\\ Get Patients medical data\\ Edit patient medical data\end{tabular} & \begin{tabular}[c]{@{}l@{}}Department\\ Patient\\ Bed\\ User\\ Nurse\\ Doctor\end{tabular} \\ \hline
+    \end{tabular}%
+    %
+    \bigbreak\noindent%
+    %
+    \begin{tabular}{|l|l|}
+        \hline
+        \rowcolor[HTML]{C0C0C0}
+        \multicolumn{2}{|c|}{\cellcolor[HTML]{C0C0C0}\textbf{Inpatient}\textit{\small{ extends Department}}} \\ \hline
+        \rowcolor[HTML]{C0C0C0}
+        Responsibilities & Collaborators \\ \hline
+        \begin{tabular}[c]{@{}l@{}}Name\\ ID \small{(unique, final)}\\ User List\\ Patient List\\ Bed List\\ Next Bed Index\\ Capacity\\ \\ Add User\\ Remove User\\ Add Patient\\ Remove Patient\end{tabular} & \begin{tabular}[c]{@{}l@{}}User\\ Patient\\ Bed\end{tabular} \\ \hline
+    \end{tabular}%
+\end{minipage}%
+
+% LEFT
+\begin{minipage}[t]{0.49\textwidth}
+    \centering
+    \begin{tabular}{|l|l|}
+        \hline
+        \rowcolor[HTML]{C0C0C0}
+        \multicolumn{2}{|c|}{\cellcolor[HTML]{C0C0C0}\textbf{Management}\textit{\small{ extends Department}}} \\ \hline
+        \rowcolor[HTML]{C0C0C0}
+        Responsibilities & Collaborators \\ \hline
+        \begin{tabular}[c]{@{}l@{}}Name\\ ID \small{(unique, final)}\\ User List\\ \\ Add User\\ Remove User\end{tabular} & \begin{tabular}[c]{@{}l@{}}User\\ Patient\end{tabular} \\ \hline
+    \end{tabular}%
+    %
+    \bigbreak\noindent%
+    %
+    \begin{tabular}{|l|l|}
+        \hline
+        \rowcolor[HTML]{C0C0C0}
+        \multicolumn{2}{|c|}{\cellcolor[HTML]{C0C0C0}\textbf{Patient}} \\ \hline
+        \rowcolor[HTML]{C0C0C0}
+        Responsibilities & Collaborators \\ \hline
+        \begin{tabular}[c]{@{}l@{}}Name\\ ID \small{(unique, final)}\\ Phone Number\\ Address\\ Deceased\\ Health Record\\ Department\end{tabular} & \begin{tabular}[c]{@{}l@{}}Department\end{tabular} \\ \hline
+    \end{tabular}
+\end{minipage}%
+% RIGHT
+\begin{minipage}[t]{0.49\textwidth}
+    \centering
+    \begin{tabular}{|l|l|}
+        \hline
+        \rowcolor[HTML]{C0C0C0}
+        \multicolumn{2}{|c|}{\cellcolor[HTML]{C0C0C0}\textbf{Emergency}\textit{\small{ extends Department}}} \\ \hline
+        \rowcolor[HTML]{C0C0C0}
+        Responsibilities & Collaborators \\ \hline
+        \begin{tabular}[c]{@{}l@{}}Name\\ ID \small{(unique, final)}\\ User List\\ Patient List\\ \\ Add User\\ Remove User\\ Add Patient\\ Remove Patient\end{tabular} & \begin{tabular}[c]{@{}l@{}}User\\ Patient\end{tabular} \\ \hline
+    \end{tabular}%
+    %
+    \bigbreak\noindent%
+    %
+    \begin{tabular}{|l|l|}
+        \hline
+        \rowcolor[HTML]{C0C0C0}
+        \multicolumn{2}{|c|}{\cellcolor[HTML]{C0C0C0}\textbf{Bed}} \\ \hline
+        \rowcolor[HTML]{C0C0C0}
+        Responsibilities & Collaborators \\ \hline
+        \begin{tabular}[c]{@{}l@{}}ID \small{(unique, final)}\\ Patient\\ Department\\ \\ Show Information\end{tabular} & \begin{tabular}[c]{@{}l@{}}Patient\\ Department\end{tabular} \\ \hline
+    \end{tabular}%
+\end{minipage}%

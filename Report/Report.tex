@@ -9,13 +9,30 @@
 \usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
 
 %% Useful packages
+\usepackage[table,xcdraw]{xcolor}
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \usepackage{fancyhdr}
 
+
 \begin{document}
-	\include{Sections/Frontpage}
-	
+	\input{Sections/Frontpage}
+
+
+	\newpage{}
+    \begin{centering}
+    \section*{User Stories}
+    \vspace{18pt}
+    \end{centering}
+	\input{Report/Sections/UserStories}
+
+	\newpage{}
+    \begin{centering}
+    \section*{CRC Cards}
+    \vspace{18pt}
+    \end{centering}
+	\input{Report/Sections/CRCCards}
+
 \end{document}

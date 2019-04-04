@@ -1,0 +1,174 @@
+\noindent
+\subsection*{M1 Patient Registration}
+\textbf{AS A} User\newline
+\textbf{I WANT TO} register a new patient\newline
+\textbf{SO THAT} I can save their basic information in the system\newline
+\medbreak
+\noindent
+\textbf{AS A} User\newline
+\textbf{I WANT TO} edit a patient's information\newline
+\medbreak
+\noindent
+\textbf{AS A} User\newline
+\textbf{I WANT TO} search for a certain patient's criteria (name, birth date, patient number etc.)\newline
+\textbf{SO THAT} I can access the patients that fulfil the criteria\newline
+\medbreak
+\noindent
+\subsection*{M2 Staff Management}
+\textbf{AS AN} Admin\newline
+\textbf{I WANT TO} add/ archive staff members\newline
+\medbreak
+\noindent
+\textbf{AS AN} Admin\newline
+\textbf{I WANT TO} view and edit users\newline
+\textbf{SO THAT} I can change their information(name, department etc.)\newline
+\medbreak
+\noindent
+\textbf{AS A} user\newline
+\textbf{I WANT TO} view all staff members and their basic information (name and email only)\newline
+\textbf{SO THAT} I can communicate with my colleagues\newline
+\medbreak
+\noindent
+\textbf{AS A} user\newline
+\textbf{I WANT TO} be able to search for staff members by their name/email\newline
+\textbf{SO THAT} I can access the rest of their basic information (name/email)\newline
+\medbreak
+\noindent
+\textbf{AS AN} admin\newline
+\textbf{I WANT TO} search for all users with a specific criteria(name, email, birth date, department, job title etc.\newline
+\textbf{SO THAT} I can see all staff members who fulfil the criteria\newline
+\medbreak
+\noindent
+\subsection*{M3 Health Facility Management}
+
+\textbf{AS A} User\newline
+\textbf {I WANT TO} See how many beds are available in a department\newline
+\textbf {SO THAT} I can check if a department is at capacity\newline
+
+\textbf{AS A} User\newline
+\textbf {I WANT TO} be classified by a specific department\newline
+\textbf {SO THAT} I can have one department in which I work.\newline
+
+\medbreak
+\noindent
+\subsection*{M4 Patient Admission}
+
+\textbf {AS A} User\newline
+\textbf {I WANT TO} register/ create new patient profile with their non-medical data\newline
+\textbf {SO THAT} I admit new patients\newline
+\newline
+
+\textbf{AS A} Nurse\newline
+\textbf{I WANT TO} allocate a patient to a bed (inpatient)\newline
+\textbf{SO THAT} The patient is admitted to the department and can receive care.\newline
+\newline
+
+\textbf{AS A} Doctor\newline
+\textbf{I WANT TO} call on a patient (outpatient)\newline
+\textbf{SO THAT} The patient can occupy a bed and receive care.\newline
+\newline
+
+\textbf{AS A} Nurse\newline
+\textbf{I WANT TO} discharge a patient\newline
+\textbf{SO THAT} The patient is no longer occupying a bed when treatment is done.\newline
+\newline
+
+\textbf{AS A} Nurse\newline
+\textbf{I WANT TO} Move a patient to a new department\newline
+\textbf{SO THAT} The patient is discharged from one department and admitted to another.\newline
+\newline
+
+\textbf{AS A} Nurse\newline
+\textbf{I WANT TO} move a patient within the current department\newline
+\textbf{SO THAT} The patient can be moved to another bed as needed.\newline
+\newline
+
+\subsection*{M5 User Interface}
+\textbf{AS A} User\newline
+\textbf{I WANT TO} log in\newline
+\textbf{SO THAT} I can access the HMS\newline
+\newline
+\textbf{AS A} User\newline
+\textbf{I WANT TO} read a patients non-Medical data\newline
+\textbf{SO THAT} I can see non medical data\newline
+\newline
+AS A User\newline
+I WANT TO edit a patients non-Medical data\newline
+SO THAT I can edit non medical information\newline
+\newline
+
+As A User\newline
+\textbf{I WANT TO} view basic staff data (name, email, department)\newline
+\textbf{SO THAT} I can communicate with my colleagues\newline
+\newline
+AS A Nurse\newline
+\textbf{I WANT TO} read a patients medical data in my department\newline
+\textbf{SO THAT} I can see the medical data of all patients in my department\newline
+\newline
+AS A Nurse\newline
+\textbf{I WANT TO} edit a patients medical data\newline
+\textbf{SO THAT} I can edit the Medical data of all patients in my department\newline
+\newline
+AS AN Admin\newline
+\textbf{I WANT TO} see all staff information\newline
+\textbf{SO THAT} I can assist all users\newline
+\newline
+AS AN Admin\newline
+\textbf{I WANT TO} edit all staff information\newline
+\textbf{SO THAT} I can assist users with entry errors\newline
+\newline
+Access level works as shown in the following hierarchy:
+\newline
+User < Nurse < Doctor < Admin.
+\newline
+Nurses, Doctors, and Admin can do anything users have access to and so on...
+\newline
+\textbf{Users:}
+\begin{itemize}
+    \item User
+    \item Nurse
+    \item Doctor
+    \item Admin
+\end{itemize}
+
+\textbf{Departments:}
+\begin{itemize}
+    \item Inpatients
+    \item outpatients
+    \item Emergency
+    \item ??
+\end{itemize}
+
+\newpage
+\begin{table}[]
+\begin{tabular}{ll}
+\textbf{Medical Data} & \textbf{Non-Medical Data} \\
+Health Record         & Name                      \\
+Alive?                & Surname                   \\
+Height                & Address                   \\
+Weight                & Phone                     \\
+Perscriptions         & ID number                 \\
+Age                   & Department                \\
+Blood Type            &
+\end{tabular}
+\end{table}
+
+\subsection*{O2 User Management}
+\textbf{AS A} User\newline
+\textbf{I WANT TO} Have access to the functionality appropriate for my job \newline
+\textbf{SO THAT} i can do my job\newline
+
+\subsection*{O4 Persistency Layer}
+
+\textbf{AS A} User\newline
+\textbf{I WANT TO} open and close the system without losing data\newline
+\textbf{SO THAT} I can still access patient and staff information\newline
+
+\textbf{AS A} User\newline
+\textbf{I WANT TO} Move a patient into my department by admitting them\newline
+\textbf{SO THAT} I can access their previous health data that is saved in the system\newline
+
+\subsection*{O6 Advanced Query Mechanism}
+\textbf{AS A} User\newline
+\textbf{I WANT TO} I want to be able so view simple statistics describing departments and the hospital in general\newline
+\textbf{SO THAT} I can get an overview of the status\newline
