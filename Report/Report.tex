@@ -13,26 +13,20 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage[colorinlistoftodos]{todonotes}
-\usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \usepackage{fancyhdr}
 
 
+
 \begin{document}
-	\input{Sections/Frontpage}
-
-
-	\newpage{}
-    \begin{centering}
-    \section*{User Stories}
-    \vspace{18pt}
-    \end{centering}
-	\input{Sections/UserStories}
-
-	\newpage{}
-    \begin{centering}
-    \section*{CRC Cards}
-    \vspace{18pt}
-    \end{centering}
-	\input{Sections/CRCCards}
-
+	\include{Sections/Frontpage}
+	%
+	\tableofcontents
+	\thispagestyle{plain}
+	\newpage
+    %
+	\include{Sections/SystemDesign}
+	\include{Sections/Description}
+	\include{Sections/ProjectManagement}
+	\include{Sections/WorkDistribution}
+	\include{Sections/UserManual}
 \end{document}
