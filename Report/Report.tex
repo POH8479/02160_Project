@@ -9,13 +9,24 @@
 \usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
 
 %% Useful packages
+\usepackage[table,xcdraw]{xcolor}
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage[colorinlistoftodos]{todonotes}
-\usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \usepackage{fancyhdr}
+
+
 
 \begin{document}
 	\include{Sections/Frontpage}
-	
+	%
+	\tableofcontents
+	\thispagestyle{plain}
+	\newpage
+    %
+	\include{Sections/SystemDesign}
+	\include{Sections/Description}
+	\include{Sections/ProjectManagement}
+	\include{Sections/WorkDistribution}
+	\include{Sections/UserManual}
 \end{document}

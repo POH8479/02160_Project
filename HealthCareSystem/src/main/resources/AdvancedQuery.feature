@@ -1,4 +1,4 @@
-#Author: s186111@student.dtu.dk
+#Author: s174406@student.dtu.dk
 #Keywords Summary :
 #Feature: List of scenarios.
 #Scenario: Business rule through list of steps with arguments.
@@ -17,17 +17,10 @@
 ## (Comments)
 #Sample Feature Definition Template
 @tag
-Feature: Patients are registered upon arrival and admitted to a department.
-   They can move departments by being discharged and admitted to the new one,
-   or change beds within the same department.
+Feature: Advanced Query Mechanism
 
   @tag1
-  Scenario: Title of your scenario
-    Given I want to write a step with precondition
-    And some other precondition
-    When I complete action
-    And some other action
-    And yet another action
-    Then I validate the outcomes
-    And check more outcomes
- 
+  Scenario: View statistics
+    Given A user and a department 
+    When I choose a statistic to see
+    Then I want to see what this statistic is
