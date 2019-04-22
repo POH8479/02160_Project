@@ -2,7 +2,7 @@ package hospitalmanagmentsystem.users;
 
 import java.time.LocalDate;
 
-import hospitalmanagmentsystem.patient.Patient;
+import hospitalmanagmentsystem.Patient;
 
 /**
  * A User of the Hospital Management System. They have the lowest privileges of
@@ -19,12 +19,12 @@ public class User {
 	String name;
 	final int userID;
 	String address;
-	int phoneNumber;
+	String phoneNumber;
 
 	/**
 	 * Creates a new User of the Hospital Management System
 	 */
-	public User(String usersName, String usersAddress, int phone){
+	public User(String usersName, String usersAddress, String phone){
 		// assign the User with a unique ID
 		IDCounter++;
 		this.userID = IDCounter;
@@ -82,6 +82,23 @@ public class User {
 	 * @return The patients basic data in String format
 	 */
 	public String getPatientData(Patient patient) {
+		// create a String Builder
+		StringBuilder sb = new StringBuilder();
 
+		// append the Name
+		sb.append("Name: ");
+		sb.append(name);
+		// append the ID
+		sb.append("\nUser ID: ");
+		sb.append(userID);
+		// append the Address
+		sb.append("\nAddress: ");
+		sb.append(address);
+		// append the phoneNumber
+		sb.append("\nPhone Number: ");
+		sb.append(phoneNumber);
+
+		// convert sb to String and return
+		return sb.toString();
 	}
 }

@@ -1,6 +1,9 @@
-package hospitalmanagmentsystem.patient;
+package hospitalmanagmentsystem;
 
 import java.time.LocalDate;
+
+import hospitalmanagmentsystem.departments.Department;
+import hospitalmanagmentsystem.departments.Management;
 
 public class Patient {
 	// Static Variables
@@ -48,10 +51,42 @@ public class Patient {
 	 * @param department
 	 * @throws IllegalAccessException
 	 */
-	public void updateDepartment(Department department) {
-		// check if department is Managment
-		if( department instanceof Managment) {
+	public void updateDepartment(Department department) throws IllegalAccessException {
+		// check if department is Management
+		if( department instanceof Management) {
 			throw new IllegalAccessException("Patients can not be assigned to the Managment Department");
 		}
+	}
+
+	public void updateBed(Bed bed) {
+		
+	}
+
+	public String getRecord() {
+		return null;
+	}
+
+	public void updateRecord(String data) {
+		
+	}
+
+	public Object[] getPatientInfo() {
+		return null;
+	}
+
+	public Object getBed() {
+		return null;
+	}
+
+	public int getPatientId() {
+		return 0;
+	}
+
+	public boolean getDeceased() {
+		return false;
+	}
+
+	public Object getDepartment() {
+		return null;
 	}
 }

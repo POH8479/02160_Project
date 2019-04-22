@@ -1,7 +1,8 @@
 package hospitalmanagmentsystem.users;
 
+import hospitalmanagmentsystem.Bed;
+import hospitalmanagmentsystem.Patient;
 import hospitalmanagmentsystem.departments.Department;
-import hospitalmanagmentsystem.patient.Patient;
 
 /**
  * A Health Staff is a User who is medically working with patients.
@@ -17,16 +18,19 @@ public interface HealthStaff {
 	 *
 	 * @param patient The Patient that is being admitted
 	 * @param department The department to admit the patient to
+	 * @throws IllegalAccessException 
+	 * @throws Exception 
 	 */
-	public void admitPatient(Patient patient, Department department);
+	public void admitPatient(Patient patient, Department department) throws Exception;
 
 	/**
 	 * Discharges the given patient from their department, removing the patient
 	 * from the Departments patient list and the patients department variable
 	 *
 	 * @param patient The Patient that is being discharged
+	 * @throws Exception 
 	 */
-	public void dichargePatient(Patient patient);
+	public void dichargePatient(Patient patient) throws Exception;
 
 	/**
 	 * Assigns the given Patient a Bed in the department, updating the patients Bed
