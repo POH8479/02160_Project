@@ -1,7 +1,10 @@
 package hospitalmanagmentsystem.users;
 
+import hospitalmanagmentsystem.departments.Department;
+import hospitalmanagmentsystem.patient.Patient;
+
 /**
- * A Health Staff is a User who is medicaly working with patients.
+ * A Health Staff is a User who is medically working with patients.
  * The methods allow HealthStaff to admit and discharge Patients, assign them a
  * Bed and to access and update their medical record.
  *
@@ -12,7 +15,7 @@ public interface HealthStaff {
 	 * Admits a given patient to a given department, updating the patients
 	 * department variable and the departments patient list.
 	 *
-	 * @param patient The Patient that is being admited
+	 * @param patient The Patient that is being admitted
 	 * @param department The department to admit the patient to
 	 */
 	public void admitPatient(Patient patient, Department department);
@@ -37,16 +40,16 @@ public interface HealthStaff {
 	/**
 	 * Returns the medical data of the given patient as a String
 	 *
-	 * @param patient The Patient whos medical data is being requested
+	 * @param patient The Patient whose medical data is being requested
 	 * @return A string of the patients medical data
 	 */
 	public String getMedicalData(Patient patient);
 
 	/**
 	 * This method updates the given Patients medical record. The data String
-	 * is appended to the Paitents medical data variable.
+	 * is appended to the Patients medical data variable.
 	 *
-	 * @param patient The Patient whos medical data is being edited
+	 * @param patient The Patient whose medical data is being edited
 	 * @param data The new medical data
 	 * @return A string of the patients updated medical data
 	 */

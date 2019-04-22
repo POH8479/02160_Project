@@ -1,24 +1,28 @@
 package hospitalmanagmentsystem.users;
 
+import java.time.LocalDate;
+
+import hospitalmanagmentsystem.patient.Patient;
+
 /**
- * A User of the Hospital Managment System. They have the lowest privileges of
+ * A User of the Hospital Management System. They have the lowest privileges of
  * all the users but can still see a Users basic information and register the
- * patient into the Hospital Managment System.
+ * patient into the Hospital Management System.
  *
  * @author Pieter O'Hearn
  */
 public class User {
 	// Static Variables
-	static int IDCounter = 0;
+	public static int IDCounter = 0;
 
 	// Instance Variables
 	String name;
-	int final id;
+	final int id;
 	String address;
 	int phoneNumber;
 
-	/*
-	 * Creates a new User of the Hospital Managment System
+	/**
+	 * Creates a new User of the Hospital Management System
 	 */
 	public User(String usersName, String usersAddress, int phone){
 		// assign the User with a unique ID
@@ -42,30 +46,30 @@ public class User {
 
 		// append the Name
 		sb.append("Name: ");
-		sb.append(Name);
+		sb.append(name);
 		// append the ID
 		sb.append("\nID: ");
 		sb.append(id);
 		// append the Address
 		sb.append("\nAddress: ");
-		sb.append(Address);
+		sb.append(address);
 		// append the phoneNumber
 		sb.append("\nPhone Number: ");
 		sb.append(phoneNumber);
 
-		// convert sb to Strng and return
-		return sb.toString()
+		// convert sb to String and return
+		return sb.toString();
 	}
 
 	/**
-	 * This method registers a new Patient into the hospital managment system
+	 * This method registers a new Patient into the hospital management system
 	 * and returns that Patient.
 	 *
 	 * @return The Patient Object that has been registered to the HMS
 	 */
-	public Patient registerPatient(String patientName, String patientAddress, int patientPhone) {
+	public Patient registerPatient(String name, String surname, LocalDate bday, String address, String phoneNo) {
 		// create a new Patient
-		Patient newPatient = new Patient(patientName, patientAddress, patientPhone);
+		Patient newPatient = new Patient(name, surname, bday, address, phoneNo);
 
 		// return the Patient
 		return newPatient;
