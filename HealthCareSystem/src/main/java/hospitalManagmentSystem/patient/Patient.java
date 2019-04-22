@@ -46,12 +46,12 @@ public class Patient {
 	 * Description
 	 *
 	 * @param department
-	 * @throws AccessDeniedException
+	 * @throws IllegalAccessException
 	 */
 	public void updateDepartment(Department department) {
 		// check if department is Managment
 		if( department instanceof Managment) {
-			throw new AccessDeniedException("Patients can not be assigned to the Managment Department");
+			throw new IllegalAccessException("Patients can not be assigned to the Managment Department");
 		}
 	}
 }

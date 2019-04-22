@@ -34,12 +34,11 @@ public class PatientTest {
 	Bed b1;
 	Bed b2;
 	Bed b3;
-	Bed b4;
 
 	@BeforeClass
 	public static void setUpBeforeClass() {
 		// Create Departments
-		em = new Emergency();
+		= new Emergency();
 		inPa = new Inpatient();
 		outPa = new Outpatient();
 		man = new Managment();
@@ -64,7 +63,12 @@ public class PatientTest {
 		b1 = new Bed(em);
 		b2 = new Bed(em);
 		b3 = new Bed(em);
-		b4 = new Bed(em);
+
+		// create Users
+		admin = new Admin("Steve Jobs", "Cupertino, California, United States", "+180249625");
+		doc = new Doctor("Dr. Smith", "Anker Engelunds Vej 1 Bygning 101A, 2800 Kgs. Lyngby", "+4545252525");
+		nurse = new Nurse("John Doe", "123 Main St Anytown, Denmark", "+4512345678");
+		user = new User("James Gosling", "San Francisco Bay Area, California, U.S.", "+141558396");
 	}
 
 	/**
@@ -90,25 +94,26 @@ public class PatientTest {
 
 	/**
 	 * Tests the updateDepartment method of the Patient class
+	 * @throws IllegalAccessException
 	 */
 	@Test
-	public void updateDepartmentTest() {
+	public void updateDepartmentTest() throws IllegalAccessException {
 		// Patient 1 expected info strings before and after update
 		String p1Info = "First Name: Pieter\nLast Name: O'Hearn\nBirthday: 12/1/1990\nAddress: 259 Nordvej 2800 Kongens Lyngby\n Phone Number: +4562473948\nDepartment: Emergency";
 		String p1InfoUpdated = "First Name: Pieter\nLast Name: O'Hearn\nBirthday: 12/1/1990\nAddress: 259 Nordvej 2800 Kongens Lyngby\n Phone Number: +4562473948\nDepartment: Outpatient";
 
 		// check the origonal info string matches
-		assertArrayEquals(p1.getPatientInfo(), p1Info);
+		assertEquals(p1.getPatientInfo(), p1Info);
 
 		// update the department and check again
 		p1.updateDepartment(inPa);
-		assertArrayEquals(p1.getPatientInfo(), p1InfoUpdated);
+		assertEquals(p1.getPatientInfo(), p1InfoUpdated);
 
 		// Test that error is thrown when trying to udate Patient to Managment department
 		try {
 			p1.updateDepartment(man);
 			fail("Expected an AccessDeniedException to be thrown")
-		} catch(AccessDeniedException expected) {
+		} catch(IllegalAccessException expected) {
 			assertThat(expected.getMessage(), is("Patients can not be assigned to the Managment Department"));
 		}
 	}
@@ -117,8 +122,28 @@ public class PatientTest {
 	 * Tests the updateBed method of the Patient class
 	 */
 	@Test
-	public void updateBedTest() {
+	public void updateBedTest() throws IllegalArgumentException {
+		// test assigning a patient to an empty bed in the same department
+		p1.updateBed(b1);
+		assertEquals(b1.getPatient(),p1);
+		assertEquals(p1.getBed(),b1);
 
+		// test assigning a patient to an empty bed in another department
+		try {
+			p2.updateBed(b2); // p2 is in inPa
+			fail("Expected an AccessDeniedException to be thrown")
+		} catch (IllegalArgumentException expected) {
+			assertThat(expected.getMessage(), is("Bed %s is in a different Department to Jack".format(b1.getBedID())));
+		}
+
+		// Test assigning a patient to an occupied bed
+		try {
+			p3.updateBed(b3);
+			p4.updateBed(b3);
+			fail("Expected an AccessDeniedException to be thrown")
+		} catch (IllegalArgumentException expected) {
+			assertThat(expected.getMessage(), is("Bed %s is already occupied".format(b1.getBedID())));
+		}
 	}
 
 	/**
@@ -126,7 +151,15 @@ public class PatientTest {
 	 */
 	@Test
 	public void getRecordTest() {
+		// Give the patients a record
+		String r1 = "The patient has a fracture on their right index finger, I recomend strapping the fingre and some good whiskey to reduce the pain.";
+		String r2 = "The patient has severe lacerations on their right leg.";
+		p1.updateRecord(r1);
+		p2.updateRecord(r2);
 
+		// check the records match
+		assertEquals(p1.getRecord(), r1);
+		assertEquals(p2.getRecord(), r2);
 	}
 
 	/**
@@ -134,16 +167,27 @@ public class PatientTest {
 	 */
 	@Test
 	public void updateRecordTest() {
+		// origonal records
+		String r5 = "The patient is experiencing severe stomach pains.";
+		String r6 = "The patient has severe lacerations on their right leg.";
 
+		// updated records
+		String uR5 = "The patient is experiencing severe stomach pains.\nI have assigned them to Dr. Smith who has better experience with this.";
+		String uR6 = "The patient has severe lacerations on their right leg.\nI have cleaned the wound and have told the patient to keep it covered and clean.";
 
-	}
+		// update and test
+		p5.updateRecord(r5);
+		p6.updateRecord(r6);
 
-	/**
-	 * Tests if a non-medical staff can change sensitive medical data
-	 */
-	@Test(expected = AccessDeniedException.class)
-	public void testAccessLevel() {
+		assertEquals(p5.getRecord(), r5);
+		assertEquals(p6.getRecord(), r6);
 
+		// update again and test the new message has been appended to a new line
+		p5.updateRecord("I have assigned them to Dr. Smith who has better experience with this.");
+		p6.updateRecord("I have cleaned the wound and have told the patient to keep it covered and clean.");
+
+		assertEquals(p3.getRecord(), uR5);
+		assertEquals(p4.getRecord(), uR6);
 	}
 
 	/**
@@ -151,6 +195,13 @@ public class PatientTest {
 	 */
 	@Test
 	public void testConstructor() {
+		// create a new Patient
+		Patient newPatient = new Patient("name", "surname", LocalDate.of(2000, 1,1), "address", "phoneNo");
 
+		// check variables
+		assertTrue(newPatient.getPatientId() != 0 && newPatient.getPatientId() > 0);
+		assertTrue(newPatient.getRecord().equals(null));
+		assertTrue(newPatient.getDepartment.equals(null));
+		assertFalse(newPatient.getDeceased());
 	}
 }
