@@ -74,4 +74,14 @@ public class User {
 		// return the Patient
 		return newPatient;
 	}
+	// TODO Finish this method
+	/**
+	 * returns the patients basic data (Name, )
+	 *
+	 * @param patient The
+	 * @return The patients basic data in String format
+	 */
+	public String getPatientData(Patient patient) {
+
+	}
 }
