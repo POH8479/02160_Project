@@ -1,4 +1,4 @@
-package hospitalManagmentSystem.users;
+package hospitalmanagmentsystem.users;
 
 public class Admin extends User implements HealthStaff{
 

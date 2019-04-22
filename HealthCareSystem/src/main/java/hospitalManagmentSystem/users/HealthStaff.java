@@ -1,4 +1,5 @@
 package hospitalmanagmentsystem.users;
+
 /**
  * A Health Staff is a User who is medicaly working with patients.
  * The methods allow HealthStaff to admit and discharge Patients, assign them a
@@ -25,11 +26,11 @@ public interface HealthStaff {
 	public void dichargePatient(Patient patient);
 
 	/**
-	 * Assigns the given Patient to the given Bed, updating the patients Bed
+	 * Assigns the given Patient a Bed in the department, updating the patients Bed
 	 * variable and the beds Patient variable.
 	 *
 	 * @param patient The Patient who is being assigned a Bed
-	 * @param bed The Bed that they are being assigned
+	 * @return The Bed the patient is assigned to
 	 */
 	public Bed assignBed(Patient patient, Bed bed);
 
@@ -37,6 +38,7 @@ public interface HealthStaff {
 	 * Returns the medical data of the given patient as a String
 	 *
 	 * @param patient The Patient whos medical data is being requested
+	 * @return A string of the patients medical data
 	 */
 	public String getMedicalData(Patient patient);
 
@@ -46,6 +48,7 @@ public interface HealthStaff {
 	 *
 	 * @param patient The Patient whos medical data is being edited
 	 * @param data The new medical data
+	 * @return A string of the patients updated medical data
 	 */
 	public String editMedicalData(Patient patient, String data);
 }
