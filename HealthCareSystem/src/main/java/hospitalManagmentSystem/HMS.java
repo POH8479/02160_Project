@@ -1,4 +1,4 @@
-package hospitalManagmentSystem;
+package hospitalmanagmentsystem;
 
 public class HMS {
 
