@@ -17,7 +17,7 @@ public class User {
 
 	// Instance Variables
 	String name;
-	final int id;
+	final int userID;
 	String address;
 	int phoneNumber;
 
@@ -27,7 +27,7 @@ public class User {
 	public User(String usersName, String usersAddress, int phone){
 		// assign the User with a unique ID
 		IDCounter++;
-		this.id = IDCounter;
+		this.userID = IDCounter;
 		// assign the remaining information
 		this.name = usersName;
 		this.address = usersAddress;
@@ -48,8 +48,8 @@ public class User {
 		sb.append("Name: ");
 		sb.append(name);
 		// append the ID
-		sb.append("\nID: ");
-		sb.append(id);
+		sb.append("\nUser ID: ");
+		sb.append(userID);
 		// append the Address
 		sb.append("\nAddress: ");
 		sb.append(address);
