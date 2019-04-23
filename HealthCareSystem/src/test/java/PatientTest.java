@@ -2,10 +2,10 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import hospitalmanagmentsystem.Bed;
-import hospitalmanagmentsystem.Patient;
-import hospitalmanagmentsystem.departments.*;
-import hospitalmanagmentsystem.users.*;
+import hospitalmanagementsystem.Bed;
+import hospitalmanagementsystem.Patient;
+import hospitalmanagementsystem.departments.*;
+import hospitalmanagementsystem.users.*;
 import java.time.LocalDate;
 
 /**
