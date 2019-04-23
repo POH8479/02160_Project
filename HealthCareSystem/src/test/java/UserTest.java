@@ -86,12 +86,6 @@ public class UserTest {
 	 */
 	@Test
 	public void getPatientDataTest() {
-		Hashtable<String,String> patData = new Hashtable<String,String>();
-		patData.put("First Name", "Jack");
-		patData.put("Last Name", "Rodman");
-		patData.put("First Name",);
-		patData.put("First Name",);
-		
 		//check that appended string returned matches patient info
 		assertEquals(u1.getPatientData(p2), "Name: Jack Rodman\nUser ID: "+ p1.idnum + "\nAddress: 259 Nordvej 2800 Kongens Lyngby\nPhone Number: +4562870942");
 		

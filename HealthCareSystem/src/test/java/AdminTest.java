@@ -83,8 +83,6 @@ public class AdminTest {
 		assertEquals("Emergency",p2.getPatientInfo().get("Department"));
 		assertTrue(em.getPatientList().contains(p2.getPatientInfo().get("Patient ID")));
 		assertFalse(p2.getPatientInfo().get("Bed").equals(null));
-		assertEquals(p2.getPatientInfo().get("Patient ID"),p2.getBed().getPatient());
-
 	}
 
 	// create a rule

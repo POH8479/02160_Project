@@ -120,8 +120,8 @@ public class Patient {
 		patientInfo.put("Birth Date", bdayString);
 		patientInfo.put("Address", this.address);
 		patientInfo.put("Phone Number", this.phoneNo);
-		//patientInfo.put("Deceased", "false");
-		//patientInfo.put("Department", this.dept.name);
+		patientInfo.put("Deceased", "false");
+		patientInfo.put("Department", this.dept.toString());
 		patientInfo.put("Bed ID", this.bed.getBedID());
 		
 		return patientInfo;
