@@ -7,6 +7,7 @@ import hospitalmanagementsystem.Patient;
 import hospitalmanagementsystem.departments.*;
 import hospitalmanagementsystem.users.*;
 import java.time.LocalDate;
+import java.util.Hashtable;
 
 /**
  *
@@ -80,19 +81,28 @@ public class PatientTest {
 	@Test
 	public void getPatientInfoTest() {
 		// Patients expected info strings
-		String p1Info = "First Name: Pieter\nLast Name: O'Hearn\nBirthday: 12/1/1990\nAddress: 259 Nordvej 2800 Kongens Lyngby\n Phone Number: +4562473948\nDepartment: Emergency";
-		String p2Info = "First Name: Jack\nLast Name: Rodman\nBirthday: 28/6/1997\nAddress: 259 Nordvej 2800 Kongens Lyngby\n Phone Number: +4562870942\nDepartment: Inpatient";
-		String p3Info = "First Name: Anna\nLast Name: Hogan\nBirthday: 21/8/1988\nAddress: Georg Brandes Pl. 2-6, 1307 København\n Phone Number: +4552373549\nDepartment: Emergency";
-		String p4Info = "First Name: Asger\nLast Name: Conradsen\nBirthday: 29/5/1999\nAddress: 87 downtown 2800 Kongens Lyngby\n Phone Number: +4585476964\nDepartment: Emergency";
-		String p5Info = "First Name: Karoline\nLast Name: Østergaard\nBirthday: 11/2/1994\nAddress: 259 Nordvej 2800 Kongens Lyngby\n Phone Number: +4582373943\nDepartment: Emergency";
-		String p6Info = "First Name: Kun\nLast Name: Zhu\nBirthday: 8/6/1996\nAddress: 259 Nordvej 2800 Kongens Lyngby\n Phone Number: +4539562047\nDepartment: Outpatient";
+		Hashtable<String, String> p1Info = new Hashtable<String, String>();
+		p1Info.put("First Name", "Pieter");
+		p1Info.put("Last Name", "O'Hearn");
+		p1Info.put("Birthday", "12/1/1990");
+		p1Info.put("Address", "259 Nordvej 2800 Kongens Lyngby");
+		p1Info.put("Phone Number", "+4562473948");
+		p1Info.put("Department", "Emergency");
+		p1Info.put("Patient ID", "1");
+		p1Info.put("Deceased", "False");
+
+		Hashtable<String, String> p2Info = new Hashtable<String, String>();
+		p2Info.put("First Name", "Jack");
+		p2Info.put("Last Name", "Rodman");
+		p2Info.put("Birthday", "28/6/1997");
+		p2Info.put("Address", "259 Nordvej 2800 Kongens Lyngby");
+		p2Info.put("Phone Number", "+4562870942");
+		p2Info.put("Department", "Inpatient");
+		p2Info.put("Patient ID", "2");
+		p2Info.put("Deceased", "False");
 
 		assertEquals(p1.getPatientInfo(), p1Info);
 		assertEquals(p2.getPatientInfo(), p2Info);
-		assertEquals(p3.getPatientInfo(), p3Info);
-		assertEquals(p4.getPatientInfo(), p4Info);
-		assertEquals(p5.getPatientInfo(), p5Info);
-		assertEquals(p6.getPatientInfo(), p6Info);
 	}
 
 	/**
@@ -115,16 +125,12 @@ public class PatientTest {
 	 */
 	@Test
 	public void updateDepartmentTest() {
-		// Patient 1 expected info strings before and after update
-		String p1Info = "First Name: Pieter\nLast Name: O'Hearn\nBirthday: 12/1/1990\nAddress: 259 Nordvej 2800 Kongens Lyngby\n Phone Number: +4562473948\nDepartment: Emergency";
-		String p1InfoUpdated = "First Name: Pieter\nLast Name: O'Hearn\nBirthday: 12/1/1990\nAddress: 259 Nordvej 2800 Kongens Lyngby\n Phone Number: +4562473948\nDepartment: Outpatient";
+		// check the original Department is Emergency
+		assertEquals(p1.getPatientInfo().get("Department"), "Emergency");
 
-		// check the original info string matches
-		assertEquals(p1.getPatientInfo(), p1Info);
-
-		// update the department and check again
+		// update the department and check it has changed
 		p1.updateDepartment(outPa);
-		assertEquals(p1.getPatientInfo(), p1InfoUpdated);
+		assertEquals(p1.getPatientInfo().get("Department"), "Outpatient");
 	}
 
 	/**
@@ -208,37 +214,9 @@ public class PatientTest {
 		Patient newPatient = new Patient("name", "surname", LocalDate.of(2000, 1,1), "address", "phoneNo");
 
 		// check variables
-		assertTrue(newPatient.getPatientId() != 0 && newPatient.getPatientId() > 0);
+		assertTrue(Integer.parseInt(newPatient.getPatientInfo().get{"Patient ID"}) != 0 && Integer.parseInt(newPatient.getPatientInfo().get{"Patient ID"}) > 0);
 		assertTrue(newPatient.getRecord().equals(null));
 		assertTrue(newPatient.getDepartment().equals(null));
 		assertFalse(newPatient.getDeceased());
-	}
-
-	/**
-	 * Tests the getBed Method
-	 */
-	@Test
-	public void testGetBed() {
-		// create
-		// check variables
-		assertEquals(p1.getBed(), b1);
-	}
-
-	/**
-	 * Tests the getDeceased Method
-	 */
-	@Test
-	public void testGetDeceased() {
-		// check variables
-		assertFalse(p1.getDeceased());
-	}
-
-	/**
-	 * Tests the getDepartment Method
-	 */
-	@Test
-	public void testGetDepartment() {
-		// check variables
-		assertEquals(p1.getDepartment(), em);
 	}
 }
