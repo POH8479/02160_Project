@@ -70,7 +70,7 @@ public class PatientTest {
 
 		// create Users
 		admin = new Admin("Steve Jobs", "Cupertino, California, United States", "+180249625");
-		doc = new Doctor("Dr. Smith", "Anker Engelunds Vej 1 Bygning 101A, 2800 Kgs. Lyngby", "+4545252525");
+		doc = new Doctor("Dr. Smith", "Anker Engelunds Vej 1 Bygning 101A, 2800 Kgs. Lyngby", "+4545252525", "Emergency");
 		nurse = new Nurse("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Emergency");
 		user = new User("James Gosling", "San Francisco Bay Area, California, U.S.", "+141558396");
 	}
@@ -122,9 +122,10 @@ public class PatientTest {
 
 	/**
 	 * Tests the updateDepartment method of the Patient class
+	 * @throws IllegalAccessException
 	 */
 	@Test
-	public void updateDepartmentTest() {
+	public void updateDepartmentTest() throws IllegalAccessException {
 		// check the original Department is Emergency
 		assertEquals(p1.getPatientInfo().get("Department"), "Emergency");
 
@@ -141,7 +142,7 @@ public class PatientTest {
 		// test assigning a patient to an empty bed in the same department
 		p1.updateBed(b1);
 		assertEquals(p1,b1.getPatient());
-		assertEquals(b1,p1.getBed());
+		assertEquals(b1.getBedID(),p1.getPatientInfo().get("Bed"));
 
 		// test assigning a patient to an empty bed in another department
 		try {
@@ -214,9 +215,9 @@ public class PatientTest {
 		Patient newPatient = new Patient("name", "surname", LocalDate.of(2000, 1,1), "address", "phoneNo");
 
 		// check variables
-		assertTrue(Integer.parseInt(newPatient.getPatientInfo().get{"Patient ID"}) != 0 && Integer.parseInt(newPatient.getPatientInfo().get{"Patient ID"}) > 0);
+		assertTrue(Integer.parseInt(newPatient.getPatientInfo().get("Patient ID")) != 0 && Integer.parseInt(newPatient.getPatientInfo().get("Patient ID")) > 0);
 		assertTrue(newPatient.getRecord().equals(null));
-		assertTrue(newPatient.getDepartment().equals(null));
-		assertFalse(newPatient.getDeceased());
+		assertTrue(newPatient.getPatientInfo().get("Department").equals(null));
+		assertEquals("False",newPatient.getPatientInfo().get("Deceased"));
 	}
 }

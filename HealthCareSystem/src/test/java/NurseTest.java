@@ -68,7 +68,7 @@ public class NurseTest {
 		assertTrue(inPa.getPatientList().contains(p1.getPatientInfo().get("Patient ID")));
 		assertEquals(null,p1.getPatientInfo().get("Bed"));
 
-		// admit to Emergency and check that a bed is assigned and that both patiens variable and departments list
+		// admit to Emergency and check that a bed is assigned and that both patients variable and departments list
 		assertEquals(null,p2.getPatientInfo().get("Department"));
 		n1.admitPatient(p2,em);
 		assertEquals("Emergency",p2.getPatientInfo().get("Department"));
@@ -87,10 +87,11 @@ public class NurseTest {
 
 	/**
 	 * Tests the admitPatient method of the Nurse Class when the patient already has a Department
+	 * @throws IllegalAccessException 
 	 */
 	@Test
-	public void admitPatientErrorTest() throws IllegalArgumentException {
-		exception.expect(IllegalArgumentException.class);
+	public void admitPatientErrorTest() throws IllegalAccessException {
+		exception.expect(IllegalAccessException.class);
 		exception.expectMessage("Can not admit a patient who is already admitted to a department.");
 		n2.admitPatient(p1,outPa);
 	}
@@ -107,7 +108,7 @@ public class NurseTest {
 
 		// check nurses from other departments can discharge Patients
 		assertEquals("Outpatient",p2.getPatientInfo().get("Department"));
-		assertEquals("Emergency"n1.getUserInfo().get("Department"));
+		assertEquals("Emergency",n1.getUserInfo().get("Department"));
 		n1.dischargePatient(p2);
 		assertEquals(null,p2.getPatientInfo().get("Department"));
 	}
@@ -118,22 +119,23 @@ public class NurseTest {
 	@Test
 	public void dischargePatientErrorTest() throws IllegalArgumentException {
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage(containsString("Can not discharge a patient who is not already admitted into any department."));
+		exception.expectMessage("Can not discharge a patient who is not already admitted into any department.");
 		n2.dischargePatient(p1);
 	}
 
 	/**
 	 * Tests the assignBed method of the Nurse Class
+	 * @throws IllegalAccessException 
 	 */
 	@Test
-	public void assignBedTest() throws IllegalArgumentException {
+	public void assignBedTest() throws IllegalArgumentException, IllegalAccessException {
 		// admit p1 to the Emergency department and assign the bed b1 to them
 		n1.admitPatient(p1, em);
 		n1.assignBed(p1, b1);
 
 		// check that the patients info and beds info reflect this
 		assertEquals(p1, b1.getPatient());
-		assertEquals(b1.getBedID(),p1.getPatientInfo("Bed"));
+		assertEquals(b1.getBedID(),p1.getPatientInfo().get("Bed"));
 
 		// try assign patient2 to the same bed, an IllegalArgumentException is expected
 		try {

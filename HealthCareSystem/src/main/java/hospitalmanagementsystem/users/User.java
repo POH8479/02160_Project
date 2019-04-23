@@ -1,6 +1,7 @@
 package hospitalmanagementsystem.users;
 
 import java.time.LocalDate;
+import java.util.Hashtable;
 
 import hospitalmanagementsystem.Patient;
 
@@ -40,25 +41,17 @@ public class User {
 	 *
 	 * @return String
 	 */
-	public String getUserInfo() {
-		// create a String Builder
-		StringBuilder sb = new StringBuilder();
+	public Hashtable<String,String> getUserInfo() {
+		// create a Hash table and add the Users info
+		Hashtable<String,String> info = new Hashtable<String,String>();
+		info.put("Name", this.name);
+		info.put("User ID", Integer.toString(this.userID));
+		info.put("Address", this.address);
+		info.put("Phone Number", this.phoneNumber);
+		
 
-		// append the Name
-		sb.append("Name: ");
-		sb.append(name);
-		// append the ID
-		sb.append("\nUser ID: ");
-		sb.append(userID);
-		// append the Address
-		sb.append("\nAddress: ");
-		sb.append(address);
-		// append the phoneNumber
-		sb.append("\nPhone Number: ");
-		sb.append(phoneNumber);
-
-		// convert sb to String and return
-		return sb.toString();
+		// return info hash table
+		return info;
 	}
 
 	/**

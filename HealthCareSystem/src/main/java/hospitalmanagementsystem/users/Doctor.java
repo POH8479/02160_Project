@@ -6,7 +6,7 @@ import hospitalmanagementsystem.Patient;
 
 public class Doctor extends User implements HealthStaff{
 
-	public Doctor(String usersName, String usersAddress, String phone) {
+	public Doctor(String usersName, String usersAddress, String phone, String department) {
 		super(usersName, usersAddress, phone);
 	}
 
