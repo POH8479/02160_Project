@@ -7,6 +7,12 @@ import java.util.Hashtable;
 import hospitalmanagementsystem.departments.Department;
 import hospitalmanagementsystem.departments.Management;
 
+/**
+ * 
+ * @author Jack Rodman
+ *
+ */
+
 public class Patient {
 	// Static Variables
 	public static int idnum = 0;
@@ -49,15 +55,27 @@ public class Patient {
 		if( department instanceof Management) {
 			throw new IllegalAccessException("Patients can not be assigned to the Managment Department");
 		}
+		//otherwise update department
+		else {
+			this.dept = department;
+		}
 	}
 
 	/**
 	 * Updates a patient's assigned bed in case the patient is admitted or moved.
 	 * @param newbed
+	 * @throws IllegalAccessException
 	 */
-	public void updateBed(Bed newbed) {
-		this.bed = newbed;
-		//this.bed.addPatient(this); Is this step unnecessary?
+	public void updateBed(Bed newbed) throws IllegalAccessException {
+		//check if bed is empty
+		if(newbed.getPatient() == null) {
+			throw new IllegalAccessException("This bed is already occupied");
+		}
+		//otherwise update bed
+		else {
+			this.bed = newbed;
+			//this.bed.addPatient(this); Is this step unnecessary?
+		}
 	}
 
 	/**
