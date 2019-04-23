@@ -1,6 +1,8 @@
 package hospitalmanagementsystem;
 
 import java.time.LocalDate;
+import java.util.Hashtable;
+
 import hospitalmanagementsystem.departments.Department;
 import hospitalmanagementsystem.departments.Management;
 
@@ -69,8 +71,13 @@ public class Patient {
 		
 	}
 
-	public Object[] getPatientInfo() {
-		return null;
+	//exclude record
+	public Hashtable<String, String> getPatientInfo() {
+		Hashtable<String, String> patientInfo = new Hashtable<String, String>();
+		patientInfo.put("Name", this.name);
+		
+		
+		return patientInfo;
 	}
 
 	public Object getBed() {
