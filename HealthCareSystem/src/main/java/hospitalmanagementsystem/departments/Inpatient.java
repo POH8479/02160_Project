@@ -7,5 +7,4 @@ public class Inpatient extends Department {
 	public Hashtable<String, String> getPatientList() {
 		return null;
 	}
-
 }

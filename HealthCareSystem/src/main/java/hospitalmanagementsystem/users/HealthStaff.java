@@ -19,7 +19,7 @@ public interface HealthStaff {
 	 * @param patient The Patient that is being admitted
 	 * @param department The department to admit the patient to
 	 * @throws IllegalAccessException 
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public void admitPatient(Patient patient, Department department) throws Exception;
 
@@ -38,8 +38,9 @@ public interface HealthStaff {
 	 *
 	 * @param patient The Patient who is being assigned a Bed
 	 * @return The Bed the patient is assigned to
+	 * @throws IllegalAccessException 
 	 */
-	public Bed assignBed(Patient patient, Bed bed);
+	public Bed assignBed(Patient patient, Bed bed) throws IllegalAccessException;
 
 	/**
 	 * Returns the medical data of the given patient as a String

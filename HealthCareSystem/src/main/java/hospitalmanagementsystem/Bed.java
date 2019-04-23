@@ -88,4 +88,9 @@ public class Bed {
 		return Integer.toString(this.bedID);
 	}
 
+	public Object getDepartment() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

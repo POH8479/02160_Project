@@ -65,8 +65,9 @@ public class Admin extends User implements HealthStaff{
 	 *
 	 * @param patient The Patient who is being assigned a Bed
 	 * @return The Bed the patient is assigned to
+	 * @throws IllegalAccessException 
 	 */
-	public Bed assignBed(Patient patient, Bed bed) {
+	public Bed assignBed(Patient patient, Bed bed) throws IllegalAccessException {
 		// Update the patients Bed variable
 		patient.updateBed(bed);
 
@@ -143,4 +144,5 @@ public class Admin extends User implements HealthStaff{
 	public void removeUser(User oldUser) {
 
 	}
+
 }

@@ -1,12 +1,10 @@
 import static org.junit.Assert.*;
-
 import org.junit.Test;
 
+
 public class HealthStaffTest {
-
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void admitPatientTest() throws Exception{
+		fail("not yet implemented");	
 	}
-
 }
