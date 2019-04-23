@@ -1,77 +1,91 @@
+import java.time.LocalDate;
+import java.util.Hashtable;
+
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import hospitalmanagementsystem.*;
+import hospitalmanagementsystem.departments.*;
+import hospitalmanagementsystem.users.*;
 
 public class StepDefinition {
 
 	User anyUser;
 	Patient newPatient;
+	Management man;
+	String statistic;
+	Hashtable<String,String> relevantInfo;
 
 	@Given("^Any user of the program and a patient that has not been admitted$")
-	public void any_user_of_the_program_and_a_patient_that_has_not_been_admitted() throws Throwable {
+	public void any_user_of_the_program_and_a_patient_that_has_not_been_admitted() {
 	    // create the a user
-		User anyUser = new User("John Doe", "123 Main St Anytown, Denmark", "+4512345678");
+		anyUser = new User("John Doe", "123 Main St Anytown, Denmark", "+4512345678");
 	}
 
 	@When("^They enter a new patient's non-medical data$")
-	public void they_enter_a_new_patient_s_non_medical_data() throws Throwable {
+	public void they_enter_a_new_patient_s_non_medical_data() {
 	    // create the patient
 		newPatient = new Patient("name", "surname", LocalDate.of(2000, 1,1), "address", "phoneNo");
 	}
 
 	@Then("^The data is saved in the system and a confirmation is displayed to the user$")
-	public void the_data_is_saved_in_the_system_and_a_confirmation_is_displayed_to_the_user() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void the_data_is_saved_in_the_system_and_a_confirmation_is_displayed_to_the_user() {
+	    // the patient is saved if the surname is retrived
+		assertEquals("surname",newPatient.getPatientInfo().get("Last Name"))
 	}
 
 	@Given("^A user and a department$")
-	public void a_user_and_a_department() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void a_user_and_a_department() {
+	    // create a user and a department
+		anyUser = new User("Managment User", "123 Main St Anytown, Denmark", "+4512345678");
+		man = new Management();
 	}
 
 	@When("^I choose a statistic to see$")
-	public void i_choose_a_statistic_to_see() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void i_choose_a_statistic_to_see() {
+	    // chose to see a users unique user ID
+		statistic = anyUser.getUserInfo().get("User ID");
 	}
 
 	@Then("^I want to see what this statistic is$")
-	public void i_want_to_see_what_this_statistic_is() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void i_want_to_see_what_this_statistic_is() {
+	    // statistic should not be null
+	    assertFalse(statistic.equals(null));
 	}
 
 	@Given("^patient to register$")
-	public void patient_to_register() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void patient_to_register() {
+	    // reset the newpatient
+		newPatient = new Patient(null, null, null, null, null);
 	}
 
 	@Given("^relevant info \\(name, surname, birth-date, home address, phone number, tribe, alive/dead, etc\\.\\.\\)$")
-	public void relevant_info_name_surname_birth_date_home_address_phone_number_tribe_alive_dead_etc() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void relevant_info_name_surname_birth_date_home_address_phone_number_tribe_alive_dead_etc() {
+	    // Store the relevant information in the relevantInfo Hashtable
+		relevantInfo.put("First Name", "Jeff");
+		relevantInfo.put("Last Name", "Bezos");
+		relevantInfo.put("Birthday", "1964-01-12");
+		relevantInfo.put("Address", "1246 Big St Seattle, USA");
+		relevantInfo.put("Phone Number", "+12069220880");
 	}
 
 	@When("^information is entered$")
-	public void information_is_entered() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void information_is_entered() {
+	    // Enter the relevant information into the newPatient
+	    newPatient = new Patient(relevantInfo.get("First Name"), relevantInfo.get("Last Name"), LocalDate.parse(relevantInfo.get("Birthday"),ISO_LOCAL_DATE), relevantInfo.get("Address"), relevantInfo.get("Phone Number"));
 	}
 
 	@Then("^patient is saved$")
-	public void patient_is_saved() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void patient_is_saved() {
+		// The saved name is the same as the entered name and the data has been saved
+		assertEquals(relevantInfo.get("First Name"),newPatient.getPatientInfo().get("First Name"));
 	}
 
 	@Then("^incremential patient number is generated$")
-	public void incremential_patient_number_is_generated() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void incremential_patient_number_is_generated() {
+		// Patient ID should not be null
+	    assertFalse(newPatient.getPatientInfo().get("Patient ID").equals(null));
 	}
 
 	@Given("^patient$")
@@ -206,23 +220,23 @@ public class StepDefinition {
 	    throw new PendingException();
 	}
 
-	@Given("^A$")
-	public void a1() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
-	}
-
-	@When("^A$")
-	public void a2() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
-	}
-
-	@Then("^A$")
-	public void a3() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
-	}
+	// @Given("^A$")
+	// public void a1() throws Throwable {
+	//     // Write code here that turns the phrase above into concrete actions
+	//     throw new PendingException();
+	// }
+	//
+	// @When("^A$")
+	// public void a2() throws Throwable {
+	//     // Write code here that turns the phrase above into concrete actions
+	//     throw new PendingException();
+	// }
+	//
+	// @Then("^A$")
+	// public void a3() throws Throwable {
+	//     // Write code here that turns the phrase above into concrete actions
+	//     throw new PendingException();
+	// }
 
 	@Given("^a travel card with a balance of (\\d+)$")
 	public void a_travel_card_with_a_balance_of(int arg1) throws Throwable {
@@ -320,23 +334,23 @@ public class StepDefinition {
 	    throw new PendingException();
 	}
 
-	@Given("^A user$")
-	public void a_user() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
-	}
-
-	@When("^I log in$")
-	public void i_log_in() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
-	}
-
-	@Then("^I am able to access the system$")
-	public void i_am_able_to_access_the_system() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
-	}
+	// @Given("^A user$")
+	// public void a_user() throws Throwable {
+	//     // Write code here that turns the phrase above into concrete actions
+	//     throw new PendingException();
+	// }
+	//
+	// @When("^I log in$")
+	// public void i_log_in() throws Throwable {
+	//     // Write code here that turns the phrase above into concrete actions
+	//     throw new PendingException();
+	// }
+	//
+	// @Then("^I am able to access the system$")
+	// public void i_am_able_to_access_the_system() throws Throwable {
+	//     // Write code here that turns the phrase above into concrete actions
+	//     throw new PendingException();
+	// }
 
 	@Given("^An existing user in the system$")
 	public void an_existing_user_in_the_system() throws Throwable {

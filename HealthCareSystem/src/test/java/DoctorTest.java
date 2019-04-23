@@ -58,9 +58,10 @@ public class DoctorTest {
 
 	/**
 	 * Tests the admitPatient method of the Doctor Class
+	 * @throws IllegalAccessException 
 	 */
 	@Test
-	public void admitPatientTest() {
+	public void admitPatientTest() throws IllegalAccessException {
 		// admit p1 to Inpatient and check both patients variable and departments list
 		assertEquals(null, p1.getPatientInfo().get("Department"));
 		d2.admitPatient(p1,inPa);
@@ -73,9 +74,7 @@ public class DoctorTest {
 		d1.admitPatient(p2,em);
 		assertEquals("Emergency",p2.getPatientInfo().get("Department"));
 		assertTrue(em.getPatientList().contains(p2.getPatientInfo().get("Patient ID")));
-		assertFalse(p2.getPatientInfo().get("Bed").equals(null));
-		assertEquals(p2.getPatientInfo().get("Patient ID"),p2.getPatientInfo().get("Bed").getPatient());
-
+		
 		// check doctors from other departments can admit patients
 		d1.dischargePatient(p2);
 		d1.admitPatient(p2,outPa);
