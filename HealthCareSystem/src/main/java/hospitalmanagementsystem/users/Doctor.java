@@ -28,7 +28,7 @@ public class Doctor extends User implements HealthStaff{
 	 *
 	 * @param patient The Patient that is being discharged
 	 */
-	public void dichargePatient(Patient patient) {
+	public void dischargePatient(Patient patient) {
 		
 	}
 

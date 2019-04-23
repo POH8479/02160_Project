@@ -47,7 +47,7 @@ public class Admin extends User implements HealthStaff{
 	 * @param patient The Patient that is being discharged
 	 * @throws IllegalAccessException 
 	 */
-	public void dichargePatient(Patient patient) throws IllegalAccessException{
+	public void dischargePatient(Patient patient) throws IllegalAccessException{
 		// Update the patients department variable
 		patient.updateDepartment(null);
 

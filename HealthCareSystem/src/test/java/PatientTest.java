@@ -15,12 +15,12 @@ import java.util.Hashtable;
  */
 public class PatientTest {
 	// test Patients
-	static Patient p1 = null;
-	static Patient p2 = null;
-	static Patient p3 = null;
-	static Patient p4 = null;
-	static Patient p5 = null;
-	static Patient p6 = null;
+	static Patient p1;
+	static Patient p2;
+	static Patient p3;
+	static Patient p4;
+	static Patient p5;
+	static Patient p6;
 
 	// Departments
 	static Emergency em;
@@ -71,7 +71,7 @@ public class PatientTest {
 		// create Users
 		admin = new Admin("Steve Jobs", "Cupertino, California, United States", "+180249625");
 		doc = new Doctor("Dr. Smith", "Anker Engelunds Vej 1 Bygning 101A, 2800 Kgs. Lyngby", "+4545252525");
-		nurse = new Nurse("John Doe", "123 Main St Anytown, Denmark", "+4512345678");
+		nurse = new Nurse("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Emergency");
 		user = new User("James Gosling", "San Francisco Bay Area, California, U.S.", "+141558396");
 	}
 
@@ -81,7 +81,7 @@ public class PatientTest {
 	@Test
 	public void getPatientInfoTest() {
 		// Patients expected info strings
-		Hashtable<String, String> p1Info = new Hashtable<String, String>();
+		Hashtable<String, Object> p1Info = new Hashtable<String, Object>();
 		p1Info.put("First Name", "Pieter");
 		p1Info.put("Last Name", "O'Hearn");
 		p1Info.put("Birthday", "12/1/1990");
@@ -140,24 +140,24 @@ public class PatientTest {
 	public void updateBedTest() throws IllegalArgumentException {
 		// test assigning a patient to an empty bed in the same department
 		p1.updateBed(b1);
-		assertEquals(b1.getPatient(),p1);
-		assertEquals(p1.getBed(),b1);
+		assertEquals(p1,b1.getPatient());
+		assertEquals(b1,p1.getBed());
 
 		// test assigning a patient to an empty bed in another department
 		try {
 			p2.updateBed(b2); // p2 is in inPa
-			fail("Expected an AccessDeniedException to be thrown");
+			fail("Expected an IllegalArgumentException to be thrown");
 		} catch (IllegalArgumentException expected) {
-			assertEquals(expected.getMessage(), String.format("Bed %s is in a different Department to Jack", b1.getBedID()));
+			assertEquals(String.format("Bed %s is in a different Department to Jack", b1.getBedID()),expected.getMessage());
 		}
 
 		// Test assigning a patient to an occupied bed
 		try {
 			p3.updateBed(b3);
 			p4.updateBed(b3);
-			fail("Expected an AccessDeniedException to be thrown");
+			fail("Expected an IllegalArgumentException to be thrown");
 		} catch (IllegalArgumentException expected) {
-			assertEquals(expected.getMessage(), String.format("Bed %s is already occupied", b1.getBedID()));
+			assertEquals(String.format("Bed %s is already occupied", b1.getBedID()),expected.getMessage());
 		}
 	}
 
@@ -173,8 +173,8 @@ public class PatientTest {
 		p2.updateRecord(r2);
 
 		// check the records match
-		assertEquals(p1.getRecord(), r1);
-		assertEquals(p2.getRecord(), r2);
+		assertEquals(r1,p1.getRecord());
+		assertEquals(r2,p2.getRecord());
 	}
 
 	/**
@@ -194,15 +194,15 @@ public class PatientTest {
 		p5.updateRecord(r5);
 		p6.updateRecord(r6);
 
-		assertEquals(p5.getRecord(), r5);
-		assertEquals(p6.getRecord(), r6);
+		assertEquals(r5, p5.getRecord());
+		assertEquals(r6, p6.getRecord());
 
 		// update again and test the new message has been appended to a new line
 		p5.updateRecord("I have assigned them to Dr. Smith who has better experience with this.");
 		p6.updateRecord("I have cleaned the wound and have told the patient to keep it covered and clean.");
 
-		assertEquals(p3.getRecord(), uR5);
-		assertEquals(p4.getRecord(), uR6);
+		assertEquals(uR5,p3.getRecord());
+		assertEquals(uR6,p4.getRecord());
 	}
 
 	/**

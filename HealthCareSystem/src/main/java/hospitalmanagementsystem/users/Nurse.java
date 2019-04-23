@@ -6,7 +6,7 @@ import hospitalmanagementsystem.Patient;
 
 public class Nurse extends User implements HealthStaff{
 
-	public Nurse(String usersName, String usersAddress, String phone) {
+	public Nurse(String usersName, String usersAddress, String phone, String Department) {
 		super(usersName, usersAddress, phone);
 	}
 
@@ -28,7 +28,7 @@ public class Nurse extends User implements HealthStaff{
 	 *
 	 * @param patient The Patient that is being discharged
 	 */
-	public void dichargePatient(Patient patient) {
+	public void dischargePatient(Patient patient) {
 		
 	}
 

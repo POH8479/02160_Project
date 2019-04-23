@@ -8,10 +8,10 @@ public class Bed {
 	}
 
 	public void addPatient(Patient patient) {
-		
+
 	}
 
-	public Object getPatient() {
+	public String getPatient() {
 		return null;
 	}
 

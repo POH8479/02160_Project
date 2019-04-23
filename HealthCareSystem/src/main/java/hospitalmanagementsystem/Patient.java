@@ -60,7 +60,7 @@ public class Patient {
 	}
 
 	public void updateBed(Bed bed) {
-		
+
 	}
 
 	public String getRecord() {
@@ -68,31 +68,16 @@ public class Patient {
 	}
 
 	public void updateRecord(String data) {
-		
+
 	}
 
 	//exclude record
 	public Hashtable<String, String> getPatientInfo() {
 		Hashtable<String, String> patientInfo = new Hashtable<String, String>();
 		patientInfo.put("Name", this.name);
-		
-		
+
+
 		return patientInfo;
 	}
-
-	public Object getBed() {
-		return null;
-	}
-
-	public int getPatientId() {
-		return 0;
-	}
-
-	public boolean getDeceased() {
-		return false;
-	}
-
-	public Object getDepartment() {
-		return null;
-	}
+	
 }

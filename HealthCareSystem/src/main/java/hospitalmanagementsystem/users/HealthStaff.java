@@ -30,7 +30,7 @@ public interface HealthStaff {
 	 * @param patient The Patient that is being discharged
 	 * @throws Exception 
 	 */
-	public void dichargePatient(Patient patient) throws Exception;
+	public void dischargePatient(Patient patient) throws Exception;
 
 	/**
 	 * Assigns the given Patient a Bed in the department, updating the patients Bed
