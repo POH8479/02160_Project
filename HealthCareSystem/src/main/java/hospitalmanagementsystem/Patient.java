@@ -135,6 +135,6 @@ public class Patient {
 	 * @return Department object if admitted or null if department has not yet been assigned
 	 */
 	public Object getDepartment() {
-		return null;
+		return this.dept;
 	}
 }
