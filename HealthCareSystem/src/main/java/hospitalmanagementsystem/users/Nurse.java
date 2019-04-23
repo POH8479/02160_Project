@@ -2,16 +2,17 @@ package hospitalmanagementsystem.users;
 
 import hospitalmanagementsystem.departments.*;
 import hospitalmanagementsystem.Bed;
+import hospitalmanagementsystem.HMS;
 import hospitalmanagementsystem.Patient;
 
 public class Nurse extends User implements HealthStaff{
 	Department department;
 
-	public Nurse(String usersName, String usersAddress, String phone, String Department) {
+	public Nurse(String usersName, String usersAddress, String phone, String department) {
 		super(usersName, usersAddress, phone);
     
 		//assign department based on input
-		this.department = dept;
+		this.department = HMS.getDepartment(department);
 	}
 
 	/**

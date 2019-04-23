@@ -136,9 +136,10 @@ public class PatientTest {
 
 	/**
 	 * Tests the updateBed method of the Patient class
+	 * @throws IllegalAccessException 
 	 */
 	@Test
-	public void updateBedTest() throws IllegalArgumentException {
+	public void updateBedTest() throws IllegalArgumentException, IllegalAccessException {
 		// test assigning a patient to an empty bed in the same department
 		p1.updateBed(b1);
 		assertEquals(p1,b1.getPatient());

@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
+import java.util.Hashtable;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -71,13 +72,13 @@ public class UserTest {
 	 */
 	@Test
 	public void registerPatientTest() {
-		//register a patient identical to p1 and verify that objects are the same
+		//register a patient and check that its unique ID is no longer null
 		Patient newpat = u1.registerPatient("Jack", "Rodman", LocalDate.of(1997, 6,28), "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
-		assertEquals(newpat, p2);
+		assertFalse(newpat.getPatientInfo().get("Patient ID").equals(null));
 		
-		//test for a mismatched case
-		Patient failpat = u1.registerPatient("Jack", "Rodman", LocalDate.of(1998, 6,28), "259 Nordvej 2800 Kongens Lyngby", "+4562870940");
-		assertNotSame(failpat, p2);
+		//test that new patient with same info has a different Patient ID
+		Patient failpat = u1.registerPatient("Jack", "Rodman", LocalDate.of(1997, 6,28), "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
+		assertFalse(newpat.getPatientInfo().get("Patient ID").equals(failpat.getPatientInfo().get("Patient ID")));
 	}
 
 	/**
@@ -85,6 +86,12 @@ public class UserTest {
 	 */
 	@Test
 	public void getPatientDataTest() {
+		Hashtable<String,String> patData = new Hashtable<String,String>();
+		patData.put("First Name", "Jack");
+		patData.put("Last Name", "Rodman");
+		patData.put("First Name",);
+		patData.put("First Name",);
+		
 		//check that appended string returned matches patient info
 		assertEquals(u1.getPatientData(p2), "Name: Jack Rodman\nUser ID: "+ p1.idnum + "\nAddress: 259 Nordvej 2800 Kongens Lyngby\nPhone Number: +4562870942");
 		

@@ -97,9 +97,10 @@ public class DoctorTest {
 
 	/**
 	 * Tests the dischargePatient method of the Doctor Class
+	 * @throws IllegalAccessException 
 	 */
 	@Test
-	public void dischargePatientTest() {
+	public void dischargePatientTest() throws IllegalAccessException {
 		// Doctor2 discharges patient1 from Inpatient and check is Department is null
 		assertEquals("Inpatient",p1.getPatientInfo().get("Department"));
 		d2.dischargePatient(p1);
@@ -114,9 +115,10 @@ public class DoctorTest {
 
 	/**
 	 * Tests the dischargePatient method of the Doctor Class when the patient already has a Department
+	 * @throws IllegalAccessException 
 	 */
 	@Test
-	public void dischargePatientErrorTest() throws IllegalArgumentException {
+	public void dischargePatientErrorTest() throws IllegalArgumentException, IllegalAccessException {
 		exception.expect(IllegalArgumentException.class);
 		exception.expectMessage("Can not discharge a patient who is not already admitted into any department.");
 		d2.dischargePatient(p1);

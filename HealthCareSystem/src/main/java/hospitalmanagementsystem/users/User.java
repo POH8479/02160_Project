@@ -35,7 +35,6 @@ public class User {
 		this.phoneNumber = phone;
 	}
 
-// TODO Should This return a Dictionary for easy lookup????
 	/**
 	 * Returns the Users Info as a String in the format
 	 *
@@ -67,31 +66,15 @@ public class User {
 		// return the Patient
 		return newPatient;
 	}
-	// TODO Finish this method
+	
 	/**
 	 * returns the patients basic data (Name, )
 	 *
 	 * @param patient The
 	 * @return The patients basic data in String format
 	 */
-	public String getPatientData(Patient patient) {
-		// create a String Builder
-		StringBuilder sb = new StringBuilder();
-
-		// append the Name
-		sb.append("Name: ");
-		sb.append(name);
-		// append the ID
-		sb.append("\nUser ID: ");
-		sb.append(userID);
-		// append the Address
-		sb.append("\nAddress: ");
-		sb.append(address);
-		// append the phoneNumber
-		sb.append("\nPhone Number: ");
-		sb.append(phoneNumber);
-
-		// convert sb to String and return
-		return sb.toString();
+	public Hashtable<String,String> getPatientData(Patient patient) {
+		// return the patients info
+		return patient.getPatientInfo();
 	}
 }

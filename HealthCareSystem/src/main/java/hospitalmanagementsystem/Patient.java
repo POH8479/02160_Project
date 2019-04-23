@@ -111,8 +111,8 @@ public class Patient {
 		Hashtable<String, String> patientInfo = new Hashtable<String, String>();
 		
 		//load all parameters into hashtable
-		patientInfo.put("Name", this.name);
-		patientInfo.put("Surname", this.surname);
+		patientInfo.put("First Name", this.name);
+		patientInfo.put("Last Name", this.surname);
 		patientInfo.put("Patient ID", Integer.toString(this.patientID));
 		//string formatting for patient birth date parameter
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
@@ -122,42 +122,42 @@ public class Patient {
 		patientInfo.put("Phone Number", this.phoneNo);
 		//patientInfo.put("Deceased", "false");
 		//patientInfo.put("Department", this.dept.name);
-		patientInfo.put("Bed number", this.bed.getBedID());
+		patientInfo.put("Bed ID", this.bed.getBedID());
 		
 		return patientInfo;
 	}
-
-	/**
-	 * This method retreives the bed object that is currently occupied by the patient
-	 * @return bed
-	 */
-	public Bed getBed() {
-		//if null is returned, patient has not yet been admitted to a bed
-		return this.bed;
-	}
-
-	/**
-	 * This method retrieves a patients unique ID number
-	 * @return ID number
-	 */
-	public int getPatientId() {
-		return this.patientID;
-	}
-
-	/**
-	 * This method notifies the user if the patient is alive or dead
-	 * @return true if a patient is deceased and false if a patient is alive
-	 */
-	public boolean getDeceased() {
-		return this.deceased;
-	}
-
-	/**
-	 * This method retrieves the department that a patient belongs to
-	 * @return Department object if admitted or null if department has not yet been assigned
-	 */
-	public Department getDepartment() {
-		return this.dept;
-	}
+//
+//	/**
+//	 * This method retrieves the bed object that is currently occupied by the patient
+//	 * @return bed
+//	 */
+//	public Bed getBed() {
+//		//if null is returned, patient has not yet been admitted to a bed
+//		return this.bed;
+//	}
+//
+//	/**
+//	 * This method retrieves a patients unique ID number
+//	 * @return ID number
+//	 */
+//	public int getPatientId() {
+//		return this.patientID;
+//	}
+//
+//	/**
+//	 * This method notifies the user if the patient is alive or dead
+//	 * @return true if a patient is deceased and false if a patient is alive
+//	 */
+//	public boolean getDeceased() {
+//		return this.deceased;
+//	}
+//
+//	/**
+//	 * This method retrieves the department that a patient belongs to
+//	 * @return Department object if admitted or null if department has not yet been assigned
+//	 */
+//	public Department getDepartment() {
+//		return this.dept;
+//	}
 	
 }

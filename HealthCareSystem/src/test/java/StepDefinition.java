@@ -1,3 +1,6 @@
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
 import java.time.LocalDate;
 import java.util.Hashtable;
 
@@ -8,6 +11,7 @@ import cucumber.api.java.en.When;
 import hospitalmanagementsystem.*;
 import hospitalmanagementsystem.departments.*;
 import hospitalmanagementsystem.users.*;
+import java.time.format.DateTimeFormatter;
 
 public class StepDefinition {
 
@@ -31,8 +35,8 @@ public class StepDefinition {
 
 	@Then("^The data is saved in the system and a confirmation is displayed to the user$")
 	public void the_data_is_saved_in_the_system_and_a_confirmation_is_displayed_to_the_user() {
-	    // the patient is saved if the surname is retrived
-		assertEquals("surname",newPatient.getPatientInfo().get("Last Name"))
+	    // the patient is saved if the surname is retrieved
+		assertEquals("surname",newPatient.getPatientInfo().get("Last Name"));
 	}
 
 	@Given("^A user and a department$")
