@@ -1,8 +1,8 @@
-package hospitalmanagmentsystem.users;
+package hospitalmanagementsystem.users;
 
 import java.time.LocalDate;
 
-import hospitalmanagmentsystem.Patient;
+import hospitalmanagementsystem.Patient;
 
 /**
  * A User of the Hospital Management System. They have the lowest privileges of

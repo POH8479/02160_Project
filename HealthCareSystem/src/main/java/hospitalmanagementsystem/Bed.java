@@ -1,6 +1,6 @@
-package hospitalmanagmentsystem;
+package hospitalmanagementsystem;
 
-import hospitalmanagmentsystem.departments.*;
+import hospitalmanagementsystem.departments.*;
 
 public class Bed {
 

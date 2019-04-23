@@ -1,9 +1,9 @@
-package hospitalmanagmentsystem.users;
+package hospitalmanagementsystem.users;
 
-import hospitalmanagmentsystem.departments.*;
-import hospitalmanagmentsystem.Bed;
-import hospitalmanagmentsystem.HMS;
-import hospitalmanagmentsystem.Patient;
+import hospitalmanagementsystem.departments.*;
+import hospitalmanagementsystem.Bed;
+import hospitalmanagementsystem.HMS;
+import hospitalmanagementsystem.Patient;
 
 public class Admin extends User implements HealthStaff{
 	// Instance Variables

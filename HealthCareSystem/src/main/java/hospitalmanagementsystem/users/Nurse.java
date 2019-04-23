@@ -1,12 +1,12 @@
-package hospitalmanagmentsystem.users;
+package hospitalmanagementsystem.users;
 
-import hospitalmanagmentsystem.departments.*;
-import hospitalmanagmentsystem.Bed;
-import hospitalmanagmentsystem.Patient;
+import hospitalmanagementsystem.departments.*;
+import hospitalmanagementsystem.Bed;
+import hospitalmanagementsystem.Patient;
 
-public class Doctor extends User implements HealthStaff{
+public class Nurse extends User implements HealthStaff{
 
-	public Doctor(String usersName, String usersAddress, String phone) {
+	public Nurse(String usersName, String usersAddress, String phone) {
 		super(usersName, usersAddress, phone);
 	}
 
@@ -41,6 +41,7 @@ public class Doctor extends User implements HealthStaff{
 	 */
 	public Bed assignBed(Patient patient, Bed bed) {
 		return null;
+		
 	}
 
 	/**
@@ -51,6 +52,7 @@ public class Doctor extends User implements HealthStaff{
 	 */
 	public String getMedicalData(Patient patient) {
 		return null;
+		
 	}
 
 	/**
@@ -63,5 +65,6 @@ public class Doctor extends User implements HealthStaff{
 	 */
 	public String editMedicalData(Patient patient, String data) {
 		return null;
+		
 	}
 }

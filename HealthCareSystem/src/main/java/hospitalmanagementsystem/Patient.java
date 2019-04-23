@@ -1,9 +1,10 @@
-package hospitalmanagmentsystem;
+package hospitalmanagementsystem;
 
 import java.time.LocalDate;
+import java.util.Hashtable;
 
-import hospitalmanagmentsystem.departments.Department;
-import hospitalmanagmentsystem.departments.Management;
+import hospitalmanagementsystem.departments.Department;
+import hospitalmanagementsystem.departments.Management;
 
 public class Patient {
 	// Static Variables
@@ -70,8 +71,13 @@ public class Patient {
 		
 	}
 
-	public Object[] getPatientInfo() {
-		return null;
+	//exclude record
+	public Hashtable<String, String> getPatientInfo() {
+		Hashtable<String, String> patientInfo = new Hashtable<String, String>();
+		patientInfo.put("Name", this.name);
+		
+		
+		return patientInfo;
 	}
 
 	public Object getBed() {
