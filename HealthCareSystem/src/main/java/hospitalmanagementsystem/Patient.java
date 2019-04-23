@@ -68,8 +68,12 @@ public class Patient {
 	 */
 	public void updateBed(Bed newbed) throws IllegalAccessException {
 		//check if bed is empty
-		if(newbed.getPatient() == null) {
-			throw new IllegalAccessException("This bed is already occupied");
+		if(newbed.getPatient() != null) {
+			throw new IllegalAccessException(String.format("Bed %s is already occupied", newbed.getBedID()));
+		}
+		//check if bed is not in same department as patient
+		else if(newbed.getDepartment().equals(this.dept)) {
+			throw new IllegalAccessException(String.format("Bed %s is in a different department to %s", newbed.getBedID(), this.name));
 		}
 		//otherwise update bed
 		else {
@@ -84,9 +88,9 @@ public class Patient {
 	 */
 	public String getRecord() {
 		//returns a notification of no entry if nothing has been recorded yet
-		if(this.record == null) {
+		/*if(this.record == null) {
 			return "Patient does not have record entry";
-		}
+		}*/
 		return this.record;
 	}
 
@@ -127,7 +131,7 @@ public class Patient {
 	 * This method retreives the bed object that is currently occupied by the patient
 	 * @return bed
 	 */
-	public Object getBed() {
+	public Bed getBed() {
 		//if null is returned, patient has not yet been admitted to a bed
 		return this.bed;
 	}
@@ -152,7 +156,7 @@ public class Patient {
 	 * This method retrieves the department that a patient belongs to
 	 * @return Department object if admitted or null if department has not yet been assigned
 	 */
-	public Object getDepartment() {
+	public Department getDepartment() {
 		return this.dept;
 	}
 }

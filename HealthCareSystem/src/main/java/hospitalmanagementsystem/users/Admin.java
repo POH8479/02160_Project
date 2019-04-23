@@ -47,7 +47,7 @@ public class Admin extends User implements HealthStaff{
 	 * @param patient The Patient that is being discharged
 	 * @throws IllegalAccessException 
 	 */
-	public void dichargePatient(Patient patient) throws IllegalAccessException{
+	public void dischargePatient(Patient patient) throws IllegalAccessException{
 		// Update the patients department variable
 		patient.updateDepartment(null);
 
@@ -61,8 +61,9 @@ public class Admin extends User implements HealthStaff{
 	 *
 	 * @param patient The Patient who is being assigned a Bed
 	 * @return The Bed the patient is assigned to
+	 * @throws IllegalAccessException 
 	 */
-	public Bed assignBed(Patient patient, Bed bed) {
+	public Bed assignBed(Patient patient, Bed bed) throws IllegalAccessException {
 		// Update the patients Bed variable
 		patient.updateBed(bed);
 
@@ -139,4 +140,5 @@ public class Admin extends User implements HealthStaff{
 	public void removeUser(User oldUser) {
 
 	}
+
 }

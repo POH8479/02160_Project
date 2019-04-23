@@ -5,9 +5,12 @@ import hospitalmanagementsystem.Bed;
 import hospitalmanagementsystem.Patient;
 
 public class Nurse extends User implements HealthStaff{
+	Department department;
 
-	public Nurse(String usersName, String usersAddress, String phone) {
+	public Nurse(String usersName, String usersAddress, String phone, Department dept) {
 		super(usersName, usersAddress, phone);
+		//assign department based on input
+		this.department = dept;
 	}
 
 	/**
@@ -19,7 +22,16 @@ public class Nurse extends User implements HealthStaff{
 	 * @throws IllegalAccessException 
 	 */
 	public void admitPatient(Patient patient, Department department) throws IllegalAccessException {
-		
+		// if department is Management then throw an exception
+		if(department instanceof Management) {
+			throw new IllegalAccessException();
+		} else {
+			// Update the patients department variable
+			patient.updateDepartment(department);
+
+			// Add the Patient to the departments patient list
+			department.addPatient(patient);
+		}
 	}
 
 	/**
@@ -28,8 +40,12 @@ public class Nurse extends User implements HealthStaff{
 	 *
 	 * @param patient The Patient that is being discharged
 	 */
-	public void dichargePatient(Patient patient) {
-		
+	public void dischargePatient(Patient patient) throws IllegalAccessException {
+		// Update the patients department variable
+		patient.updateDepartment(null);
+
+		// remove the Patient from the departments patient list
+		department.removePatient(patient);
 	}
 
 	/**
@@ -39,8 +55,14 @@ public class Nurse extends User implements HealthStaff{
 	 * @param patient The Patient who is being assigned a Bed
 	 * @return The Bed the patient is assigned to
 	 */
-	public Bed assignBed(Patient patient, Bed bed) {
-		return null;
+	public Bed assignBed(Patient patient, Bed bed) throws IllegalAccessException {
+		// Update the patients Bed variable
+		patient.updateBed(bed);
+
+		// Add the Patient to the beds patient variable
+		bed.addPatient(patient);
+
+		return bed;
 		
 	}
 
@@ -51,8 +73,8 @@ public class Nurse extends User implements HealthStaff{
 	 * @return A string of the patients medical data
 	 */
 	public String getMedicalData(Patient patient) {
-		return null;
-		
+		// request the updated record and return it
+		return patient.getRecord();
 	}
 
 	/**
@@ -64,7 +86,11 @@ public class Nurse extends User implements HealthStaff{
 	 * @return A string of the patients updated medical data
 	 */
 	public String editMedicalData(Patient patient, String data) {
-		return null;
+		// append the data to the patients medical data
+		patient.updateRecord(data);
+
+		// request the updated record and return it
+		return patient.getRecord();
 		
 	}
 }
