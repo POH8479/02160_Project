@@ -5,7 +5,7 @@ import org.junit.Test;
 public class NurseTest {
 
 	/**
-	 * Description
+	 * the
 	 */
 	@Test
 	public void test() {
