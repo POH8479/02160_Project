@@ -1,9 +1,8 @@
-package hospitalmanagmentsystem;
+package hospitalmanagementsystem;
 
 import java.time.LocalDate;
-
-import hospitalmanagmentsystem.departments.Department;
-import hospitalmanagmentsystem.departments.Management;
+import hospitalmanagementsystem.departments.Department;
+import hospitalmanagementsystem.departments.Management;
 
 public class Patient {
 	// Static Variables

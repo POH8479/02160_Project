@@ -1,6 +1,6 @@
-package hospitalmanagmentsystem.departments;
+package hospitalmanagementsystem.departments;
 
-import hospitalmanagmentsystem.Patient;
+import hospitalmanagementsystem.Patient;
 
 public abstract class Department {
 
