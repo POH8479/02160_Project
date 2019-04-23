@@ -35,16 +35,6 @@ public class Patient {
 		this.dept = null;
 	}
 
-	/** This method generates a unique ID for a registered patient
-	 * @return int value for ID
-	 */
-	@Deprecated
-	public int generateID() {
-		int idnum = 0; //NEED TO CHANGE to implement global variable but not sure how
-		return idnum++;
-
-	}
-
 	/**
 	 * Description
 	 *

@@ -100,7 +100,21 @@ public class PatientTest {
 	 * @throws IllegalAccessException
 	 */
 	@Test
-	public void updateDepartmentTest() throws IllegalAccessException {
+	public void updateDepartmentToManagementTest() throws IllegalAccessException {
+		// Test that error is thrown when trying to udate Patient to Managment department
+		try {
+			p1.updateDepartment(man);
+			fail("Expected an AccessDeniedException to be thrown");
+		} catch(IllegalAccessException expected) {
+			assertEquals(expected.getMessage(), "Patients can not be assigned to the Managment Department");
+		}
+	}
+
+	/**
+	 * Tests the updateDepartment method of the Patient class
+	 */
+	@Test
+	public void updateDepartmentTest() {
 		// Patient 1 expected info strings before and after update
 		String p1Info = "First Name: Pieter\nLast Name: O'Hearn\nBirthday: 12/1/1990\nAddress: 259 Nordvej 2800 Kongens Lyngby\n Phone Number: +4562473948\nDepartment: Emergency";
 		String p1InfoUpdated = "First Name: Pieter\nLast Name: O'Hearn\nBirthday: 12/1/1990\nAddress: 259 Nordvej 2800 Kongens Lyngby\n Phone Number: +4562473948\nDepartment: Outpatient";
@@ -109,16 +123,8 @@ public class PatientTest {
 		assertEquals(p1.getPatientInfo(), p1Info);
 
 		// update the department and check again
-		p1.updateDepartment(inPa);
+		p1.updateDepartment(outPa);
 		assertEquals(p1.getPatientInfo(), p1InfoUpdated);
-
-		// Test that error is thrown when trying to udate Patient to Managment department
-		try {
-			p1.updateDepartment(man);
-			fail("Expected an AccessDeniedException to be thrown");
-		} catch(IllegalAccessException expected) {
-			assertEquals(expected.getMessage(), "Patients can not be assigned to the Managment Department");
-		}
 	}
 
 	/**
@@ -206,5 +212,33 @@ public class PatientTest {
 		assertTrue(newPatient.getRecord().equals(null));
 		assertTrue(newPatient.getDepartment().equals(null));
 		assertFalse(newPatient.getDeceased());
+	}
+
+	/**
+	 * Tests the getBed Method
+	 */
+	@Test
+	public void testGetBed() {
+		// create
+		// check variables
+		assertEquals(p1.getBed(), b1);
+	}
+
+	/**
+	 * Tests the getDeceased Method
+	 */
+	@Test
+	public void testGetDeceased() {
+		// check variables
+		assertFalse(p1.getDeceased());
+	}
+
+	/**
+	 * Tests the getDepartment Method
+	 */
+	@Test
+	public void testGetDepartment() {
+		// check variables
+		assertEquals(p1.getDepartment(), em);
 	}
 }
