@@ -1,6 +1,7 @@
 package hospitalmanagementsystem;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Hashtable;
 
 import hospitalmanagementsystem.departments.Department;
@@ -20,6 +21,7 @@ public class Patient {
 	Boolean deceased;
 	String record;
 	Department dept;
+	Bed bed;
 
 	//CONSTRUCTOR
 	public Patient(String name, String surname, LocalDate bday, String address, String phoneNo) {
@@ -34,21 +36,11 @@ public class Patient {
 		this.deceased = false;
 		this.record = null;
 		this.dept = null;
-	}
-
-	/** This method generates a unique ID for a registered patient
-	 * @return int value for ID
-	 */
-	@Deprecated
-	public int generateID() {
-		int idnum = 0; //NEED TO CHANGE to implement global variable but not sure how
-		return idnum++;
-
+		this.bed = null;
 	}
 
 	/**
-	 * Description
-	 *
+	 * Updates a patient's department to enable admitting or moving a patient to a new department
 	 * @param department
 	 * @throws IllegalAccessException
 	 */
@@ -59,39 +51,89 @@ public class Patient {
 		}
 	}
 
-	public void updateBed(Bed bed) {
-		
+	/**
+	 * Updates a patient's assigned bed in case the patient is admitted or moved.
+	 * @param newbed
+	 */
+	public void updateBed(Bed newbed) {
+		this.bed = newbed;
+		//this.bed.addPatient(this); Is this step unnecessary?
 	}
 
+	/**
+	 * Retrieves a patients medical record if it exists
+	 * @return
+	 */
 	public String getRecord() {
-		return null;
+		//returns a notification of no entry if nothing has been recorded yet
+		if(this.record == null) {
+			return "Patient does not have record entry";
+		}
+		return this.record;
 	}
 
+	/**
+	 * Updates a patients medical record
+	 * @param data
+	 */
 	public void updateRecord(String data) {
-		
+		this.record = data;
 	}
 
-	//exclude record
+	/**
+	 * This method creates a hashtable to be able to retrieve the patient info accessible by a user
+	 * @return patientInfo hashtable
+	 */
 	public Hashtable<String, String> getPatientInfo() {
+		//create hashtable for easier organisation of patient data
 		Hashtable<String, String> patientInfo = new Hashtable<String, String>();
-		patientInfo.put("Name", this.name);
 		
+		//load all parameters into hashtable
+		patientInfo.put("Name", this.name);
+		patientInfo.put("Surname", this.surname);
+		patientInfo.put("Patient ID", Integer.toString(this.patientID));
+		//string formatting for patient birth date parameter
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+		String bdayString = bday.format(formatter);
+		patientInfo.put("Birth Date", bdayString);
+		patientInfo.put("Address", this.address);
+		patientInfo.put("Phone Number", this.phoneNo);
+		//patientInfo.put("Deceased", "false");
+		//patientInfo.put("Department", this.dept.name);
+		patientInfo.put("Bed number", this.bed.getBedID());
 		
 		return patientInfo;
 	}
 
+	/**
+	 * This method retreives the bed object that is currently occupied by the patient
+	 * @return bed
+	 */
 	public Object getBed() {
-		return null;
+		//if null is returned, patient has not yet been admitted to a bed
+		return this.bed;
 	}
 
+	/**
+	 * This method retrieves a patients unique ID number
+	 * @return ID number
+	 */
 	public int getPatientId() {
-		return 0;
+		return this.patientID;
 	}
 
+	/**
+	 * This method notifies the user if the patient is alive or dead
+	 * @return true if a patient is deceased and false if a patient is alive
+	 */
 	public boolean getDeceased() {
-		return false;
+		return this.deceased;
 	}
 
+	/**
+	 * This method retrieves the department that a patient belongs to
+	 * @return Department object if admitted or null if department has not yet been assigned
+	 */
 	public Object getDepartment() {
 		return null;
 	}
