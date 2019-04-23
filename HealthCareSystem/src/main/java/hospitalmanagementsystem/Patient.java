@@ -60,7 +60,7 @@ public class Patient {
 			this.dept = department;
 		}
 	}
-
+  
 	/**
 	 * Updates a patient's assigned bed in case the patient is admitted or moved.
 	 * @param newbed
@@ -80,7 +80,7 @@ public class Patient {
 			this.bed = newbed;
 			//this.bed.addPatient(this); Is this step unnecessary?
 		}
-	}
+  }
 
 	/**
 	 * Retrieves a patients medical record if it exists
@@ -159,4 +159,5 @@ public class Patient {
 	public Department getDepartment() {
 		return this.dept;
 	}
+	
 }

@@ -6,6 +6,5 @@ public class Emergency extends Department {
 
 	public Hashtable<String, String> getPatientList() {
 		return null;
-	}
-	
+  }
 }

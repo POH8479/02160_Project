@@ -5,6 +5,10 @@ import hospitalmanagementsystem.Bed;
 import hospitalmanagementsystem.HMS;
 import hospitalmanagementsystem.Patient;
 
+/**
+ *
+ * @author Pieter O'Hearn
+ */
 public class Admin extends User implements HealthStaff{
 	// Instance Variables
 	Department department;
@@ -119,11 +123,11 @@ public class Admin extends User implements HealthStaff{
 			newUser = newAdmin;
 		} else if(typeOfUser.toLowerCase().equals("doctor")) {
 			// create a new Doctor
-			Doctor newDoctor = new Doctor(usersName, usersAddress, phone);
+			Doctor newDoctor = new Doctor(usersName, usersAddress, phone,"Emergency");
 			newUser = newDoctor;
 		} else if(typeOfUser.toLowerCase().equals("nurse")) {
 			// create a new Nurse
-			Nurse newNurse = new Nurse(usersName, usersAddress, phone);
+			Nurse newNurse = new Nurse(usersName, usersAddress, phone,"Emergency");
 			newUser = newNurse;
 		} else if(typeOfUser.toLowerCase().equals("user")) {
 			// create a new User

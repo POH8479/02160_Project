@@ -14,7 +14,7 @@ public class Doctor extends User implements HealthStaff{
 	Department department;
 	//String specialty; TODO
 
-	public Doctor(String usersName, String usersAddress, String phone, Department dept) {
+	public Doctor(String usersName, String usersAddress, String phone, String department) {
 		super(usersName, usersAddress, phone);
 		//assign department based on input
 		this.department = dept;
@@ -47,7 +47,7 @@ public class Doctor extends User implements HealthStaff{
 	 *
 	 * @param patient The Patient that is being discharged
 	 */
-	public void dischargePatient(Patient patient) throws IllegalAccessException{
+  public void dischargePatient(Patient patient) throws IllegalAccessException{
 		// Update the patients department variable
 		patient.updateDepartment(null);
 

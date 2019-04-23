@@ -7,8 +7,9 @@ import hospitalmanagementsystem.Patient;
 public class Nurse extends User implements HealthStaff{
 	Department department;
 
-	public Nurse(String usersName, String usersAddress, String phone, Department dept) {
+	public Nurse(String usersName, String usersAddress, String phone, String Department) {
 		super(usersName, usersAddress, phone);
+    
 		//assign department based on input
 		this.department = dept;
 	}
@@ -40,6 +41,7 @@ public class Nurse extends User implements HealthStaff{
 	 *
 	 * @param patient The Patient that is being discharged
 	 */
+
 	public void dischargePatient(Patient patient) throws IllegalAccessException {
 		// Update the patients department variable
 		patient.updateDepartment(null);
