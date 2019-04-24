@@ -1,4 +1,9 @@
-package hospitalManagmentSystem.departments;
+package hospitalmanagementsystem.departments;
+
+import java.util.List;
+import java.util.ArrayList;
+
+import hospitalmanagementsystem.*;
 
 public class Emergency extends Department {
 	//capacity of emergency department

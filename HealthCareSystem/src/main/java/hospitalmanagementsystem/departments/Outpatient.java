@@ -1,4 +1,9 @@
-package hospitalManagmentSystem.departments;
+package hospitalmanagementsystem.departments;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import hospitalmanagementsystem.*;
 
 public class Outpatient extends Department {
 	  int capacity;
@@ -6,7 +11,7 @@ public class Outpatient extends Department {
 		List<Patient> patientList = new ArrayList<Patient>();
 
 		public void addPatient(Patient patient) {
-			patientList.add(Patient);
+			patientList.add(patient);
 		}
 
 		public void removePatient(Patient patient) {

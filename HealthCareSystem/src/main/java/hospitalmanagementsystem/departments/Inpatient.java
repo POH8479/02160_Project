@@ -1,7 +1,9 @@
-package hospitalManagmentSystem.departments;
+package hospitalmanagementsystem.departments;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import hospitalmanagementsystem.*;
 
 public class Inpatient extends Department {
   
