@@ -96,4 +96,5 @@ public class Bed {
 		this.patient = null;
 	}
 
+	// kun's comment
 }

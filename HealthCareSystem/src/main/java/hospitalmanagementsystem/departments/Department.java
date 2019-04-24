@@ -5,6 +5,12 @@ import java.util.ArrayList;
 import hospitalmanagementsystem.Patient;
 import hospitalmanagementsystem.users.*;
 
+/**
+ * 
+ * @author Kun
+ *
+ */
+
 public abstract class Department {
 	String ID;
 	String name;
