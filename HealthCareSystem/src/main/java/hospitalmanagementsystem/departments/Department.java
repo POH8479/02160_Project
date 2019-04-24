@@ -1,8 +1,6 @@
 package hospitalmanagementsystem.departments;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
 
 import hospitalmanagementsystem.Patient;
 import hospitalmanagementsystem.users.*;
@@ -10,7 +8,7 @@ import hospitalmanagementsystem.users.*;
 public abstract class Department {
 	String ID;
 	String name;
-	List<User> userList = new ArrayList<User>();
+	ArrayList<User> userList = new ArrayList<User>();
 
 	public void addUser(User User) {
 		userList.add(User);
@@ -30,11 +28,8 @@ public abstract class Department {
 		
 	}
 	
-	public Hashtable<String, String> getPatientList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	public abstract String getName();
+	
+	public abstract ArrayList<Patient> getPatientList();
 	
 }

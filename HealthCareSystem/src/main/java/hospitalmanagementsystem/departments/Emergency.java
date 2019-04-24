@@ -37,4 +37,8 @@ public class Emergency extends Department {
 	public String getName() {
 		return "Emergency";
 	}
+	
+	public ArrayList<Patient> getPatientList() {
+		return this.patientList;
+	}
 }

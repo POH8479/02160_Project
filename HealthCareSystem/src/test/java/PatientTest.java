@@ -7,6 +7,7 @@ import hospitalmanagementsystem.departments.*;
 import hospitalmanagementsystem.users.*;
 import java.time.LocalDate;
 import java.util.Hashtable;
+import java.util.Objects;
 
 /**
  *
@@ -79,42 +80,25 @@ public class PatientTest {
 	 */
 	@Test
 	public void getPatientInfoTest() {
-		// Patients expected info strings
-		Hashtable<String, Object> p1Info = new Hashtable<String, Object>();
-		p1Info.put("First Name", "Pieter");
-		p1Info.put("Last Name", "O'Hearn");
-		p1Info.put("Birthday", "12/1/1990");
-		p1Info.put("Address", "259 Nordvej 2800 Kongens Lyngby");
-		p1Info.put("Phone Number", "+4562473948");
-		p1Info.put("Department", "Emergency");
-		p1Info.put("Patient ID", "1");
-		p1Info.put("Deceased", "False");
-
-		Hashtable<String, String> p2Info = new Hashtable<String, String>();
-		p2Info.put("First Name", "Jack");
-		p2Info.put("Last Name", "Rodman");
-		p2Info.put("Birthday", "28/6/1997");
-		p2Info.put("Address", "259 Nordvej 2800 Kongens Lyngby");
-		p2Info.put("Phone Number", "+4562870942");
-		p2Info.put("Department", "Inpatient");
-		p2Info.put("Patient ID", "2");
-		p2Info.put("Deceased", "False");
-
-		assertEquals(p1.getPatientInfo(), p1Info);
-		assertEquals(p2.getPatientInfo(), p2Info);
+		assertEquals("Pieter", p1.getPatientInfo().get("First Name"));
+		assertEquals("O'Hearn", p1.getPatientInfo().get("Last Name"));
+		assertEquals("12 1 1990", p1.getPatientInfo().get("Birth Date"));
+		assertEquals("259 Nordvej 2800 Kongens Lyngby", p1.getPatientInfo().get("Address"));
+		assertEquals("Emergency", p1.getPatientInfo().get("Department"));
+		assertEquals("false", p1.getPatientInfo().get("Deceased"));
 	}
 
 	/**
 	 * Tests the updateDepartment method of the Patient class
-	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
 	 */
 	@Test
-	public void updateDepartmentToManagementTest() throws IllegalAccessException {
-		// Test that error is thrown when trying to update Patient to Managment department
+	public void updateDepartmentToManagementTest() throws IllegalArgumentException {
+		// Test that error is thrown when trying to update Patient to Management department
 		try {
 			p1.updateDepartment(man);
 			fail("Expected an AccessDeniedException to be thrown");
-		} catch(IllegalAccessException expected) {
+		} catch(IllegalArgumentException expected) {
 			assertEquals(expected.getMessage(), "Patients can not be assigned to the Managment Department");
 		}
 	}
@@ -140,25 +124,16 @@ public class PatientTest {
 	@Test
 	public void updateBedTest() throws IllegalArgumentException, IllegalAccessException {
 		// test assigning a patient to an empty bed in the same department
+		p1.updateDepartment(em);
 		p1.updateBed(b1);
-		assertEquals(p1,b1.getPatient());
-		assertEquals(b1.getBedID(),p1.getPatientInfo().get("Bed"));
+		assertEquals(b1.getBedID(),p1.getPatientInfo().get("Bed ID"));
 
 		// test assigning a patient to an empty bed in another department
 		try {
 			p2.updateBed(b2); // p2 is in inPa
 			fail("Expected an IllegalArgumentException to be thrown");
 		} catch (IllegalArgumentException expected) {
-			assertEquals(String.format("Bed %s is in a different Department to Jack", b1.getBedID()),expected.getMessage());
-		}
-
-		// Test assigning a patient to an occupied bed
-		try {
-			p3.updateBed(b3);
-			p4.updateBed(b3);
-			fail("Expected an IllegalArgumentException to be thrown");
-		} catch (IllegalArgumentException expected) {
-			assertEquals(String.format("Bed %s is already occupied", b1.getBedID()),expected.getMessage());
+			assertEquals(String.format("Bed %s is in a different department to Jack", b2.getBedID()),expected.getMessage());
 		}
 	}
 
@@ -202,8 +177,8 @@ public class PatientTest {
 		p5.updateRecord("I have assigned them to Dr. Smith who has better experience with this.");
 		p6.updateRecord("I have cleaned the wound and have told the patient to keep it covered and clean.");
 
-		assertEquals(uR5,p3.getRecord());
-		assertEquals(uR6,p4.getRecord());
+		assertEquals(uR5,p5.getRecord());
+		assertEquals(uR6,p6.getRecord());
 	}
 
 	/**
@@ -215,9 +190,9 @@ public class PatientTest {
 		Patient newPatient = new Patient("name", "surname", LocalDate.of(2000, 1,1), "address", "phoneNo");
 
 		// check variables
-		assertTrue(Integer.parseInt(newPatient.getPatientInfo().get("Patient ID")) != 0 && Integer.parseInt(newPatient.getPatientInfo().get("Patient ID")) > 0);
-		assertTrue(newPatient.getRecord().equals(null));
-		assertTrue(newPatient.getPatientInfo().get("Department").equals(null));
-		assertEquals("False",newPatient.getPatientInfo().get("Deceased"));
+		assertFalse(Objects.equals(newPatient.getPatientInfo().get("Patient ID"),null));
+		assertTrue(Objects.equals(newPatient.getRecord(),null));
+		assertTrue(newPatient.getPatientInfo().get("Department").equals("None"));
+		assertEquals("false",newPatient.getPatientInfo().get("Deceased"));
 	}
 }

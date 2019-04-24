@@ -1,17 +1,13 @@
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 import java.time.LocalDate;
-import java.util.Hashtable;
 
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import hospitalmanagementsystem.*;
-import hospitalmanagementsystem.departments.*;
 import hospitalmanagementsystem.users.*;
-import java.time.format.DateTimeFormatter;
 
 public class StepDefinition {
 	

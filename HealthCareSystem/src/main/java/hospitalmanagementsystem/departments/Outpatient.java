@@ -1,7 +1,6 @@
 package hospitalmanagementsystem.departments;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import hospitalmanagementsystem.*;
 
@@ -37,5 +36,9 @@ public class Outpatient extends Department {
 	
 	public String getName() {
 		return "Outpatient";
+	}
+	
+	public ArrayList<Patient> getPatientList() {
+		return this.patientList;
 	}
 }

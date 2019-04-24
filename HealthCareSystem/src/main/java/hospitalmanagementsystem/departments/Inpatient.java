@@ -1,8 +1,6 @@
 package hospitalmanagementsystem.departments;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
 
 import hospitalmanagementsystem.*;
 
@@ -42,4 +40,7 @@ public class Inpatient extends Department {
 		return "Inpatient";
 	}
 
+	public ArrayList<Patient> getPatientList() {
+		return this.patientList;
+	}
 }

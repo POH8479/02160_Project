@@ -4,9 +4,7 @@ import java.time.LocalDate;
 import java.util.Hashtable;
 
 import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import hospitalmanagementsystem.*;
 import hospitalmanagementsystem.departments.*;
@@ -63,8 +61,15 @@ public class UserTest {
 	 */
 	@Test
 	public void getUserInfoTest() {
+		// create a hashtable of the expected return
+		Hashtable<String,String> expected = new Hashtable<String,String>();
+		expected.put("Name", "John Doe");
+		expected.put("User ID", u1.getUserInfo().get("User ID"));
+		expected.put("Address", "123 Main St Anytown, Denmark");
+		expected.put("Phone Number", "+4512345678");
+		
 		//check that appended string returned matches user info
-		assertEquals(u1.getUserInfo(), "Name: John Doe\nUser ID: 1\nAddress: 1123 Main St Anytown, Denmark\nPhone Number: +4512345678");
+		assertEquals(expected,u1.getUserInfo());
 	}
 	
 	/**
@@ -86,10 +91,20 @@ public class UserTest {
 	 */
 	@Test
 	public void getPatientDataTest() {
-		//check that appended string returned matches patient info
-		assertEquals(u1.getPatientData(p2), "Name: Jack Rodman\nUser ID: "+ p1.idnum + "\nAddress: 259 Nordvej 2800 Kongens Lyngby\nPhone Number: +4562870942");
+		// create a hashtable of the expected return
+		Hashtable<String,String> expected = new Hashtable<String,String>();
 		
-		//check that getPatientData also works after registering a patient
-		assertEquals(u1.registerPatient("Jack", "Rodman", LocalDate.of(1997, 6,28), "259 Nordvej 2800 Kongens Lyngby", "+4562870942"), "Name: Jack Rodman\nUser ID: "+ p1.idnum + "\nAddress: 259 Nordvej 2800 Kongens Lyngby\nPhone Number: +4562870942");
+		expected.put("Last Name", "Rodman");
+		expected.put("Bed ID", "None");
+		expected.put("Birth Date", "28 6 1997");
+		expected.put("Patient ID", p2.getPatientInfo().get("Patient ID"));
+		expected.put("Phone Number", "+4562870942");
+		expected.put("Address", "259 Nordvej 2800 Kongens Lyngby");
+		expected.put("Deceased", "false");
+		expected.put("Department", "None");
+		expected.put("First Name", "Jack");
+		
+		//check that appended string returned matches patient info
+		assertEquals(expected,u1.getPatientData(p2));
 	}
 }

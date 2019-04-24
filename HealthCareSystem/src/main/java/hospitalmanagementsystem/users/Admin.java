@@ -1,9 +1,10 @@
 package hospitalmanagementsystem.users;
 
 import hospitalmanagementsystem.departments.*;
-import hospitalmanagementsystem.Bed;
-import hospitalmanagementsystem.HMS;
-import hospitalmanagementsystem.Patient;
+
+import java.util.Objects;
+
+import hospitalmanagementsystem.*;
 
 /**
  *
@@ -24,7 +25,7 @@ public class Admin extends User implements HealthStaff{
 		// super
 		super(usersName, usersAddress, phone);
 		// set the department to Admin
-		this.department = HMS.getDepartment("Management");
+		this.department = Management.getInstance();
 		
 		idCounter++;
 		adminID = "A" + Integer.toString(idCounter);
@@ -36,16 +37,19 @@ public class Admin extends User implements HealthStaff{
 	 *
 	 * @param patient The Patient that is being admitted
 	 * @param department The department to admit the patient to
-	 * @throws IllegalAccessException 
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
 	 */
-	public void admitPatient(Patient patient, Department department) throws IllegalAccessException {
+	public void admitPatient(Patient patient, Department department) throws IllegalAccessException, IllegalArgumentException {
 		// if department is Management then throw an exception
 		if(department instanceof Management) {
 			throw new IllegalAccessException();
+		} else if(!Objects.equals(patient.getPatientInfo().get("Department"), "None")) { 
+			throw new IllegalArgumentException("Can not admit a patient who is already admitted to a department.");
 		} else {
 			// Update the patients department variable
 			patient.updateDepartment(department);
-	
+
 			// Add the Patient to the departments patient list
 			department.addPatient(patient);
 		}
@@ -56,14 +60,18 @@ public class Admin extends User implements HealthStaff{
 	 * from the Departments patient list and the patients department variable
 	 *
 	 * @param patient The Patient that is being discharged
-	 * @throws IllegalAccessException 
 	 */
-	public void dischargePatient(Patient patient) throws IllegalAccessException{
-		// Update the patients department variable
-		patient.updateDepartment(null);
-
-		// remove the Patient from the departments patient list
-		department.removePatient(patient);
+	public void dischargePatient(Patient patient) throws IllegalArgumentException{
+		// check if already checked out
+		if(patient.getPatientInfo().get("Department").equals("None")) {
+			throw new IllegalArgumentException("Can not discharge a patient who is not already admitted into any department.");
+		} else {
+			// Update the patients department variable
+			patient.updateDepartment(null);
+			
+			// remove the Patient from the departments patient list
+			department.removePatient(patient);
+		}
 	}
 
 	/**
@@ -152,4 +160,7 @@ public class Admin extends User implements HealthStaff{
 
 	}
 
+	public Department getDepartment() {
+		return this.department;
+	}
 }
