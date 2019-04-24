@@ -8,15 +8,15 @@ import hospitalmanagementsystem.Patient;
 import hospitalmanagementsystem.users.*;
 
 public abstract class Department {
-  int ID;
+	String ID;
 	String name;
 	List<User> userList = new ArrayList<User>();
 
-	protected void addUser(User User) {
+	public void addUser(User User) {
 		userList.add(User);
 	}
 
-	protected void removeUser(User User) {
+	public void removeUser(User User) {
 		userList.remove(User);
 	}
 
@@ -34,5 +34,7 @@ public abstract class Department {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public abstract String getName();
 
 }

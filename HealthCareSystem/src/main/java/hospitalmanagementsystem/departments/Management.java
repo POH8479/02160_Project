@@ -21,4 +21,8 @@ public class Management extends Department {
   
         return single_instance; 
     }
+    
+    public String getName() {
+		return "Management";
+	}
 }

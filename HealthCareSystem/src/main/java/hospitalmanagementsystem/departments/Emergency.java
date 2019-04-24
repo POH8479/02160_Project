@@ -33,4 +33,8 @@ public class Emergency extends Department {
 		patientList.remove(Patient);
 	
 	}
+	
+	public String getName() {
+		return "Emergency";
+	}
 }

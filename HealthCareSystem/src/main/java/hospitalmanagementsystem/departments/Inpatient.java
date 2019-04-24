@@ -37,5 +37,9 @@ public class Inpatient extends Department {
 		patientList.remove(Patient);
 
 	}
+	
+	public String getName() {
+		return "Inpatient";
+	}
 
 }
