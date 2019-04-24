@@ -34,6 +34,10 @@ public abstract class Department {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	public Hashtable<String, String> getUserList() {
+	// TODO Auto-generated method stub
+	return null;
+	}
 	
 	public abstract String getName();
 
