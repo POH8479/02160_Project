@@ -14,7 +14,7 @@ import hospitalmanagementsystem.users.*;
 import java.time.format.DateTimeFormatter;
 
 public class StepDefinition {
-
+	
 	User anyUser;
 	Patient newPatient;
 	Management man;
@@ -43,7 +43,7 @@ public class StepDefinition {
 	public void a_user_and_a_department() {
 	    // create a user and a department
 		anyUser = new User("Managment User", "123 Main St Anytown, Denmark", "+4512345678");
-		man = new Management();
+		man = Management.getInstance();
 	}
 
 	@When("^I choose a statistic to see$")
@@ -75,9 +75,9 @@ public class StepDefinition {
 	}
 
 	@When("^information is entered$")
-	public void information_is_entered() {
-	    // Enter the relevant information into the newPatient
-	    newPatient = new Patient(relevantInfo.get("First Name"), relevantInfo.get("Last Name"), LocalDate.parse(relevantInfo.get("Birthday"),ISO_LOCAL_DATE), relevantInfo.get("Address"), relevantInfo.get("Phone Number"));
+	public void information_is_entered() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
 	}
 
 	@Then("^patient is saved$")
@@ -92,155 +92,143 @@ public class StepDefinition {
 	    assertFalse(newPatient.getPatientInfo().get("Patient ID").equals(null));
 	}
 
-	@Given("^patient$")
-	public void patient() throws Throwable {
+	@Given("^I want to check available beds$")
+	public void i_want_to_check_available_beds() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
 
-	@Given("^new information$")
-	public void new_information() throws Throwable {
+	@Given("^total amount of beds$")
+	public void total_amount_of_beds() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
 
-	@When("^new information is entered$")
-	public void new_information_is_entered() throws Throwable {
+	@Given("^beds are in use$")
+	public void beds_are_in_use() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
 
-	@Then("^saved patient infomartion is changed to the new version$")
-	public void saved_patient_infomartion_is_changed_to_the_new_version() throws Throwable {
+	@When("^I click on facility under specific department\\(s\\)$")
+	public void i_click_on_facility_under_specific_department_s() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
 
-	@Given("^some patient information \\(name, surname, birth-date, etc\\.\\.\\)$")
-	public void some_patient_information_name_surname_birth_date_etc() throws Throwable {
+	@When("^I choose to see available beds$")
+	public void i_choose_to_see_available_beds() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
 
-	@When("^information is searched for$")
-	public void information_is_searched_for() throws Throwable {
+	@When("^I shoose to see total amount of beds$")
+	public void i_shoose_to_see_total_amount_of_beds() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
 
-	@Then("^return the patients who match the information\\.$")
-	public void return_the_patients_who_match_the_information() throws Throwable {
+	@When("^I choose to see beds that are in occupied$")
+	public void i_choose_to_see_beds_that_are_in_occupied() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
 
-	@Given("^Staff member (\\d+) is in the Medical department$")
-	public void staff_member_is_in_the_Medical_department(int arg1) throws Throwable {
+	@Then("^I have a list of available beds$")
+	public void i_have_a_list_of_available_beds() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
 
-	@When("^I check the staff members department$")
-	public void i_check_the_staff_members_department() throws Throwable {
+	@Then("^I have a list of occupied beds with patients' <name>, <patient number>$")
+	public void i_have_a_list_of_occupied_beds_with_patients_name_patient_number() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
 
-	@Then("^The System returns the Medical$")
-	public void the_System_returns_the_Medical() throws Throwable {
+	@Given("^I want to write a step with department(\\d+)$")
+	public void i_want_to_write_a_step_with_department(int arg1) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
 
-	@Given("^Staff member (\\d+) is in the Human Resources department$")
-	public void staff_member_is_in_the_Human_Resources_department(int arg1) throws Throwable {
+	@When("^I check for the <beds> in step$")
+	public void i_check_for_the_beds_in_step() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
 
-	@Then("^The System returns the Human Resources$")
-	public void the_System_returns_the_Human_Resources() throws Throwable {
+	@Then("^I verify the <status> in step$")
+	public void i_verify_the_status_in_step() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
 
-	@Given("^Staff member (\\d+) is in the Receptionist department$")
-	public void staff_member_is_in_the_Receptionist_department(int arg1) throws Throwable {
+	@Given("^A new patient comes for treatment\\(s\\)$")
+	public void a_new_patient_comes_for_treatment_s() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
 
-	@Then("^The System returns the Receptionist$")
-	public void the_System_returns_the_Receptionist() throws Throwable {
+	@Given("^a new staff is employed$")
+	public void a_new_staff_is_employed() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
 
-	@Given("^A Medical department has (\\d+) beds$")
-	public void a_Medical_department_has_beds(int arg1) throws Throwable {
+	@When("^I want to create profile\\(s\\)$")
+	public void i_want_to_create_profile_s() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
 
-	@Given("^(\\d+) beds in use$")
-	public void beds_in_use(int arg1) throws Throwable {
+	@Then("^The system pops dialog window for inputing relevant information$")
+	public void the_system_pops_dialog_window_for_inputing_relevant_information() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
 
-	@When("^Check available beds$")
-	public void check_available_beds() throws Throwable {
+	@Then("^sytem save the profile in data base after typing and confirmation by the user$")
+	public void sytem_save_the_profile_in_data_base_after_typing_and_confirmation_by_the_user() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
 
-	@Then("^System displays that there are (\\d+) available Beds$")
-	public void system_displays_that_there_are_available_Beds(int arg1) throws Throwable {
+	@Given("^A user or patient has changed his personal info$")
+	public void a_user_or_patient_has_changed_his_personal_info() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
 
-	@Given("^The staff member belongs to the Receptionist department$")
-	public void the_staff_member_belongs_to_the_Receptionist_department() throws Throwable {
+	@Given("^A patient has received a new treatment$")
+	public void a_patient_has_received_a_new_treatment() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
 
-	@Given("^The Medical department has an available bed$")
-	public void the_Medical_department_has_an_available_bed() throws Throwable {
+	@Given("^A patient is being transfered to another department$")
+	public void a_patient_is_being_transfered_to_another_department() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
 
-	@When("^Check-in Patient$")
-	public void check_in_Patient() throws Throwable {
+	@When("^I open the profile, then make the change$")
+	public void i_open_the_profile_then_make_the_change() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
 
-	@Then("^the number of available beds is decreased by (\\d+)$")
-	public void the_number_of_available_beds_is_decreased_by(int arg1) throws Throwable {
+	@Then("^I confirm the changes$")
+	public void i_confirm_the_changes() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new PendingException();
 	}
 
-	// @Given("^A$")
-	// public void a1() throws Throwable {
-	//     // Write code here that turns the phrase above into concrete actions
-	//     throw new PendingException();
-	// }
-	//
-	// @When("^A$")
-	// public void a2() throws Throwable {
-	//     // Write code here that turns the phrase above into concrete actions
-	//     throw new PendingException();
-	// }
-	//
-	// @Then("^A$")
-	// public void a3() throws Throwable {
-	//     // Write code here that turns the phrase above into concrete actions
-	//     throw new PendingException();
-	// }
+	@Then("^save to the database$")
+	public void save_to_the_database() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
+	}
 
 	@Given("^a travel card with a balance of (\\d+)$")
 	public void a_travel_card_with_a_balance_of(int arg1) throws Throwable {
@@ -338,23 +326,77 @@ public class StepDefinition {
 	    throw new PendingException();
 	}
 
-	// @Given("^A user$")
-	// public void a_user() throws Throwable {
-	//     // Write code here that turns the phrase above into concrete actions
-	//     throw new PendingException();
-	// }
-	//
-	// @When("^I log in$")
-	// public void i_log_in() throws Throwable {
-	//     // Write code here that turns the phrase above into concrete actions
-	//     throw new PendingException();
-	// }
-	//
-	// @Then("^I am able to access the system$")
-	// public void i_am_able_to_access_the_system() throws Throwable {
-	//     // Write code here that turns the phrase above into concrete actions
-	//     throw new PendingException();
-	// }
+	@Given("^I want to search a patient profile$")
+	public void i_want_to_search_a_patient_profile() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
+	}
+
+	@When("^I click search$")
+	public void i_click_search() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
+	}
+
+	@When("^type <name> for search$")
+	public void type_name_for_search() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
+	}
+
+	@When("^type<email> for search$")
+	public void type_email_for_search() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
+	}
+
+	@Then("^I will be shown the relevant info such as, <birthday>, <address>, <patient number> etc\\.$")
+	public void i_will_be_shown_the_relevant_info_such_as_birthday_address_patient_number_etc() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
+	}
+
+	@Given("^A new staff is emplyed$")
+	public void a_new_staff_is_emplyed() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
+	}
+
+	@When("^I create a staff account with <name>, <position>, <birthday>, <contact info>$")
+	public void i_create_a_staff_account_with_name_position_birthday_contact_info() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
+	}
+
+	@Then("^An account is created$")
+	public void an_account_is_created() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
+	}
+
+	@Then("^saved to database$")
+	public void saved_to_database() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
+	}
+
+	@Given("^A user$")
+	public void a_user() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
+	}
+
+	@When("^I log in$")
+	public void i_log_in() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
+	}
+
+	@Then("^I am able to access the system$")
+	public void i_am_able_to_access_the_system() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
+	}
 
 	@Given("^An existing user in the system$")
 	public void an_existing_user_in_the_system() throws Throwable {

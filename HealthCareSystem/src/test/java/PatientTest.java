@@ -2,8 +2,7 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import hospitalmanagementsystem.Bed;
-import hospitalmanagementsystem.Patient;
+import hospitalmanagementsystem.*;
 import hospitalmanagementsystem.departments.*;
 import hospitalmanagementsystem.users.*;
 import java.time.LocalDate;
@@ -111,7 +110,7 @@ public class PatientTest {
 	 */
 	@Test
 	public void updateDepartmentToManagementTest() throws IllegalAccessException {
-		// Test that error is thrown when trying to udate Patient to Managment department
+		// Test that error is thrown when trying to update Patient to Managment department
 		try {
 			p1.updateDepartment(man);
 			fail("Expected an AccessDeniedException to be thrown");
