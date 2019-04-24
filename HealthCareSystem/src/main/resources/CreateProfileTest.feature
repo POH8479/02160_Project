@@ -18,19 +18,31 @@
 #Sample Feature Definition Template
 @tag
 Feature: create a profile
-  I want to use this template for creating a profile
 
   @tag1
-  Scenario: New profile Creation Test
-    Given A new patient comes for treatment(s)
-    And a new staff is employed
-    When I want to create profile(s)
-    Then The system pops dialog window for inputing relevant information
-    And sytem save the profile in data base after typing and confirmation by the user
+  Scenario: Creating a new patient profile
+    Given A new patient
+    And a User
+    When The User registers a patient with their non medical data
+    Then A new patient is created in the HMS
 
   @tag2
-  Scenario Outline: verify patient data
-    Given I want to create a step with <ID number>, <name>, <birth date>, <email> etc 
-    When I type for the <ID number>, <name>, <birth date> in step
-    Then I verify the <ID number>, <email> are unique
-    And I want to verify <birth date> is in valid format
+  Scenario Outline: verify patients profile data
+    Given A newly registered patient and a User
+    When A User requests their non-medical data 
+    Then The correct data is shown
+
+  @tag3
+  Scenario: Creating a new user profile
+    Given A new user
+    And An Admin
+    When The Admin creates a new User
+    Then A new user is created in the HMS
+
+  @tag2
+  Scenario Outline: verify user profile data
+    Given A newly registered User
+    When I request their data 
+    Then The correct data is shown
+    
+    

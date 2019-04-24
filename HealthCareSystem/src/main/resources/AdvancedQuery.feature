@@ -23,4 +23,4 @@ Feature: Advanced Query Mechanism
   Scenario: View statistics
     Given A user and a department 
     When I choose a statistic to see
-    Then I want to see what this statistic is
+    Then The correct result is returned

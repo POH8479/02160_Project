@@ -21,18 +21,13 @@ Feature: Persistency Layer
 
   @tag1
   Scenario: Open/close system
-    Given A user that has entered data into the system
+    Given A user that has registerd a new patient
     When I close the system
     And reopen the system
-    Then The data I entered is still saved
+    Then The User and Patient are still saved
 
   @tag2
   Scenario Outline: Moving patients
     Given A patient that has previously been admitted and is now discharged
     When I admit the patient to my department
     Then The data from their previous admission is still saved
-
-    Examples: 
-      | name  | value | status  |
-      | name1 |     5 | success |
-      | name2 |     7 | Fail    |

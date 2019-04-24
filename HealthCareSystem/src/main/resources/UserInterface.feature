@@ -21,17 +21,12 @@ Feature: User Interface
 
   @tag1
   Scenario: Log in
-    Given A user
+    Given A user and a patient
     When I log in
-    Then I am able to access the system
+    Then I am able to view the patients data
 
   @tag2
   Scenario Outline: User Interface
     Given An existing user in the system
-    When I interact with the system
-    Then I am able to access and change patient and staff information
-
-    Examples: 
-      | name  | value | status  |
-      | name1 |     5 | success |
-      | name2 |     7 | Fail    |
+    When I change a users information
+    Then The information is saved and accepted byt the system

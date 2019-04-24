@@ -87,10 +87,6 @@ public class Patient {
 	 * @return
 	 */
 	public String getRecord() {
-		//returns a notification of no entry if nothing has been recorded yet
-		/*if(this.record == null) {
-			return "Patient does not have record entry";
-		}*/
 		return this.record;
 	}
 

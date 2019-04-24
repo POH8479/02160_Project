@@ -21,24 +21,14 @@ Feature: check for available beds
   I want to use this template for available beds in department(s)
 
   @tag1
-  Scenario: Title of your scenario
-    Given I want to check available beds
-    And total amount of beds
-    And beds are in use
-    When I click on facility under specific department(s)
-    And I choose to see available beds
-    And I shoose to see total amount of beds
-    And I choose to see beds that are in occupied
-    Then I have a list of available beds
-    And I have a list of occupied beds with patients' <name>, <patient number>
+  Scenario: Number of free beds
+    Given A department
+    When I request the number of available beds
+    Then an integer is returned with the number of free beds
 
   @tag2
-  Scenario Outline: data 
-    Given I want to write a step with <department>
-    When I check for the <beds> in step
-    Then I verify the <status> in step
+  Scenario Outline: Request list of beds 
+    Given a department
+    When I request the list of beds in that department
+    Then A List of Bed objects is returned
     
-    Examples: 
-      | department  | total beds | available beds  |
-      | department1 |     50 | 30    |
-      | department2 |     70 | 20    |
