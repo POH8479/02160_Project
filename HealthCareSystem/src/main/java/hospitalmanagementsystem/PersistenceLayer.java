@@ -89,6 +89,8 @@ public class PersistenceLayer {
 		return true;
 	}
 	
+	//TEST
+	
 	// Loads class contained in given file
 	public Object load(String filename) {
 		XMLDecoder d = null;
