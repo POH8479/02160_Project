@@ -47,10 +47,10 @@ public class AdminTest {
 		p2 = new Patient("Jack", "Rodman", LocalDate.of(1997, 6,28), "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
 
 		// create the Departments
-		em = new Emergency();
-		inPa = new Inpatient();
-		outPa = new Outpatient();
-		man = new Management();
+		em = Emergency.getInstance();
+		inPa = Inpatient.getInstance();
+		outPa = Outpatient.getInstance();
+		man = Management.getInstance();
 
 		// create the Bed
 		b1 = new Bed(em);

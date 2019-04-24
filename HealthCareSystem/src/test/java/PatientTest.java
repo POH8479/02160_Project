@@ -42,10 +42,10 @@ public class PatientTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws IllegalAccessException {
 		// Create Departments
-		em = new Emergency();
-		inPa = new Inpatient();
-		outPa = new Outpatient();
-		man = new Management();
+		em = Emergency.getInstance();
+		inPa = Inpatient.getInstance();
+		outPa = Outpatient.getInstance();
+		man = Management.getInstance();
 
 		// Create Patients
 		p1 = new Patient("Pieter", "O\'Hearn", LocalDate.of(1990, 1,12), "259 Nordvej 2800 Kongens Lyngby", "+4562473948");

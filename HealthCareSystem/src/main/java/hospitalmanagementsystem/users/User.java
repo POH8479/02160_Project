@@ -14,11 +14,11 @@ import hospitalmanagementsystem.Patient;
  */
 public class User {
 	// Static Variables
-	public static int IDCounter = 0;
+	public static int idCounter = 0;
 
 	// Instance Variables
 	String name;
-	final int userID;
+	final String userID;
 	String address;
 	String phoneNumber;
 
@@ -27,8 +27,8 @@ public class User {
 	 */
 	public User(String usersName, String usersAddress, String phone){
 		// assign the User with a unique ID
-		IDCounter++;
-		this.userID = IDCounter;
+		idCounter++;
+		this.userID = "U" + Integer.toString(idCounter);
 		// assign the remaining information
 		this.name = usersName;
 		this.address = usersAddress;
@@ -44,7 +44,7 @@ public class User {
 		// create a Hash table and add the Users info
 		Hashtable<String,String> info = new Hashtable<String,String>();
 		info.put("Name", this.name);
-		info.put("User ID", Integer.toString(this.userID));
+		info.put("User ID", this.userID);
 		info.put("Address", this.address);
 		info.put("Phone Number", this.phoneNumber);
 		

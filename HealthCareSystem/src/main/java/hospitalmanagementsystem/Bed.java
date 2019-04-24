@@ -12,7 +12,7 @@ public class Bed {
 	public static int IDCounter = 0;
 
 	// Instance Variables
-	final int bedID;
+	final String bedID;
 	Department department;
 	Patient patient;
 	
@@ -23,7 +23,7 @@ public class Bed {
 	public Bed() {
 		// give the new bed a unique ID
 		IDCounter++;
-		this.bedID = IDCounter;
+		this.bedID = "B" + Integer.toString(IDCounter);
 		
 		// assign other variables
 		this.department = null;
@@ -38,7 +38,7 @@ public class Bed {
 	public Bed(Department dep) {
 		// give the new bed a unique ID
 		IDCounter++;
-		this.bedID = IDCounter;
+		this.bedID = "B" + Integer.toString(IDCounter);
 		
 		// assign other variables
 		this.department = dep;
@@ -55,10 +55,10 @@ public class Bed {
 		// check if the bed is full
 		if(this.patient.equals(null)) {
 			// if full throw IllegalArgumentException
-			throw new IllegalArgumentException(String.format("Bed %s is already occupied", Integer.toString(this.bedID)));
+			throw new IllegalArgumentException(String.format("Bed %s is already occupied", this.bedID));
 		} else if(!patient.getPatientInfo().get("Department").equals(this.department.toString())) {
 			// if bed is in wrong department throw IllegalArgumentException
-			throw new IllegalArgumentException(String.format("Bed %s is in a different Department to %s", Integer.toString(this.bedID), patient.getPatientInfo().get("First Name")));
+			throw new IllegalArgumentException(String.format("Bed %s is in a different Department to %s", this.bedID, patient.getPatientInfo().get("First Name")));
 		} else {
 			// if empty and in the same department update patient
 			this.patient = patient;
@@ -85,7 +85,7 @@ public class Bed {
 	 * @return the bed ID
 	 */
 	public String getBedID() {
-		return Integer.toString(this.bedID);
+		return this.bedID;
 	}
 
 	public Object getDepartment() {

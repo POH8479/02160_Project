@@ -10,8 +10,12 @@ import hospitalmanagementsystem.Patient;
  * @author Pieter O'Hearn
  */
 public class Admin extends User implements HealthStaff{
+	// Static Variables
+	static int idCounter;
+	
 	// Instance Variables
 	Department department;
+	final String adminID;
 
 	/**
 	 * Creates a new Admin of the Hospital Management
@@ -21,6 +25,9 @@ public class Admin extends User implements HealthStaff{
 		super(usersName, usersAddress, phone);
 		// set the department to Admin
 		this.department = HMS.getDepartment("Management");
+		
+		idCounter++;
+		adminID = "A" + Integer.toString(idCounter);
 	}
 
 	/**

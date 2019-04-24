@@ -6,13 +6,21 @@ import hospitalmanagementsystem.HMS;
 import hospitalmanagementsystem.Patient;
 
 public class Nurse extends User implements HealthStaff{
+	// Static Variables
+	static int idCounter;
+	
+	// Instance variables
 	Department department;
+	final String nurseID;
 
 	public Nurse(String usersName, String usersAddress, String phone, String department) {
 		super(usersName, usersAddress, phone);
     
 		//assign department based on input
 		this.department = HMS.getDepartment(department);
+		
+		idCounter++;
+		nurseID = "N" + Integer.toString(idCounter);
 	}
 
 	/**

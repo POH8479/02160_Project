@@ -11,14 +11,21 @@ import hospitalmanagementsystem.Patient;
  *
  */
 public class Doctor extends User implements HealthStaff{
+	// Static variables
+	static int idCounter;
+	
 	//INSTANCE VARIABLES
 	Department department;
+	final String doctorID;
 	//String specialty; TODO
 
 	public Doctor(String usersName, String usersAddress, String phone, String department) {
 		super(usersName, usersAddress, phone);
 		//assign department based on input
 		this.department = HMS.getDepartment(department);
+		
+		idCounter++;
+		doctorID = "D" + Integer.toString(idCounter);
 	}
 
 	/**

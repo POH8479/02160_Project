@@ -20,7 +20,7 @@ public class Patient {
 	//INSTANCE VARIABLES
 	String name;
 	String surname;
-	final int patientID;
+	final String patientID;
 	LocalDate bday;
 	String address;
 	String phoneNo;
@@ -35,7 +35,7 @@ public class Patient {
 		this.name = name;
 		this.surname = surname;
 		idnum++;
-		this.patientID = idnum;
+		this.patientID = "P" + Integer.toString(idnum);;
 		this.bday = bday;
 		this.address = address;
 		this.phoneNo = phoneNo;
@@ -113,7 +113,7 @@ public class Patient {
 		//load all parameters into hashtable
 		patientInfo.put("First Name", this.name);
 		patientInfo.put("Last Name", this.surname);
-		patientInfo.put("Patient ID", Integer.toString(this.patientID));
+		patientInfo.put("Patient ID", this.patientID);
 		//string formatting for patient birth date parameter
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
 		String bdayString = bday.format(formatter);
