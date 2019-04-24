@@ -1,11 +1,16 @@
-package hospitalmanagementsystem.departments;
-
-import java.util.Hashtable;
+package hospitalManagmentSystem.departments;
 
 public class Outpatient extends Department {
+	  int capacity;
 
-	public Hashtable<String, String> getPatientList() {
-		return null;
-	}
-	
+		List<Patient> patientList = new ArrayList<Patient>();
+
+		public void addPatient(Patient patient) {
+			patientList.add(Patient);
+		}
+
+		public void removePatient(Patient patient) {
+			patientList.remove(patient);
+
+		}
 }

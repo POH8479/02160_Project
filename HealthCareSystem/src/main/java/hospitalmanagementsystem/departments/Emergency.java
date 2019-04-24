@@ -1,10 +1,17 @@
-package hospitalmanagementsystem.departments;
-
-import java.util.Hashtable;
+package hospitalManagmentSystem.departments;
 
 public class Emergency extends Department {
+	//capacity of emergency department
+	  int capacity;
 
-	public Hashtable<String, String> getPatientList() {
-		return null;
-  }
+		List<Patient> patientList = new ArrayList<Patient>();
+
+		public void addPatient(Patient Patient) {
+			patientList.add(Patient);
+		}
+
+		public void removePatient(Patient Patient) {
+			patientList.remove(Patient);
+
+		}
 }

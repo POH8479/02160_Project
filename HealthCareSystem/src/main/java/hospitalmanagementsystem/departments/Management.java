@@ -1,5 +1,5 @@
-package hospitalmanagementsystem.departments;
+package hospitalManagmentSystem.departments;
 
-public class Management extends Department {
+public class Managment extends Department {
 
 }
