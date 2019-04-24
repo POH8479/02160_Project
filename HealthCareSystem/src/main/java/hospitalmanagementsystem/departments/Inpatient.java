@@ -6,6 +6,12 @@ import java.util.List;
 
 import hospitalmanagementsystem.*;
 
+/**
+ * 
+ * @author Kun
+ *
+ */
+
 public class Inpatient extends Department {
 	// static variable single_instance of type Inpatient 
     private static Inpatient single_instance = null; 
