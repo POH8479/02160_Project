@@ -93,4 +93,5 @@ public class Bed {
 		return null;
 	}
 
+	// kun's comment
 }
