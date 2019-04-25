@@ -1,7 +1,5 @@
 import static org.junit.Assert.*;
 
-import java.time.LocalDate;
-
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -43,8 +41,8 @@ public class NurseTest {
 		n2 = new Nurse("Jane nurse", "123 Main St Medicaltown, Germany", "+4912345678", "Inpatient");
 
 		// create the Patients
-		p1 = new Patient("Pieter", "O\'Hearn", LocalDate.of(1990, 1,12), "259 Nordvej 2800 Kongens Lyngby", "+4562473948");
-		p2 = new Patient("Jack", "Rodman", LocalDate.of(1997, 6,28), "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
+		p1 = new Patient("Pieter", "O\'Hearn", "12/01/1990", "259 Nordvej 2800 Kongens Lyngby", "+4562473948");
+		p2 = new Patient("Jack", "Rodman", "28/06/1997", "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
 
 		// create the Departments
 		em = Emergency.getInstance();
@@ -58,7 +56,7 @@ public class NurseTest {
 
 	/**
 	 * Tests the admitPatient method of the Nurse Class
-	 * @throws IllegalAccessException 
+	 * @throws IllegalAccessException
 	 */
 	@Test
 	public void admitPatientTest() throws IllegalAccessException {
@@ -79,7 +77,7 @@ public class NurseTest {
 		n1.dischargePatient(p2);
 		n1.admitPatient(p2,outPa);
 		assertEquals("Outpatient",p2.getPatientInfo().get("Department"));
-		
+
 		// try and admit patient to the management class
 		try {
 			n1.dischargePatient(p2);
@@ -95,8 +93,8 @@ public class NurseTest {
 
 	/**
 	 * Tests the admitPatient method of the Nurse Class when the patient already has a Department
-	 * @throws IllegalArgumentException 
-	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
 	 */
 	@Test
 	public void admitPatientErrorTest() throws IllegalArgumentException, IllegalAccessException {
@@ -108,7 +106,7 @@ public class NurseTest {
 
 	/**
 	 * Tests the dischargePatient method of the Nurse Class
-	 * @throws IllegalAccessException 
+	 * @throws IllegalAccessException
 	 */
 	@Test
 	public void dischargePatientTest() throws IllegalAccessException {
@@ -126,7 +124,7 @@ public class NurseTest {
 
 	/**
 	 * Tests the dischargePatient method of the Nurse Class when the patient already has a Department
-	 * @throws IllegalArgumentException 
+	 * @throws IllegalArgumentException
 	 */
 	@Test
 	public void dischargePatientErrorTest() throws IllegalArgumentException {
@@ -138,7 +136,7 @@ public class NurseTest {
 
 	/**
 	 * Tests the assignBed method of the Nurse Class
-	 * @throws IllegalAccessException 
+	 * @throws IllegalAccessException
 	 */
 	@Test
 	public void assignBedTest() throws IllegalArgumentException, IllegalAccessException {
@@ -188,7 +186,7 @@ public class NurseTest {
 		n1.editMedicalData(p2, "Send patient to the morgue.");
 		assertEquals("This Patient has died.\nSend patient to the morgue.",n1.getMedicalData(p2));
 	}
-	
+
 	/**
 	 * Tests the Constructor method of the Doctor Class
 	 */
@@ -197,7 +195,7 @@ public class NurseTest {
 		// create a nurse in Outpatient and check it works
 		Nurse n3 = new Nurse("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Outpatient");
 		assertEquals(outPa, n3.getDepartment());
-		
+
 		// create a doctor with an invalid department and expect an exception
 		try {
 			Nurse n4 = new Nurse("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Blahh");

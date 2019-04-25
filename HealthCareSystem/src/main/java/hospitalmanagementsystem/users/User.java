@@ -1,6 +1,6 @@
 package hospitalmanagementsystem.users;
 
-import java.time.LocalDate;
+
 import java.util.Hashtable;
 
 import hospitalmanagementsystem.Patient;
@@ -62,7 +62,7 @@ public class User {
 		info.put("User ID", this.userID);
 		info.put("Address", this.address);
 		info.put("Phone Number", this.phoneNumber);
-		
+
 
 		// return info hash table
 		return info;
@@ -74,14 +74,14 @@ public class User {
 	 *
 	 * @return The Patient Object that has been registered to the HMS
 	 */
-	public Patient registerPatient(String name, String surname, LocalDate bday, String address, String phoneNo) {
+	public Patient registerPatient(String name, String surname, String bday, String address, String phoneNo) {
 		// create a new Patient
 		Patient newPatient = new Patient(name, surname, bday, address, phoneNo);
 
 		// return the Patient
 		return newPatient;
 	}
-	
+
 	/**
 	 * returns the patients basic data (Name, )
 	 *
@@ -95,6 +95,26 @@ public class User {
 
 	public Department getDepartment() {
 		return this.department;
+	}
+
+	public String getUserID() {
+		return this.userID;
+	}
+
+	public String getUserName() {
+		return this.name;
+	}
+
+	public String getType() {
+		return "User";
+	}
+
+	public String getAddress() {
+		return this.address;
+	}
+
+	public String getNumber() {
+		return this.phoneNumber;
 	}
 
 }

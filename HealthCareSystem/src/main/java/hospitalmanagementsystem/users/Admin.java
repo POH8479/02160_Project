@@ -153,4 +153,9 @@ public class Admin extends User implements HealthStaff{
 	public Department getDepartment() {
 		return this.department;
 	}
+	
+	@Override
+	public String getType() {
+		return "Admin";
+	}
 }

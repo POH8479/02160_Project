@@ -125,4 +125,9 @@ public class Doctor extends User implements HealthStaff{
 	public Department getDepartment() {
 		return this.department;
 	}
+	
+	@Override
+	public String getType() {
+		return "Doctor";
+	}
 }

@@ -1,7 +1,5 @@
 import static org.junit.Assert.*;
 
-import java.time.LocalDate;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -12,7 +10,7 @@ import hospitalmanagementsystem.departments.Management;
 import hospitalmanagementsystem.departments.Outpatient;
 
 /**
- * 
+ *
  * @author Kun
  *
  */
@@ -41,10 +39,10 @@ public class OutpatientTest {
 			inPa = Inpatient.getInstance();
 			outPa = Outpatient.getInstance();
 			man = Management.getInstance();
-			
+
 			// create the patients
-			p1 = new Patient("Pieter", "O\'Hearn", LocalDate.of(1990, 1,12), "259 Nordvej 2800 Kongens Lyngby", "+4562473948");
-			p2 = new Patient("Jack", "Rodman", LocalDate.of(1997, 6,28), "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
+			p1 = new Patient("Pieter", "O\'Hearn", "12/01/1990", "259 Nordvej 2800 Kongens Lyngby", "+4562473948");
+			p2 = new Patient("Jack", "Rodman", "28/06/1997", "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
 		}
 
 		/**
@@ -65,7 +63,7 @@ public class OutpatientTest {
 			assertTrue(outPa.getPatientList().contains(p2));
 			assertFalse(inPa.getPatientList().contains(p2));
 			assertFalse(em.getPatientList().contains(p2));
-			
+
 		}
 
 		/**

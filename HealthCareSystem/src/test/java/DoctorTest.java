@@ -1,6 +1,5 @@
 import static org.junit.Assert.*;
 
-import java.time.LocalDate;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -43,8 +42,8 @@ public class DoctorTest {
 		d2 = new Doctor("Jane Doctor", "123 Main St Medicaltown, Germany", "+4912345678", "Inpatient");
 
 		// create the Patients
-		p1 = new Patient("Pieter", "O\'Hearn", LocalDate.of(1990, 1,12), "259 Nordvej 2800 Kongens Lyngby", "+4562473948");
-		p2 = new Patient("Jack", "Rodman", LocalDate.of(1997, 6,28), "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
+		p1 = new Patient("Pieter", "O\'Hearn", "12/01/1990", "259 Nordvej 2800 Kongens Lyngby", "+4562473948");
+		p2 = new Patient("Jack", "Rodman", "28/06/1997", "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
 
 		// create the Departments
 		em = Emergency.getInstance();
@@ -58,7 +57,7 @@ public class DoctorTest {
 
 	/**
 	 * Tests the admitPatient method of the Doctor Class
-	 * @throws IllegalAccessException 
+	 * @throws IllegalAccessException
 	 */
 	@Test
 	public void admitPatientTest() throws IllegalAccessException {
@@ -74,12 +73,12 @@ public class DoctorTest {
 		d1.admitPatient(p2,em);
 		assertEquals("Emergency",p2.getPatientInfo().get("Department"));
 		assertTrue(em.getPatientList().contains(p2));
-		
+
 		// check doctors from other departments can admit patients
 		d1.dischargePatient(p2);
 		d1.admitPatient(p2,outPa);
 		assertEquals("Outpatient",p2.getPatientInfo().get("Department"));
-		
+
 		// try and admit patient to the management class
 		try {
 			d1.dischargePatient(p2);
@@ -95,8 +94,8 @@ public class DoctorTest {
 
 	/**
 	 * Tests the admitPatient method of the Doctor Class when the patient already has a Department
-	 * @throws IllegalArgumentException 
-	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
 	 */
 	@Test
 	public void admitPatientErrorTest() throws IllegalArgumentException, IllegalAccessException {
@@ -107,7 +106,7 @@ public class DoctorTest {
 
 	/**
 	 * Tests the dischargePatient method of the Doctor Class
-	 * @throws IllegalAccessException 
+	 * @throws IllegalAccessException
 	 */
 	@Test
 	public void dischargePatientTest() throws IllegalAccessException {
@@ -126,7 +125,7 @@ public class DoctorTest {
 
 	/**
 	 * Tests the dischargePatient method of the Doctor Class when the patient already has a Department
-	 * @throws IllegalArgumentException 
+	 * @throws IllegalArgumentException
 	 */
 	@Test
 	public void dischargePatientErrorTest() throws IllegalArgumentException {
@@ -137,7 +136,7 @@ public class DoctorTest {
 
 	/**
 	 * Tests the assignBed method of the Doctor Class
-	 * @throws IllegalAccessException 
+	 * @throws IllegalAccessException
 	 */
 	@Test
 	public void assignBedTest() throws IllegalArgumentException, IllegalAccessException {
@@ -196,7 +195,7 @@ public class DoctorTest {
 		// create a doctor in Outpatient and check it works
 		Doctor d3 = new Doctor("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Outpatient");
 		assertEquals(outPa, d3.getDepartment());
-		
+
 		// create a doctor with an invalid department and expect an exception
 		try {
 			Doctor d4 = new Doctor("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Blahh");
@@ -205,5 +204,5 @@ public class DoctorTest {
 			assertEquals("Blahh is an invalid department.", e.getMessage());
 		}
 	}
-	
+
 }
