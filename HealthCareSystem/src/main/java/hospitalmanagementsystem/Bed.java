@@ -95,6 +95,4 @@ public class Bed {
 	public void removePatient() {
 		this.patient = null;
 	}
-
-	// kun's comment
 }

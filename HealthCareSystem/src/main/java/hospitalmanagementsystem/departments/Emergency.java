@@ -3,11 +3,13 @@ package hospitalmanagementsystem.departments;
 import java.util.ArrayList;
 
 import hospitalmanagementsystem.*;
+import hospitalmanagementsystem.users.User;
 
 public class Emergency extends Department {
 	// static variable single_instance of type Emergency 
     private static Emergency single_instance = null; 
     ArrayList<Patient> patientList;
+    ArrayList<User> userList;
     int capacity;
     
     private Emergency() {
@@ -40,5 +42,9 @@ public class Emergency extends Department {
 	
 	public ArrayList<Patient> getPatientList() {
 		return this.patientList;
+	}
+	
+	public ArrayList<User> getUserList() {
+		return this.userList;
 	}
 }

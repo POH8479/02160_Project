@@ -7,15 +7,11 @@ import java.util.Objects;
 import hospitalmanagementsystem.*;
 
 public class Nurse extends User implements HealthStaff{
-	// Static Variables
-	static int idCounter;
-	
 	// Instance variables
 	Department department;
-	final String nurseID;
 
 	public Nurse(String usersName, String usersAddress, String phone, String department) {
-		super(usersName, usersAddress, phone);
+		super(usersName, usersAddress, phone, "N");
     
 		//assign department based on input
 		switch(department) {
@@ -28,15 +24,9 @@ public class Nurse extends User implements HealthStaff{
 		  case "Outpatient":
 			  this.department = Outpatient.getInstance();
 		    break;
-		  case "Management":
-			  this.department = Management.getInstance();
-		    break;
 		  default:
-		    this.department = null;
+			  throw new IllegalArgumentException(String.format("%s is an invalid department.",department));
 		}
-		
-		idCounter++;
-		nurseID = "N" + Integer.toString(idCounter);
 	}
 
 	/**
@@ -51,7 +41,7 @@ public class Nurse extends User implements HealthStaff{
 	public void admitPatient(Patient patient, Department department) throws IllegalAccessException, IllegalArgumentException {
 		// if department is Management then throw an exception
 		if(department instanceof Management) {
-			throw new IllegalAccessException();
+			throw new IllegalAccessException("Can not admit a patient to the Management department.");
 		} else if(!Objects.equals(patient.getPatientInfo().get("Department"), "None")) { 
 			throw new IllegalArgumentException("Can not admit a patient who is already admitted to a department.");
 		} else {
@@ -74,11 +64,11 @@ public class Nurse extends User implements HealthStaff{
 		if(patient.getPatientInfo().get("Department").equals("None")) {
 			throw new IllegalArgumentException("Can not discharge a patient who is not already admitted into any department.");
 		} else {
+			// remove the Patient from the departments patient list
+			patient.getDepartment().removePatient(patient);
+			
 			// Update the patients department variable
 			patient.updateDepartment(null);
-			
-			// remove the Patient from the departments patient list
-			department.removePatient(patient);
 		}
 	}
 

@@ -32,4 +32,10 @@ public class Management extends Department {
 	public ArrayList<Patient> getPatientList() {
 		return this.emptyList;
 	}
+
+	public void removePatient(Patient patient) {}
+
+	public ArrayList<User> getUserList() {
+		return this.userList;
+	}
 }

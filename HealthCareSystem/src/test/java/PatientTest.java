@@ -6,7 +6,6 @@ import hospitalmanagementsystem.*;
 import hospitalmanagementsystem.departments.*;
 import hospitalmanagementsystem.users.*;
 import java.time.LocalDate;
-import java.util.Hashtable;
 import java.util.Objects;
 
 /**

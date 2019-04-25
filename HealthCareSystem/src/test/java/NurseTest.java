@@ -79,6 +79,15 @@ public class NurseTest {
 		n1.dischargePatient(p2);
 		n1.admitPatient(p2,outPa);
 		assertEquals("Outpatient",p2.getPatientInfo().get("Department"));
+		
+		// try and admit patient to the management class
+		try {
+			n1.dischargePatient(p2);
+			n1.admitPatient(p2,man);
+			fail("Should have thrown an IllegalAccessException");
+		} catch(IllegalAccessException e) {
+			assertEquals("Can not admit a patient to the Management department.",e.getMessage());
+		}
 	}
 
 	// create a rule
@@ -109,7 +118,7 @@ public class NurseTest {
 		assertEquals("None",p1.getPatientInfo().get("Department"));
 
 		// check nurses from other departments can discharge Patients
-		assertEquals("Outpatient",p2.getPatientInfo().get("Department"));
+		n1.admitPatient(p2, outPa);
 		assertEquals(em,n1.getDepartment());
 		n1.dischargePatient(p2);
 		assertEquals("None",p2.getPatientInfo().get("Department"));
@@ -178,5 +187,23 @@ public class NurseTest {
 		// edit patient2's medical data again and test it has been appended
 		n1.editMedicalData(p2, "Send patient to the morgue.");
 		assertEquals("This Patient has died.\nSend patient to the morgue.",n1.getMedicalData(p2));
+	}
+	
+	/**
+	 * Tests the Constructor method of the Doctor Class
+	 */
+	@Test
+	public void ConstructorTest() {
+		// create a nurse in Outpatient and check it works
+		Nurse n3 = new Nurse("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Outpatient");
+		assertEquals(outPa, n3.getDepartment());
+		
+		// create a doctor with an invalid department and expect an exception
+		try {
+			Nurse n4 = new Nurse("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Blahh");
+			fail("Expected an IllegalArgumentException");
+		} catch(IllegalArgumentException e) {
+			assertEquals("Blahh is an invalid department.", e.getMessage());
+		}
 	}
 }

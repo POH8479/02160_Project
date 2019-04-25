@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.Hashtable;
 
 import hospitalmanagementsystem.Patient;
+import hospitalmanagementsystem.departments.Department;
+import hospitalmanagementsystem.departments.Management;
 
 /**
  * A User of the Hospital Management System. They have the lowest privileges of
@@ -21,6 +23,7 @@ public class User {
 	final String userID;
 	String address;
 	String phoneNumber;
+	Department department;
 
 	/**
 	 * Creates a new User of the Hospital Management System
@@ -29,6 +32,18 @@ public class User {
 		// assign the User with a unique ID
 		idCounter++;
 		this.userID = "U" + Integer.toString(idCounter);
+		// assign the remaining information
+		this.name = usersName;
+		this.address = usersAddress;
+		this.phoneNumber = phone;
+		this.department = Management.getInstance();
+		Management.getInstance().getUserList().add(this);
+	}
+
+	public User(String usersName, String usersAddress, String phone, String classString) {
+		// assign the User with a unique ID
+		idCounter++;
+		this.userID = classString + Integer.toString(idCounter);
 		// assign the remaining information
 		this.name = usersName;
 		this.address = usersAddress;
@@ -77,4 +92,9 @@ public class User {
 		// return the patients info
 		return patient.getPatientInfo();
 	}
+
+	public Department getDepartment() {
+		return this.department;
+	}
+
 }

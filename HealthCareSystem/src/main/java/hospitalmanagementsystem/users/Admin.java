@@ -11,24 +11,19 @@ import hospitalmanagementsystem.*;
  * @author Pieter O'Hearn
  */
 public class Admin extends User implements HealthStaff{
-	// Static Variables
-	static int idCounter;
-	
 	// Instance Variables
 	Department department;
-	final String adminID;
 
 	/**
 	 * Creates a new Admin of the Hospital Management
 	 */
 	public Admin(String usersName, String usersAddress, String phone) {
-		// super
-		super(usersName, usersAddress, phone);
+		// call the super
+		super(usersName, usersAddress, phone, "A");
+		
 		// set the department to Admin
 		this.department = Management.getInstance();
-		
-		idCounter++;
-		adminID = "A" + Integer.toString(idCounter);
+		// TODO add user to department List
 	}
 
 	/**
@@ -43,7 +38,7 @@ public class Admin extends User implements HealthStaff{
 	public void admitPatient(Patient patient, Department department) throws IllegalAccessException, IllegalArgumentException {
 		// if department is Management then throw an exception
 		if(department instanceof Management) {
-			throw new IllegalAccessException();
+			throw new IllegalAccessException("Can not admit a patient to the Management department.");
 		} else if(!Objects.equals(patient.getPatientInfo().get("Department"), "None")) { 
 			throw new IllegalArgumentException("Can not admit a patient who is already admitted to a department.");
 		} else {
@@ -66,11 +61,11 @@ public class Admin extends User implements HealthStaff{
 		if(patient.getPatientInfo().get("Department").equals("None")) {
 			throw new IllegalArgumentException("Can not discharge a patient who is not already admitted into any department.");
 		} else {
+			// remove the Patient from the departments patient list
+			patient.getDepartment().removePatient(patient);
+			
 			// Update the patients department variable
 			patient.updateDepartment(null);
-			
-			// remove the Patient from the departments patient list
-			department.removePatient(patient);
 		}
 	}
 
@@ -128,27 +123,17 @@ public class Admin extends User implements HealthStaff{
 	 * @return The new User
 	 */
 	public User addUser(String usersName, String usersAddress, String phone, String typeOfUser) {
-		// create a new user variable and set to null
-		User newUser = null;
-
 		// check what typeOfUser
-		if(typeOfUser.toLowerCase().equals("admin")) {
-			// create a new Admin
-			Admin newAdmin = new Admin(usersName, usersAddress, phone);
-			newUser = newAdmin;
-		} else if(typeOfUser.toLowerCase().equals("doctor")) {
-			// create a new Doctor
-			Doctor newDoctor = new Doctor(usersName, usersAddress, phone,"Emergency");
-			newUser = newDoctor;
-		} else if(typeOfUser.toLowerCase().equals("nurse")) {
-			// create a new Nurse
-			Nurse newNurse = new Nurse(usersName, usersAddress, phone,"Emergency");
-			newUser = newNurse;
-		} else if(typeOfUser.toLowerCase().equals("user")) {
-			// create a new User
-			newUser = new User(usersName, usersAddress, phone);
+		switch(typeOfUser) {
+			case "Admin":
+				return new Admin(usersName, usersAddress, phone);
+			case "Doctor":
+				return new Doctor(usersName, usersAddress, phone,"Emergency");
+			case "Nurse":
+				return new Nurse(usersName, usersAddress, phone,"Emergency");
+			default:
+				return new User(usersName, usersAddress, phone);
 		}
-		return newUser;
 	}
 
 	/**
@@ -157,7 +142,12 @@ public class Admin extends User implements HealthStaff{
 	 * @param oldUser The user to be removed from the HMS
 	 */
 	public void removeUser(User oldUser) {
-
+		// remove patient from department userlist
+		oldUser.getDepartment().getUserList().remove(oldUser);
+		
+		// set user to null
+		// TODO we need setter methods for this
+		// TODO Maybe we can remove the user from the file system using Persistence layer
 	}
 
 	public Department getDepartment() {

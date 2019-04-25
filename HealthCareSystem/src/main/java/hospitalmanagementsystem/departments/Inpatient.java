@@ -3,6 +3,7 @@ package hospitalmanagementsystem.departments;
 import java.util.ArrayList;
 
 import hospitalmanagementsystem.*;
+import hospitalmanagementsystem.users.User;
 
 /**
  * 
@@ -15,6 +16,7 @@ public class Inpatient extends Department {
     private static Inpatient single_instance = null; 
     ArrayList<Patient> patientList;
     ArrayList<Bed> bedList;
+    ArrayList<User> userList;
     int capacity;
     
     private Inpatient() {
@@ -48,5 +50,9 @@ public class Inpatient extends Department {
 
 	public ArrayList<Patient> getPatientList() {
 		return this.patientList;
+	}
+	
+	public ArrayList<User> getUserList() {
+		return this.userList;
 	}
 }

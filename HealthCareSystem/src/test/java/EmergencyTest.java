@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
 
+import java.time.LocalDate;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -11,8 +13,7 @@ import hospitalmanagementsystem.departments.*;
  * @author Kun
  *
  */
-
-class emergencyTest {
+public class EmergencyTest {
 
 	// Patients
 	static Patient p1;
@@ -29,53 +30,52 @@ class emergencyTest {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() {
-
 		// create the Departments
 		em = Emergency.getInstance();
 		inPa = Inpatient.getInstance();
 		outPa = Outpatient.getInstance();
 		man = Management.getInstance();
+		
+		// create the patients
+		p1 = new Patient("Pieter", "O\'Hearn", LocalDate.of(1990, 1,12), "259 Nordvej 2800 Kongens Lyngby", "+4562473948");
+		p2 = new Patient("Jack", "Rodman", LocalDate.of(1997, 6,28), "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
 	}
 
 	/**
 	 * Testing add method in Emergency class
 	 */
-	@SuppressWarnings("unlikely-arg-type")
 	@Test
 	public void addPatientTest() throws IllegalAccessException{
 		// add the p1 to patientList in Emergency class
 		em.addPatient(p1);
 		// checks if the p1 is added to patientList, and p2 is not added in another department
-		assertTrue(em.getPatientList().containsValue(p1));
-		assertFalse(inPa.getPatientList().containsValue(p1));
-		assertFalse(outPa.getPatientList().containsValue(p1));
-		assertFalse(man.getPatientList().containsValue(p1));
+		assertTrue(em.getPatientList().contains(p1));
+		assertFalse(inPa.getPatientList().contains(p1));
+		assertFalse(outPa.getPatientList().contains(p1));
 
 		// add the p2 to patientList in Emergency class
 		em.addPatient(p2);
-		// checks if the p2 is added to patientList, and p2 is not added in another department
-		assertTrue(em.getPatientList().containsValue(p2));
-		assertFalse(inPa.getPatientList().containsValue(p2));
-		assertFalse(outPa.getPatientList().containsValue(p2));
-		assertFalse(man.getPatientList().containsValue(p2));
+		// checks if the p2 is added to patientList
+		assertTrue(em.getPatientList().contains(p2));
+		assertFalse(inPa.getPatientList().contains(p2));
+		assertFalse(outPa.getPatientList().contains(p2));
 		
 	}
 
 	/**
 	 * Testing getPatientData method in User class
 	 */
-	@SuppressWarnings("unlikely-arg-type")
 	@Test
 	public void removePatientTest() throws IllegalAccessException{
 		// remove the p1 to patientList in Emergency class
 		em.removePatient(p1);
 		// checks if the p1 is added to patientList
-		assertFalse(em.getPatientList().containsValue(p1));
+		assertFalse(em.getPatientList().contains(p1));
 
 		// remove the p2 to patientList in Emergency class
 		em.removePatient(p2);
 		// checks if the p2 is added to patientList
-		assertFalse(em.getPatientList().containsValue(p2));
+		assertFalse(em.getPatientList().contains(p2));
 	}
 
 }

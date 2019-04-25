@@ -79,6 +79,15 @@ public class DoctorTest {
 		d1.dischargePatient(p2);
 		d1.admitPatient(p2,outPa);
 		assertEquals("Outpatient",p2.getPatientInfo().get("Department"));
+		
+		// try and admit patient to the management class
+		try {
+			d1.dischargePatient(p2);
+			d1.admitPatient(p2,man);
+			fail("Should have thrown an IllegalAccessException");
+		} catch(IllegalAccessException e) {
+			assertEquals("Can not admit a patient to the Management department.",e.getMessage());
+		}
 	}
 
 	// create a rule
@@ -121,7 +130,6 @@ public class DoctorTest {
 	 */
 	@Test
 	public void dischargePatientErrorTest() throws IllegalArgumentException {
-		d2.dischargePatient(p2);
 		exception.expect(IllegalArgumentException.class);
 		exception.expectMessage("Can not discharge a patient who is not already admitted into any department.");
 		d2.dischargePatient(p2);
@@ -181,10 +189,21 @@ public class DoctorTest {
 	}
 
 	/**
-	 * Tests the performTest method of the Doctor Class
+	 * Tests the Constructor method of the Doctor Class
 	 */
 	@Test
-	public void performTestTes() {
-		// TODO
+	public void ConstructorTest() {
+		// create a doctor in Outpatient and check it works
+		Doctor d3 = new Doctor("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Outpatient");
+		assertEquals(outPa, d3.getDepartment());
+		
+		// create a doctor with an invalid department and expect an exception
+		try {
+			Doctor d4 = new Doctor("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Blahh");
+			fail("Expected an IllegalArgumentException");
+		} catch(IllegalArgumentException e) {
+			assertEquals("Blahh is an invalid department.", e.getMessage());
+		}
 	}
+	
 }

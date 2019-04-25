@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -67,7 +68,7 @@ public class AdminTest {
 			ad1.admitPatient(p1, man);
 			fail("Expected an AccessDeniedException to be thrown");
 			} catch(IllegalAccessException expected) {
-				//need assertion here
+				assertEquals("Can not admit a patient to the Management department.",expected.getMessage());
 			}
 		
 		// admit p1 to Inpatient and check both patients variable and departments list
@@ -175,4 +176,41 @@ public class AdminTest {
 		assertEquals("This Patient has died.\nSend patient to the morgue.",ad1.getMedicalData(p2));
 	}
 
+	/**
+	 * Tests the removeUser method of the Admin Class
+	 */
+	@Test
+	public void removeUserTest() {
+		User badUser = new User("Name", "Address", "Phone");
+		assertFalse(Objects.equals(badUser.getUserInfo().get("User ID"),"None"));
+		ad1.removeUser(badUser);
+		assertFalse(badUser.getDepartment().getUserList().contains(badUser));
+	}
+	
+	/**
+	 * Tests the addUser method of the Admin Class
+	 */
+	@Test
+	public void addUserTest() {
+		// Add one of each user
+		Admin a = (Admin) ad1.addUser("Admin", "Admin's Address", "Admins Phone", "Admin");
+		assertEquals('A',a.getUserInfo().get("User ID").charAt(0));
+		
+		Doctor d = (Doctor) ad1.addUser("Doctor", "Doctor's Address", "Doctors Phone", "Doctor");
+		assertEquals('D',d.getUserInfo().get("User ID").charAt(0));
+		
+		Nurse n = (Nurse) ad1.addUser("Nurse", "Nurse's Address", "Nurses Phone", "Nurse");
+		assertEquals('N',n.getUserInfo().get("User ID").charAt(0));
+		
+		User u = ad1.addUser("User", "User's Address", "Users Phone", "User");
+		assertEquals('U',u.getUserInfo().get("User ID").charAt(0));
+	}
+	
+	/**
+	 * Tests the getDepartment method of the Admin Class
+	 */
+	@Test
+	public void getDepartmentTest() {
+		// TODO
+	}
 }
