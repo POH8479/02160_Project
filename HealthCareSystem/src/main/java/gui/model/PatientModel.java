@@ -156,6 +156,7 @@ public class PatientModel extends AbstractTableModel {
 		toEdit.setPhoneNo(phone);
 		toEdit.setAddress(address);
 		toEdit.setPhone(phone);
+		toEdit.setDOB(dOB);
 		
 		fireTableDataChanged(); // notify the views that data changed
 	}

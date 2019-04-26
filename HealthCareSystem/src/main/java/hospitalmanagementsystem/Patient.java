@@ -203,5 +203,10 @@ public class Patient {
 	public void setPhone(String phone) {
 		this.phoneNo = phone;
 	}
+
+	public void setDOB(String dOB) {
+		this.bday = dOB;
+		
+	}
 	
 }

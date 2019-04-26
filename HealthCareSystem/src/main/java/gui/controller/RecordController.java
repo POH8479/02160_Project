@@ -4,14 +4,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import gui.model.Session;
-import gui.model.UserModel;
 import gui.view.RecordView;
 import hospitalmanagementsystem.Patient;
 import hospitalmanagementsystem.users.HealthStaff;
 
 public class RecordController {
 	
-	private UserModel userModel;
 	private Session sessionModel;
 	private RecordView view;
 	private ApplicationController applicationController;
@@ -19,7 +17,6 @@ public class RecordController {
 
 	public RecordController(Session session, ApplicationController appController, Patient patient) {
 		// 
-		this.userModel = session.getUserModel();
 		this.sessionModel = session;
 		this.applicationController = appController;
 		this.patient = patient;

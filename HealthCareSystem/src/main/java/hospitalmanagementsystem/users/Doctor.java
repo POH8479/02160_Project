@@ -139,8 +139,11 @@ public class Doctor extends User implements HealthStaff{
 
 	public void moveDepartment(Department department) {
 		// change department
+		if(this.department != null) {
+			this.department.getUserList().remove(this);
+		}
 		this.department = department;
-		
+		department.getUserList().add(this);
 	}
 	
 }

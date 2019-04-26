@@ -135,9 +135,10 @@ public class Nurse extends User implements HealthStaff{
 	
 	public void moveDepartment(Department department) {
 		// change department
-		this.department.getUserList().remove(this);
+		if(this.department != null) {
+			this.department.getUserList().remove(this);
+		}
 		this.department = department;
 		department.getUserList().add(this);
-		
 	}
 }

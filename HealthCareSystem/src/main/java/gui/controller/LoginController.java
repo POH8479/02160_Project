@@ -44,7 +44,22 @@ public class LoginController {
 		} else {
 			session.setUser(u);
 			view.setVisible(false);
-			app.manage(session);
+			
+			switch(u.getType()) {
+				case "Admin":
+					app.manage(session);
+					break;
+				case "Doctor":
+					app.healthStaff(session);
+					break;
+				case "Nurse":
+					app.healthStaff(session);
+					break;
+				default:
+					app.user(session);
+			}
+			
+	
 		}
 	}
 
