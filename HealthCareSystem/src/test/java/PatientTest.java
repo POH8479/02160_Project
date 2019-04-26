@@ -80,7 +80,7 @@ public class PatientTest {
 	public void getPatientInfoTest() {
 		assertEquals("Pieter", p1.getPatientInfo().get("First Name"));
 		assertEquals("O'Hearn", p1.getPatientInfo().get("Last Name"));
-		assertEquals("12 1 1990", p1.getPatientInfo().get("Birth Date"));
+		assertEquals("12/01/1990", p1.getPatientInfo().get("Birth Date"));
 		assertEquals("259 Nordvej 2800 Kongens Lyngby", p1.getPatientInfo().get("Address"));
 		assertEquals("Emergency", p1.getPatientInfo().get("Department"));
 		assertEquals("false", p1.getPatientInfo().get("Deceased"));

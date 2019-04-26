@@ -95,7 +95,7 @@ public class UserTest {
 
 		expected.put("Last Name", "Rodman");
 		expected.put("Bed ID", "None");
-		expected.put("Birth Date", "28 6 1997");
+		expected.put("Birth Date", "28/06/1997");
 		expected.put("Patient ID", p2.getPatientInfo().get("Patient ID"));
 		expected.put("Phone Number", "+4562870942");
 		expected.put("Address", "259 Nordvej 2800 Kongens Lyngby");
