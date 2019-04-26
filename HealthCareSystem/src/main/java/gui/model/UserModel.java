@@ -1,9 +1,13 @@
 package gui.model;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import javax.swing.table.AbstractTableModel;
 
+import hospitalmanagementsystem.departments.Department;
+import hospitalmanagementsystem.users.Admin;
+import hospitalmanagementsystem.users.HealthStaff;
 import hospitalmanagementsystem.users.User;
 
 public class UserModel extends AbstractTableModel {
@@ -20,7 +24,15 @@ public class UserModel extends AbstractTableModel {
 		fireTableDataChanged(); // notify the views that data changed
 	}
 	
-	public void removeUser(String name) {
+	public void removeUser(String userID, Admin admin) {
+		User toRemove = findUser(userID);
+		
+		// remove from list
+		users.remove(toRemove);
+		
+		// remove form HMS
+		admin.removeUser(toRemove);
+		
 		
 		fireTableDataChanged(); // notify the views that data changed
 	}
@@ -45,7 +57,11 @@ public class UserModel extends AbstractTableModel {
 		} else if (columnIndex == 1) {
 			return users.get(rowIndex).getUserName();
 		} else if (columnIndex == 2) {
-			return users.get(rowIndex).getDepartment().getName();
+			if(Objects.equals(null, users.get(rowIndex).getDepartment())) {
+				return "-";
+			} else {
+				return users.get(rowIndex).getDepartment().getName();
+			}
 		} else if (columnIndex == 3) {
 			return users.get(rowIndex).getAddress();
 		} else if (columnIndex == 4) {
@@ -68,5 +84,39 @@ public class UserModel extends AbstractTableModel {
 			return "Phone Number";
 		}
 		return null;
+	}
+
+	public void updateDepartment(String userID, Department dept) {
+		// find the user
+		HealthStaff u = (HealthStaff) findUser(userID);
+		
+		// update the users department
+		u.moveDepartment(dept);
+		
+		fireTableDataChanged(); // notify the views that data changed
+	}
+	
+	private User findUser(String userId) {
+		// search for a match in the user List
+		for(User u : users) {
+			if(u.getUserID().equals(userId)) {
+				// return
+				return u;
+			}
+		}
+		// else return null
+		return null;
+	}
+
+	public void edit(String userId, String name, String address, String phone) {
+		// find the user
+		User toEdit = findUser(userId);
+		
+		// edit
+		toEdit.setAddress(address);
+		toEdit.setPhone(phone);
+		toEdit.setUserName(name);
+		
+		fireTableDataChanged(); // notify the views that data changed
 	}
 }

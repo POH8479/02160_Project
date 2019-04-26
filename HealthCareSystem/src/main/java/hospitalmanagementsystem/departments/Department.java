@@ -17,9 +17,7 @@ public abstract class Department {
 	ArrayList<User> userList = new ArrayList<User>();
 	ArrayList<Patient> patientList = new ArrayList<Patient>();
 
-	public void addUser(User User) {
-		userList.add(User);
-	}
+	public abstract void addUser(User User);
 
 	public void removeUser(User User) {
 		userList.remove(User);

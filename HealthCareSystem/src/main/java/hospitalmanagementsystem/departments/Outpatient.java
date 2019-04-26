@@ -15,6 +15,7 @@ public class Outpatient extends Department {
     private Outpatient() {
     	this.capacity = 100;
     	patientList = new ArrayList<Patient>();
+    	userList = new ArrayList<User>();
     }
 	
     // static method to create instance of Outpatient class 
@@ -48,5 +49,9 @@ public class Outpatient extends Department {
 	
 	public ArrayList<User> getUserList() {
 		return this.userList;
+	}
+	
+	public void addUser(User User) {
+		userList.add(User);
 	}
 }

@@ -2,11 +2,14 @@ package gui.controller;
 
 import gui.model.*;
 import gui.view.ManagementView;
+import gui.view.RecordView;
+import hospitalmanagementsystem.Patient;
 
 public class ApplicationController {
 	
 	private LoginController loginController;
-	private ManagementController adminColtroller;
+	private ManagementController managementColtroller;
+	private RecordController recordController;
 	
 	/**
 	 * Login method for the HMS application
@@ -17,12 +20,21 @@ public class ApplicationController {
 	}
 	
 	public void manage(Session session) {
-		adminColtroller = new ManagementController(new UserModel(), new PatientModel(), session);
+		managementColtroller = new ManagementController(session, this);
 
-		ManagementView manView = new ManagementView(adminColtroller);
-		adminColtroller.setView(manView);
-		adminColtroller.display();
+		ManagementView manView = new ManagementView(managementColtroller);
+		managementColtroller.setView(manView);
+		managementColtroller.display();
 	}
+	
+	public void record(Session session, Patient patient) {
+		recordController = new RecordController(session, this, patient);
+
+		RecordView recordView = new RecordView(recordController);
+		recordController.setView(recordView);
+		recordController.display();
+	}
+	
 	
 	/**
 	 * Main method

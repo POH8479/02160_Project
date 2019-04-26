@@ -20,15 +20,21 @@ public class Doctor extends User implements HealthStaff{
 		super(usersName, usersAddress, phone, "D");
 		
 		//assign department based on input
-		switch(department) {
+		switch(department==null?"null":department) {
 		  case "Emergency":
 			  this.department = Emergency.getInstance();
+			  Emergency.getInstance().addUser(this);
 		    break;
 		  case "Inpatient":
 			  this.department = Inpatient.getInstance();
+			  Inpatient.getInstance().addUser(this);
 		    break;
 		  case "Outpatient":
 			  this.department = Outpatient.getInstance();
+			  Outpatient.getInstance().addUser(this);
+		    break;
+		  case "null":
+			  this.department = null;
 		    break;
 		  default:
 		    throw new IllegalArgumentException(String.format("%s is an invalid department.",department));
@@ -130,4 +136,11 @@ public class Doctor extends User implements HealthStaff{
 	public String getType() {
 		return "Doctor";
 	}
+
+	public void moveDepartment(Department department) {
+		// change department
+		this.department = department;
+		
+	}
+	
 }

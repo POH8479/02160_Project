@@ -116,5 +116,17 @@ public class User {
 	public String getNumber() {
 		return this.phoneNumber;
 	}
+	
+	public void setUserName(String newName) {
+		this.name = newName;
+	}
+	
+	public void setAddress(String newAddress) {
+		this.address = newAddress;
+	}
+	
+	public void setPhone(String newPhone) {
+		this.phoneNumber = newPhone;
+	}
 
 }

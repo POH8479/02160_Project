@@ -67,4 +67,6 @@ public interface HealthStaff {
 	 */
 	public Department getDepartment();
 	
+	public void moveDepartment(Department department);
+	
 }

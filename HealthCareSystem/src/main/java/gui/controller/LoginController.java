@@ -21,7 +21,7 @@ public class LoginController {
 	public LoginController(ApplicationController application) {
 		// save the application and create a new Session and View
 		this.app = application;
-		this.session = new Session();
+		this.session = Session.getInstance();
 		this.view = new LoginView(this);
 	}
 	
@@ -31,19 +31,20 @@ public class LoginController {
 	 * @param password the same as the username
 	 */
 	public void validateCredentials(String username, String password) {
+		User u = findUser(username);
 		// if the username is Admin the super user is evoked
-		if (username.equals("Admin")) {
-			Admin genericAdmin = new Admin("Admin", "Admin's Address", "Phone");
+		if (u == null && username.equals("Admin")) {
+			Admin genericAdmin = new Admin("Super Admin", "Super Admin's Address", "+45 12345678");
+			session.getUserModel().addNewUser(genericAdmin);
 			session.setUser(genericAdmin);
 			view.setVisible(false);
 			app.manage(session);
+		} else if (Objects.equals(u,null)) {
+			view.showError();
 		} else {
-			User u = findUser(username);
-			if (Objects.equals(u,null)) {
-				view.showError();
-			} else {
-				session.setUser(u);
-			}
+			session.setUser(u);
+			view.setVisible(false);
+			app.manage(session);
 		}
 	}
 

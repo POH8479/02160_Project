@@ -91,12 +91,11 @@ public class Patient {
 	 * @param data
 	 */
 	public void updateRecord(String data) {
-		if(this.record != null) {
+		if(!Objects.equals(this.record,null)) {
 			this.record = this.record + "\n" + data;
 		} else {
 			this.record = data;
 		}
-		
 	}
 
 	/**
@@ -183,6 +182,26 @@ public class Patient {
 
 	public String getDOB() {
 		return this.bday;
+	}
+
+	public void setFirstName(String firstName) {
+		this.name = firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.surname = lastName;
+	}
+
+	public void setPhoneNo(String phone) {
+		this.phoneNo = phone;
+	}
+
+	public void setAddress(String newAddress) {
+		this.address = newAddress;
+	}
+
+	public void setPhone(String phone) {
+		this.phoneNo = phone;
 	}
 	
 }

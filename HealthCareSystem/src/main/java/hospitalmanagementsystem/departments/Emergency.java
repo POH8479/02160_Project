@@ -15,6 +15,7 @@ public class Emergency extends Department {
     private Emergency() {
     	this.capacity = 100;
     	patientList = new ArrayList<Patient>();
+    	userList = new ArrayList<User>();
     }
 	
     // static method to create instance of Emergency class 
@@ -46,5 +47,9 @@ public class Emergency extends Department {
 	
 	public ArrayList<User> getUserList() {
 		return this.userList;
+	}
+	
+	public void addUser(User User) {
+		userList.add(User);
 	}
 }

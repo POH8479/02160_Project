@@ -22,7 +22,7 @@ public class StepDefinition {
 	@When("^They enter a new patient's non-medical data$")
 	public void they_enter_a_new_patient_s_non_medical_data() {
 	    // create a new patient
-		p1 = new Patient("name", "surname", "01/01/2000"), "address", "phoneNo");
+		p1 = new Patient("name", "surname", "01/01/2000", "address", "phoneNo");
 	}
 
 	@Then("^The data is saved in the system and a confirmation is displayed to the user$")
