@@ -158,6 +158,7 @@ public class HealthStaffController {
 	public void logOut() {
 		// close the HealthStaff view and call the login method for the next user
 		view.setVisible(false);
+		applicationController.save();
 		applicationController.login();
 	}
 	

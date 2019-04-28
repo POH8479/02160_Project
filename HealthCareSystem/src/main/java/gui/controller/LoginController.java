@@ -55,7 +55,6 @@ public class LoginController {
 			// set the User for the session and close the Login Window
 			session.setUser(user);
 			view.setVisible(false);
-			app.manage(session);
 		} // otherwise show an error message
 		else {
 			view.showError();

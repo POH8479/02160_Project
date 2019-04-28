@@ -69,7 +69,6 @@ public class ManagementView extends JFrame {
 		// BUTTONS
 		// Create a new button "Add User" with an Action Listener and set Enabled to false
 		JButton btnAddUser = new JButton("Add User");
-		btnAddUser.setEnabled(false);
 		btnAddUser.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

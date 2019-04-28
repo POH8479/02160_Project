@@ -6,6 +6,8 @@ import gui.view.ManagementView;
 import gui.view.RecordView;
 import gui.view.UserView;
 import hospitalmanagementsystem.Patient;
+import hospitalmanagementsystem.PersistenceLayer;
+import hospitalmanagementsystem.departments.*;
 
 /**
  * The main controller of the Graphical User Interface (GUI).
@@ -120,5 +122,19 @@ public class ApplicationController {
 		// initialise the ApplicationController app and call the login method to Start
 		ApplicationController app = new ApplicationController();
 		app.login();
+	}
+
+	/**
+	 * Saves the Users and Patients to file.
+	 */
+	public void save() {
+		// create a new Persistence Layer
+		PersistenceLayer persistenceLayer = new PersistenceLayer();
+		
+		// Save the information from all departments
+		persistenceLayer.save(Emergency.getInstance());
+		persistenceLayer.save(Inpatient.getInstance());
+		persistenceLayer.save(Outpatient.getInstance());
+		persistenceLayer.save(Management.getInstance());
 	}
 }

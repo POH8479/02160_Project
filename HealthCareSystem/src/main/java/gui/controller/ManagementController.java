@@ -223,10 +223,10 @@ public class ManagementController {
 	 * logs the user out of the HMS.
 	 */
 	public void logOut() {
-		// close the HealthStaff view and call the login method for the next user 
+		// close the Management view and call the login method for the next user 
 		view.setVisible(false);
+		applicationController.save();
 		applicationController.login();
-		
 	}
 	
 	/**

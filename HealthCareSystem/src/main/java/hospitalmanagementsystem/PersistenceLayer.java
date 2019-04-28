@@ -10,6 +10,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import hospitalmanagementsystem.departments.Department;
+import hospitalmanagementsystem.departments.Management;
+import hospitalmanagementsystem.users.User;
 
 
 /**
@@ -36,21 +38,18 @@ public class PersistenceLayer {
 	}
 	
 	public boolean save(Department department) {
-		// Creates directory path for the department
-		String dir = "Departments" + "/" + department.getName();
-		
-		// Writes department object to the file specified by the directory
-		XMLEncoder e = null;
-		try{
-			e = new XMLEncoder(
-                new BufferedOutputStream(
-                    new FileOutputStream(dir)));
-		} catch(FileNotFoundException fileNotFound) {
-			return false;
+		// save the Users
+		for(User user : department.getUserList()) {
+			save(user, user.getUserID(), department);
 		}
-		System.out.println(dir);
-		e.writeObject(department);
-		e.close();
+		
+		// save all the patients
+		if(!department.equals(Management.getInstance())) {
+			for(Patient patient : department.getPatientList()) {
+				save(patient, patient.getPatientId(), department);
+			}
+		}
+		
 		return true;
 	}
 	

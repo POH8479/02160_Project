@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 import javax.swing.table.AbstractTableModel;
 import hospitalmanagementsystem.Patient;
-import hospitalmanagementsystem.PersistenceLayer;
 import hospitalmanagementsystem.departments.*;
 import hospitalmanagementsystem.users.*;
 
