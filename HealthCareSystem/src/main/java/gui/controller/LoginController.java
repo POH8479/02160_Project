@@ -2,21 +2,25 @@ package gui.controller;
 
 import java.util.ArrayList;
 import java.util.Objects;
-
 import gui.model.*;
 import gui.view.LoginView;
 import hospitalmanagementsystem.users.*;
 import hospitalmanagementsystem.departments.*;
 
+/**
+ * The Controller for the Login 
+ * @author Pieter O'Hearn
+ *
+ */
 public class LoginController {
-	
+	// Instance variables
 	private ApplicationController app;
 	private Session session;
 	private LoginView view;
 	
 	/**
 	 * Constructor for the Login Controller 
-	 * @param application
+	 * @param application The application
 	 */
 	public LoginController(ApplicationController application) {
 		// save the application and create a new Session and View
@@ -33,7 +37,7 @@ public class LoginController {
 	public void validateCredentials(String username, String password) {
 		User u = findUser(username);
 		// if the username is Admin the super user is evoked
-		if (u == null && username.equals("Admin")) {
+		if (u == null && username.equals("A1")) {
 			Admin genericAdmin = new Admin("Super Admin", "Super Admin's Address", "+45 12345678");
 			session.getUserModel().addNewUser(genericAdmin);
 			session.setUser(genericAdmin);

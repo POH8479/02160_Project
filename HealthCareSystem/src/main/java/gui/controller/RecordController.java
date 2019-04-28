@@ -8,6 +8,11 @@ import gui.view.RecordView;
 import hospitalmanagementsystem.Patient;
 import hospitalmanagementsystem.users.HealthStaff;
 
+/**
+ * 
+ * @author pieterohearn
+ *
+ */
 public class RecordController {
 	
 	private Session sessionModel;
@@ -33,11 +38,6 @@ public class RecordController {
 		this.view.setSession(sessionModel);
 	}
 
-	public String getPatientId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public String getRecord() {
 		// 
 		if(this.patient.getRecord() == null) {
@@ -47,16 +47,25 @@ public class RecordController {
 	}
 
 	public void saveRecord(String text) {
-		// store entry with timestamp
-		String recordUpdate = "\n" + LocalDate.now().toString() +"    " + LocalTime.now() + "\n" + text;
+		// store entry with user id, name and timestamp
+		String recordUpdate = "\n" + this.sessionModel.getUser().getUserID() + "  " + this.sessionModel.getUser().getUserName() + "\n" + LocalDate.now().toString() +"    " + LocalTime.now() + "\n" + text;
 		
 		// save the record
 		((HealthStaff) sessionModel.getUser()).editMedicalData(this.patient, recordUpdate);
 		
-		// go back to management
+		// go back to department
 		this.view.setVisible(false);
-		this.applicationController.manage(this.sessionModel);
+		if(this.sessionModel.getUser().getType().equals("Admin")) {
+			this.applicationController.manageDisplay(this.sessionModel);
+		} else {
+			this.applicationController.healthStaffDisplay(this.sessionModel);
+		}
 		
+		
+	}
+
+	public String getPatientId() {
+		return this.patient.getPatientId();
 	}
 
 }

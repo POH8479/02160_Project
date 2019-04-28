@@ -1,6 +1,5 @@
 import static org.junit.Assert.*;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 
@@ -12,7 +11,7 @@ import hospitalmanagementsystem.users.User;
 
 
 
-class InpatientTest1 {
+class InpatientTest {
 	
 	//Define patients and departments
 	static Patient p1;
@@ -29,37 +28,37 @@ class InpatientTest1 {
 	out = Outpatient.getInstance();
 	man = Management.getInstance();
 	}
-	@SuppressWarnings("unlikely-arg-type")
+	
 	@Test
 	public void addPatientTest() {
 		
 		in.addPatient(p1);
-		assertTrue(in.getPatientList().containsValue(p1));
+		assertTrue(in.getPatientList().contains(p1));
 
 	}
-	@SuppressWarnings("unlikely-arg-type")
+
 	@Test
 	public void removePatientTest() {
 		
 		in.removePatient(p1);
-		assertFalse(in.getPatientList().containsValue(p1));
+		assertFalse(in.getPatientList().contains(p1));
 
 	}
 	@Test
 	public void getNameTest() {
 		assertEquals("Inpatient",in.getName());
 	}
-	@SuppressWarnings("unlikely-arg-type")
+	
 	@Test
 	public void addUserTest(){
 		in.addUser(u1);
-		assertTrue(in.getUserList().containsValue(u1));
+		assertTrue(in.getUserList().contains(u1));
 	}
-	@SuppressWarnings("unlikely-arg-type")
+
 	@Test
 	public void removeUserTest(){
 		in.removeUser(u1);
-		assertFalse(in.getUserList().containsValue(u1));
+		assertFalse(in.getUserList().contains(u1));
 	}
 
 }

@@ -195,10 +195,10 @@ public class DoctorTest {
 		// create a doctor in Outpatient and check it works
 		Doctor d3 = new Doctor("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Outpatient");
 		assertEquals(outPa, d3.getDepartment());
-
+		
 		// create a doctor with an invalid department and expect an exception
 		try {
-			Doctor d4 = new Doctor("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Blahh");
+			d3 = new Doctor("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Blahh");
 			fail("Expected an IllegalArgumentException");
 		} catch(IllegalArgumentException e) {
 			assertEquals("Blahh is an invalid department.", e.getMessage());

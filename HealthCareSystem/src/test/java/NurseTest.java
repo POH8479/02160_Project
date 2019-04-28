@@ -198,7 +198,7 @@ public class NurseTest {
 
 		// create a doctor with an invalid department and expect an exception
 		try {
-			Nurse n4 = new Nurse("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Blahh");
+			n3 = new Nurse("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Blahh");
 			fail("Expected an IllegalArgumentException");
 		} catch(IllegalArgumentException e) {
 			assertEquals("Blahh is an invalid department.", e.getMessage());
