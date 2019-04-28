@@ -1,48 +1,143 @@
 package gui.model;
 
-
 import java.util.ArrayList;
 import java.util.Objects;
-
 import javax.swing.table.AbstractTableModel;
-
 import hospitalmanagementsystem.Patient;
-import hospitalmanagementsystem.departments.Department;
+import hospitalmanagementsystem.PersistenceLayer;
+import hospitalmanagementsystem.departments.*;
 import hospitalmanagementsystem.users.*;
 
+/**
+ * The Model for the Patients Table. 
+ * @author Pieter O'Hearn
+ *
+ */
 public class PatientModel extends AbstractTableModel {
-
+	// instance variables
 	private static final long serialVersionUID = -8100080945056395023L;
 	private ArrayList<Patient> patients;
 	
+	/**
+	 * Constructor of the PatientModel. Creates an array of patients loaded from memory.
+	 */
 	public PatientModel() {
+		// create a new PersistenceLayer and load the Patients TODO
+//		PersistenceLayer persistenceLayer = new PersistenceLayer();
+//		persistenceLayer.load("Departments/Emergency/Patients");
+//		persistenceLayer.load("Departments/Inpatient/Patients");
+//		persistenceLayer.load("Departments/Outpatient/Patients");
+//		persistenceLayer.load("Departments/Management/Patients");
+		
+		// create a new ArrayList of patients
 		patients = new ArrayList<Patient>();
+		
+		// add any saved patients into the ArrayList
+		patients.addAll(Emergency.getInstance().getPatientList());
+		patients.addAll(Inpatient.getInstance().getPatientList());
+		patients.addAll(Outpatient.getInstance().getPatientList());
 	}
 	
+	/**
+	 * Adds a new patient to the HMS.
+	 * @param newPatient The new Patient
+	 */
 	public void addNewPatient(Patient newPatient) {
+		// add the new Patient to the Patient List
 		patients.add(newPatient);
-		fireTableDataChanged(); // notify the views that data changed
+		
+		// TODO Where should we save patient that are not in a department
+		
+		// notify the views that data changed
+		fireTableDataChanged();
 	}
 	
+	/**
+	 * Discharges a patient from their current department.
+	 * @param patientId The ID of the Patient
+	 * @param user The User discharging the patient
+	 */
 	public void dischargePatient(String patientId, HealthStaff  user) {
-		// discharge
+		// find the patient with that PatientID
 		Patient toDischarge = findPatient(patientId);
+		
+		// try and discharge patient from their department
 		try {
 			user.dischargePatient(toDischarge);
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
+			// User does not have access to perform this 
 			e.printStackTrace();
 		}
 		
-		fireTableDataChanged(); // notify the views that data changed
+		// notify the views that data changed
+		fireTableDataChanged();
+	}
+
+	/**
+	 * Admits a patient to a department
+	 * @param patientID The patients ID
+	 * @param user The user admitting the patient
+	 * @param dept The department
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 */
+	public void admitPatient(String patientID, HealthStaff user, Department dept) throws IllegalAccessException, IllegalArgumentException {
+		// find the patient and admit them to the department
+		Patient toAdmit = findPatient(patientID);
+		user.admitPatient(toAdmit, dept);
 	}
 	
+	/**
+	 * Finds the patient with the given patient ID
+	 * @param patientId The patients ID
+	 * @return The Patient with the given ID
+	 */
+	public Patient findPatient(String patientId) {
+		// search through each patient in the List
+		for(Patient p : patients) {
+			// if a match is found return that patient
+			if(p.getPatientId().equals(patientId)) {
+				return p;
+			}
+		}
+		
+		// else return null
+		return null;
+	}
+
+	/**
+	 * Edits the patients information
+	 * @param patientId
+	 * @param firstName
+	 * @param lastName
+	 * @param dOB
+	 * @param address
+	 * @param phone
+	 */
+	public void edit(String patientId, String firstName, String lastName, String dOB, String address, String phone) {
+		// find the user with the corresponding patient id
+		Patient toEdit = findPatient(patientId);
+		
+		// set the patients information to that provided by the arguments
+		toEdit.setFirstName(firstName);
+		toEdit.setLastName(lastName);
+		toEdit.setPhoneNo(phone);
+		toEdit.setAddress(address);
+		toEdit.setPhone(phone);
+		toEdit.setDOB(dOB);
+		
+		// notify the views that data changed
+		fireTableDataChanged();
+	}
 	
-	// methods below to extend table model
+	/////////////////////////////////////////
+	// METHODS BELOW TO EXTEND TABLE MODEL //
+	/////////////////////////////////////////
 	
 	@Override
 	public int getColumnCount() {
-		return 9; // this is fixed: product and quantity
+		// this is fixed: product and quantity
+		return 9;
 	}
 
 	@Override
@@ -102,62 +197,5 @@ public class PatientModel extends AbstractTableModel {
 			return "Bed";
 		}
 		return null;
-	}
-
-	public void removeUser(String patientID, Admin admin) {
-		Patient toRemove = null;
-		// search for a match in the user List
-		for(Patient p : patients) {
-			if(p.getPatientId().equals(patientID)) {
-				// store
-				toRemove = p;
-				break;
-			}
-		}
-		
-		// remove from list
-		patients.remove(toRemove);
-		
-		// remove form HMS TODO
-//		admin.removePatient(toRemove);
-		
-		
-		fireTableDataChanged(); // notify the views that data changed
-		
-	}
-
-	public void admitPatient(String patientID, HealthStaff user, Department dept) throws IllegalAccessException, IllegalArgumentException {
-		// find the patient and admit them to the department
-		Patient toAdmit = findPatient(patientID);
-		user.admitPatient(toAdmit, dept);
-	}
-	
-	public Patient findPatient(String patientId) {
-		// search for a match in the patient List
-		for(Patient p : patients) {
-			if(p.getPatientId().equals(patientId)) {
-				// return patient
-				return p;
-			}
-		}
-		
-		// else return null
-		return null;
-		
-	}
-
-	public void edit(String patientId, String firstName, String lastName, String dOB, String address, String phone) {
-		// find the user
-		Patient toEdit = findPatient(patientId);
-		
-		// edit
-		toEdit.setFirstName(firstName);
-		toEdit.setLastName(lastName);
-		toEdit.setPhoneNo(phone);
-		toEdit.setAddress(address);
-		toEdit.setPhone(phone);
-		toEdit.setDOB(dOB);
-		
-		fireTableDataChanged(); // notify the views that data changed
 	}
 }

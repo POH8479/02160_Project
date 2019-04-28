@@ -23,22 +23,21 @@ public class PersistenceLayer {
 	 * folder structure if it doesn't already exist.
 	 */
 	public PersistenceLayer() {
-		File folder = new File("Departments");
-		folder.mkdir();
+		File root = new File("Departments");
+		root.mkdir();
 		for (String department : departments) {
-			folder = new File("Departments" + "\\" + department);
+			File folder = new File(root, department);
 			folder.mkdir();
-			for (String subfolder : subfolders) {
-				folder = new File("Departments" + "\\" + department + "\\" + subfolder);
-				folder.mkdir();
+			for (String sub : subfolders) {
+				File subfolder = new File(folder, sub);
+				subfolder.mkdir();
 			}
 		}
 	}
 	
 	public boolean save(Department department) {
 		// Creates directory path for the department
-		String dir = "Departments" + "\\" + department.getName()
-		+ "\\" + department.getName();
+		String dir = "Departments" + "/" + department.getName();
 		
 		// Writes department object to the file specified by the directory
 		XMLEncoder e = null;
@@ -58,22 +57,22 @@ public class PersistenceLayer {
 	public boolean save(Object obj, String ID, Department department) {
 		//TODO Consider changing from Object to something less general
 		// Creates the directory for the object to be stored
-		String dir = "Departments" + "\\" + department.getName();
+		String dir = "Departments" + "/" + department.getName();
 		char type = ID.charAt(0);
 		switch (type) {
 			case 'U':
-				dir = dir + "\\" + "Users";
+				dir = dir + "/" + "Users";
 				break;
 			case 'P':
-				dir = dir + "\\" + "Patients";
+				dir = dir + "/" + "Patients";
 				break;
 			case 'B':
-				dir = dir + "\\" + "Beds";
+				dir = dir + "/" + "Beds";
 				break;
 			default:
 				return false;
 		}
-		dir = dir + "\\" + ID;
+		dir = dir + "/" + ID;
 		
 		// Writes object to the file specified by the directory
 		XMLEncoder e = null;

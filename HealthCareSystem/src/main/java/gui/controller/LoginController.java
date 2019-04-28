@@ -1,10 +1,10 @@
 package gui.controller;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import gui.model.*;
 import gui.view.LoginView;
 import hospitalmanagementsystem.users.*;
+import hospitalmanagementsystem.LoginManager;
 import hospitalmanagementsystem.departments.*;
 
 /**
@@ -35,42 +35,66 @@ public class LoginController {
 	 * @param password the same as the username
 	 */
 	public void validateCredentials(String username, String password) {
-		User u = findUser(username);
-		// if the username is Admin the super user is evoked
-		if (u == null && username.equals("A1")) {
-			Admin genericAdmin = new Admin("Super Admin", "Super Admin's Address", "+45 12345678");
-			session.getUserModel().addNewUser(genericAdmin);
-			session.setUser(genericAdmin);
+		// create a new Login Manager
+		LoginManager loginManager = new LoginManager();
+		
+		// Find the user with that username and store in a local variable
+		User user = findUser(username);
+		
+		// check if the loginManager returns true
+		if (loginManager.checkID(user)) {
+			// set the User for the session and close the Login Window
+			session.setUser(findUser(username));
+			view.setVisible(false);
+		} // if the username is "A1" but no user is found
+		else if(user == null && username.equals("A1")) {
+			// create a new generic Admin user and add it to the user model
+			user = new Admin("Super Admin", "Super Admin's Address", "+45 12345678");
+			session.getUserModel().addNewUser(user);
+			
+			// set the User for the session and close the Login Window
+			session.setUser(user);
 			view.setVisible(false);
 			app.manage(session);
-		} else if (Objects.equals(u,null)) {
+		} // otherwise show an error message
+		else {
 			view.showError();
-		} else {
-			session.setUser(u);
-			view.setVisible(false);
-			
-			switch(u.getType()) {
-				case "Admin":
-					app.manage(session);
-					break;
-				case "Doctor":
-					app.healthStaff(session);
-					break;
-				case "Nurse":
-					app.healthStaff(session);
-					break;
-				default:
-					app.user(session);
-			}
-			
-	
+			return;
+		}
+		
+		// check what type of user is logging in 
+		switch(user.getType()) {
+			// if an Admin open the management View
+			case "Admin":
+				app.manage(session);
+				break;
+			// if a Doctor open the healthStaff View
+			case "Doctor":
+				app.healthStaff(session);
+				break;
+			// if a Nurse open the healthStaff View
+			case "Nurse":
+				app.healthStaff(session);
+				break;
+			// otherwise open the general User view
+			default:
+				app.user(session);
 		}
 	}
 
+	/**
+	 * displays the Login view
+	 */
 	public void display() {
+		// set the visibility of the Login view to true
 		view.setVisible(true);
 	}
 	
+	/**
+	 * Finds the User who has this unique User ID. if no user is found, null is returned.
+	 * @param userID The Users unique ID
+	 * @return the User with this ID
+	 */
 	private User findUser(String userID) {
 		// retrieve the User list from all the departments and store in userList
 		ArrayList<User> userList = Emergency.getInstance().getUserList();
@@ -80,12 +104,13 @@ public class LoginController {
 		
 		// search for a match and return if found
 		for(User u : userList) {
+			// if a match is found then return the user
 			if(u.getUserID().equals(userID)) {
 				return u;
 			}
 		}
 		
+		// otherwise return null
 		return null;
 	}
-
 }

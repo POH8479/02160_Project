@@ -56,7 +56,7 @@ public class HealthStaffController {
 	}
 	
 	/**
-	 * Adds a new Patient to the HMS.
+	 * Adds a new Patient to the HMS. An Option pane is opened where the new Patients information can be inputed.
 	 */
 	public void addPatient() {
 		// Create a JTextField for each input
@@ -66,7 +66,7 @@ public class HealthStaffController {
 		JTextField address = new JTextField(5);
 		JTextField phoneNo = new JTextField(5);
 		
-		// create a new JPanel and add each of the above JTextFields along with their corresponding Labels 
+		// create a new JPanel and add each of the above JTextFields along with their corresponding Labels
 		JPanel patientPanel = new JPanel();
 		patientPanel.add(new JLabel("First Name:"));
 		patientPanel.add(firstName);
@@ -173,7 +173,7 @@ public class HealthStaffController {
 		JTextField phoneNo = new JTextField((String) patientModel.getValueAt(selectedRow, 4),10);
 		JTextField dOB = new JTextField((String) patientModel.getValueAt(selectedRow, 6),10);
 
-		// create a new JPanel and add each of the above JTextFields along with their corresponding Labels 
+		// create a new JPanel and add each of the above JTextFields along with their corresponding Labels
 		JPanel patientPanel = new JPanel();
 		patientPanel.add(new JLabel("First Name:"));
 		patientPanel.add(firstName);
@@ -186,7 +186,7 @@ public class HealthStaffController {
 		patientPanel.add(new JLabel("Phone Number:"));
 		patientPanel.add(phoneNo);
 
-		// Display the JList using a JOptionPane and store the confirmation result 
+		// Display the JList using a JOptionPane and store the confirmation result
         int confirmation = JOptionPane.showConfirmDialog(null, patientPanel, "Update the Users information", JOptionPane.OK_CANCEL_OPTION);
 
         // check the confirmation result
@@ -197,8 +197,8 @@ public class HealthStaffController {
 	}
 	
 	/**
-	 * Shows the record of a given patient
-	 * @param selectedRow The row number of the selected patient
+	 * Opens the Patient Record Window by calling the RecordController.
+	 * @param selectedRow The row number of the selected patient in the patient table
 	 */
 	public void showRecord(int selectedRow) {
 		// find the patient and save as a local variable
