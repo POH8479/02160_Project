@@ -1,20 +1,23 @@
 package hospitalmanagementsystem.departments;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
 
 import hospitalmanagementsystem.Patient;
 import hospitalmanagementsystem.users.*;
 
+/**
+ * 
+ * @author Kun
+ *
+ */
+
 public abstract class Department {
 	String ID;
 	String name;
-	List<User> userList = new ArrayList<User>();
+	ArrayList<User> userList = new ArrayList<User>();
+	ArrayList<Patient> patientList = new ArrayList<Patient>();
 
-	public void addUser(User User) {
-		userList.add(User);
-	}
+	public abstract void addUser(User User);
 
 	public void removeUser(User User) {
 		userList.remove(User);
@@ -25,16 +28,12 @@ public abstract class Department {
 		
 	}
 
-	public void removePatient(Patient patient) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	public Hashtable<String, String> getPatientList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract void removePatient(Patient patient);
 	
 	public abstract String getName();
+	
+	public abstract ArrayList<Patient> getPatientList();
+	
+	public abstract ArrayList<User> getUserList();
 	
 }

@@ -1,6 +1,5 @@
 import static org.junit.Assert.*;
 
-import java.time.LocalDate;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -43,8 +42,8 @@ public class DoctorTest {
 		d2 = new Doctor("Jane Doctor", "123 Main St Medicaltown, Germany", "+4912345678", "Inpatient");
 
 		// create the Patients
-		p1 = new Patient("Pieter", "O\'Hearn", LocalDate.of(1990, 1,12), "259 Nordvej 2800 Kongens Lyngby", "+4562473948");
-		p2 = new Patient("Jack", "Rodman", LocalDate.of(1997, 6,28), "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
+		p1 = new Patient("Pieter", "O\'Hearn", "12/01/1990", "259 Nordvej 2800 Kongens Lyngby", "+4562473948");
+		p2 = new Patient("Jack", "Rodman", "28/06/1997", "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
 
 		// create the Departments
 		em = Emergency.getInstance();
@@ -58,27 +57,36 @@ public class DoctorTest {
 
 	/**
 	 * Tests the admitPatient method of the Doctor Class
-	 * @throws IllegalAccessException 
+	 * @throws IllegalAccessException
 	 */
 	@Test
 	public void admitPatientTest() throws IllegalAccessException {
 		// admit p1 to Inpatient and check both patients variable and departments list
-		assertEquals(null, p1.getPatientInfo().get("Department"));
+		p1.updateDepartment(null);
 		d2.admitPatient(p1,inPa);
 		assertEquals("Inpatient",p1.getPatientInfo().get("Department"));
-		assertTrue(inPa.getPatientList().contains(p1.getPatientInfo().get("Patient ID")));
+		assertTrue(inPa.getPatientList().contains(p1));
 		assertEquals(null,p1.getPatientInfo().get("Bed"));
 
 		// admit to Emergency and check that a bed is assigned and that both patients variable and departments list
-		assertEquals(null,p2.getPatientInfo().get("Department"));
+		assertEquals("None",p2.getPatientInfo().get("Department"));
 		d1.admitPatient(p2,em);
 		assertEquals("Emergency",p2.getPatientInfo().get("Department"));
-		assertTrue(em.getPatientList().contains(p2.getPatientInfo().get("Patient ID")));
-		
+		assertTrue(em.getPatientList().contains(p2));
+
 		// check doctors from other departments can admit patients
 		d1.dischargePatient(p2);
 		d1.admitPatient(p2,outPa);
 		assertEquals("Outpatient",p2.getPatientInfo().get("Department"));
+
+		// try and admit patient to the management class
+		try {
+			d1.dischargePatient(p2);
+			d1.admitPatient(p2,man);
+			fail("Should have thrown an IllegalAccessException");
+		} catch(IllegalAccessException e) {
+			assertEquals("Can not admit a patient to the Management department.",e.getMessage());
+		}
 	}
 
 	// create a rule
@@ -86,47 +94,49 @@ public class DoctorTest {
 
 	/**
 	 * Tests the admitPatient method of the Doctor Class when the patient already has a Department
-	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
 	 */
 	@Test
-	public void admitPatientErrorTest() throws IllegalAccessException {
-		exception.expect(IllegalAccessException.class);
+	public void admitPatientErrorTest() throws IllegalArgumentException, IllegalAccessException {
+		exception.expect(IllegalArgumentException.class);
 		exception.expectMessage("Can not admit a patient who is already admitted to a department.");
 		d2.admitPatient(p1,outPa);
 	}
 
 	/**
 	 * Tests the dischargePatient method of the Doctor Class
-	 * @throws IllegalAccessException 
+	 * @throws IllegalAccessException
 	 */
 	@Test
 	public void dischargePatientTest() throws IllegalAccessException {
-		// Doctor2 discharges patient1 from Inpatient and check is Department is null
+		// Doctor2 discharges patient2 from Outpatient and check is Department is null
 		assertEquals("Inpatient",p1.getPatientInfo().get("Department"));
 		d2.dischargePatient(p1);
-		assertEquals(null,p1.getPatientInfo().get("Department"));
+		assertEquals("None",p1.getPatientInfo().get("Department"));
 
 		// check doctors from other departments can discharge Patients
+		p2.updateDepartment(outPa);
 		assertEquals("Outpatient",p2.getPatientInfo().get("Department"));
-		assertEquals("Emergency",d1.getUserInfo().get("Department"));
+		assertEquals("Emergency",d1.getDepartment().getName());
 		d1.dischargePatient(p2);
-		assertEquals(null,p2.getPatientInfo().get("Department"));
+		assertEquals("None",p2.getPatientInfo().get("Department"));
 	}
 
 	/**
 	 * Tests the dischargePatient method of the Doctor Class when the patient already has a Department
-	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException
 	 */
 	@Test
-	public void dischargePatientErrorTest() throws IllegalArgumentException, IllegalAccessException {
+	public void dischargePatientErrorTest() throws IllegalArgumentException {
 		exception.expect(IllegalArgumentException.class);
 		exception.expectMessage("Can not discharge a patient who is not already admitted into any department.");
-		d2.dischargePatient(p1);
+		d2.dischargePatient(p2);
 	}
 
 	/**
 	 * Tests the assignBed method of the Doctor Class
-	 * @throws IllegalAccessException 
+	 * @throws IllegalAccessException
 	 */
 	@Test
 	public void assignBedTest() throws IllegalArgumentException, IllegalAccessException {
@@ -135,8 +145,8 @@ public class DoctorTest {
 		d1.assignBed(p1, b1);
 
 		// check that the patients info and beds info reflect this
-		assertEquals(p1, b1.getPatient());
-		assertEquals(b1.getBedID(),p1.getPatientInfo().get("Bed"));
+		assertEquals(p1.getPatientInfo().get("Patient ID"), b1.getPatient());
+		assertEquals(b1.getBedID(),p1.getPatientInfo().get("Bed ID"));
 
 		// try assign patient2 to the same bed, an IllegalArgumentException is expected
 		try {
@@ -178,10 +188,21 @@ public class DoctorTest {
 	}
 
 	/**
-	 * Tests the performTest method of the Doctor Class
+	 * Tests the Constructor method of the Doctor Class
 	 */
 	@Test
-	public void performTestTes() {
-		// TODO
+	public void ConstructorTest() {
+		// create a doctor in Outpatient and check it works
+		Doctor d3 = new Doctor("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Outpatient");
+		assertEquals(outPa, d3.getDepartment());
+		
+		// create a doctor with an invalid department and expect an exception
+		try {
+			d3 = new Doctor("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Blahh");
+			fail("Expected an IllegalArgumentException");
+		} catch(IllegalArgumentException e) {
+			assertEquals("Blahh is an invalid department.", e.getMessage());
+		}
 	}
+
 }

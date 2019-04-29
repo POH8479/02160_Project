@@ -1,26 +1,22 @@
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-
-import java.time.LocalDate;
-import java.util.Hashtable;
+import static org.junit.Assert.*;
 
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import hospitalmanagementsystem.*;
-import hospitalmanagementsystem.departments.*;
 import hospitalmanagementsystem.users.*;
-import java.time.format.DateTimeFormatter;
 
 public class StepDefinition {
-	
+
 	// variables
 	User u1;
 	Patient p1;
+
 	Emergency d1;
 	Admin a1;
 	Nurse n1;
+  
 	@Given("^Any user of the program and a patient that has not been admitted$")
 	public void any_user_of_the_program_and_a_patient_that_has_not_been_admitted() {
 	    // create a user
@@ -29,7 +25,7 @@ public class StepDefinition {
 
 	@When("^They enter a new patient's non-medical data$")
 	public void they_enter_a_new_patient_s_non_medical_data() {
-	    // create a new patient
+    // create a new patient
 		p1 = new Patient("Jane", "Doe", LocalDate.of(2000, 1,1), "456 North St Anytown, Denmark", "+45234556789");
 	}
 

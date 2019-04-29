@@ -1,26 +1,38 @@
 package hospitalmanagementsystem.users;
 
 import hospitalmanagementsystem.departments.*;
-import hospitalmanagementsystem.Bed;
-import hospitalmanagementsystem.HMS;
-import hospitalmanagementsystem.Patient;
+
+import java.util.Objects;
+
+import hospitalmanagementsystem.*;
 
 public class Nurse extends User implements HealthStaff{
-	// Static Variables
-	static int idCounter;
-	
 	// Instance variables
 	Department department;
-	final String nurseID;
 
 	public Nurse(String usersName, String usersAddress, String phone, String department) {
-		super(usersName, usersAddress, phone);
+		super(usersName, usersAddress, phone, "N");
     
 		//assign department based on input
-		this.department = HMS.getDepartment(department);
-		
-		idCounter++;
-		nurseID = "N" + Integer.toString(idCounter);
+		switch(department==null?"null":department) {
+			case "Emergency":
+				this.department = Emergency.getInstance();
+				Emergency.getInstance().addUser(this);
+				break;
+			case "Inpatient":
+				this.department = Inpatient.getInstance();
+				Inpatient.getInstance().addUser(this);
+				break;
+			case "Outpatient":
+				this.department = Outpatient.getInstance();
+				Outpatient.getInstance().addUser(this);
+				break;
+			case "null":
+				this.department = null;
+				break;
+			default:
+				throw new IllegalArgumentException(String.format("%s is an invalid department.",department));
+		}
 	}
 
 	/**
@@ -29,12 +41,15 @@ public class Nurse extends User implements HealthStaff{
 	 *
 	 * @param patient The Patient that is being admitted
 	 * @param department The department to admit the patient to
-	 * @throws IllegalAccessException 
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
 	 */
-	public void admitPatient(Patient patient, Department department) throws IllegalAccessException {
+	public void admitPatient(Patient patient, Department department) throws IllegalAccessException, IllegalArgumentException {
 		// if department is Management then throw an exception
 		if(department instanceof Management) {
-			throw new IllegalAccessException();
+			throw new IllegalAccessException("Can not admit a patient to the Management department.");
+		} else if(!Objects.equals(patient.getPatientInfo().get("Department"), "None")) { 
+			throw new IllegalArgumentException("Can not admit a patient who is already admitted to a department.");
 		} else {
 			// Update the patients department variable
 			patient.updateDepartment(department);
@@ -50,13 +65,17 @@ public class Nurse extends User implements HealthStaff{
 	 *
 	 * @param patient The Patient that is being discharged
 	 */
-
-	public void dischargePatient(Patient patient) throws IllegalAccessException {
-		// Update the patients department variable
-		patient.updateDepartment(null);
-
-		// remove the Patient from the departments patient list
-		department.removePatient(patient);
+	public void dischargePatient(Patient patient) throws IllegalArgumentException{
+		// check if already checked out
+		if(patient.getPatientInfo().get("Department").equals("None")) {
+			throw new IllegalArgumentException("Can not discharge a patient who is not already admitted into any department.");
+		} else {
+			// remove the Patient from the departments patient list
+			patient.getDepartment().removePatient(patient);
+			
+			// Update the patients department variable
+			patient.updateDepartment(null);
+		}
 	}
 
 	/**
@@ -103,5 +122,23 @@ public class Nurse extends User implements HealthStaff{
 		// request the updated record and return it
 		return patient.getRecord();
 		
+	}
+	
+	public Department getDepartment() {
+		return this.department;
+	}
+	
+	@Override
+	public String getType() {
+		return "Nurse";
+	}
+	
+	public void moveDepartment(Department department) {
+		// change department
+		if(this.department != null) {
+			this.department.getUserList().remove(this);
+		}
+		this.department = department;
+		department.getUserList().add(this);
 	}
 }

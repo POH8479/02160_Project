@@ -53,10 +53,10 @@ public class Bed {
 	 */
 	public void addPatient(Patient patient) throws IllegalArgumentException {
 		// check if the bed is full
-		if(this.patient.equals(null)) {
+		if(this.patient != null) {
 			// if full throw IllegalArgumentException
 			throw new IllegalArgumentException(String.format("Bed %s is already occupied", this.bedID));
-		} else if(!patient.getPatientInfo().get("Department").equals(this.department.toString())) {
+		} else if(!patient.getPatientInfo().get("Department").equals(this.department.getName())) {
 			// if bed is in wrong department throw IllegalArgumentException
 			throw new IllegalArgumentException(String.format("Bed %s is in a different Department to %s", this.bedID, patient.getPatientInfo().get("First Name")));
 		} else {
@@ -72,7 +72,7 @@ public class Bed {
 	 */
 	public String getPatient() {
 		// check if null
-		if(this.patient.equals(null)) {
+		if(this.patient == null) {
 			return null;
 		}
 		
@@ -89,8 +89,10 @@ public class Bed {
 	}
 
 	public Object getDepartment() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.department;
 	}
-
+	
+	public void removePatient() {
+		this.patient = null;
+	}
 }

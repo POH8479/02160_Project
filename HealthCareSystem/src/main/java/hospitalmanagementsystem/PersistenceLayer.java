@@ -26,19 +26,22 @@ public class PersistenceLayer {
 		File folder = new File("Departments");
 		folder.mkdir();
 		for (String department : departments) {
-			folder = new File("Departments" + "\\" + department);
+			folder = new File("Departments" + File.separator + department);
 			folder.mkdir();
 			for (String subfolder : subfolders) {
-				folder = new File("Departments" + "\\" + department + "\\" + subfolder);
+				folder = new File("Departments" + File.separator + department + File.separator + subfolder);
 				folder.mkdir();
 			}
 		}
 	}
 	
+	/*
+	 * Saves either a department or 
+	 */
 	public boolean save(Department department) {
 		// Creates directory path for the department
-		String dir = "Departments" + "\\" + department.getName()
-		+ "\\" + department.getName();
+		String dir = "Departments" + File.separator + department.getName()
+		+ File.separator + department.getName();
 		
 		// Writes department object to the file specified by the directory
 		XMLEncoder e = null;
@@ -58,22 +61,22 @@ public class PersistenceLayer {
 	public boolean save(Object obj, String ID, Department department) {
 		//TODO Consider changing from Object to something less general
 		// Creates the directory for the object to be stored
-		String dir = "Departments" + "\\" + department.getName();
+		String dir = "Departments" + File.separator + department.getName();
 		char type = ID.charAt(0);
 		switch (type) {
 			case 'U':
-				dir = dir + "\\" + "Users";
+				dir = dir + File.separator + "Users";
 				break;
 			case 'P':
-				dir = dir + "\\" + "Patients";
+				dir = dir + File.separator + "Patients";
 				break;
 			case 'B':
-				dir = dir + "\\" + "Beds";
+				dir = dir + File.separator + "Beds";
 				break;
 			default:
 				return false;
 		}
-		dir = dir + "\\" + ID;
+		dir = dir + File.separator + ID;
 		
 		// Writes object to the file specified by the directory
 		XMLEncoder e = null;
@@ -88,6 +91,13 @@ public class PersistenceLayer {
 		e.close();
 		return true;
 	}
+	
+	//TEST
+	
+	//load department
+	//load beds
+	//load patients
+	//load users
 	
 	// Loads class contained in given file
 	public Object load(String filename) {
@@ -106,12 +116,40 @@ public class PersistenceLayer {
 	}
 	
 	// Deletes the file
-	public Boolean delete(String filename) {
-		return true;
+	public Boolean delete(Department department) {
+		// Creates directory path for the department
+		String dir = "Departments" + File.separator + department.getName()
+			+ File.separator + department.getName();
+		File delFile = new File(dir);
+		if(delFile.delete()) return true;
+		else return false;
 	}
 	
-	//updates a file
-	public void update() {}
+	public Boolean delete(String ID, Department department) {
+		// Creates the directory for the object to be stored
+		String dir = "Departments" + File.separator + department.getName();
+		char type = ID.charAt(0);
+		switch (type) {
+			case 'U':
+				dir = dir + File.separator + "Users";
+				break;
+			case 'P':
+				dir = dir + File.separator + "Patients";
+				break;
+			case 'B':
+				dir = dir + File.separator + "Beds";
+				break;
+			default:
+				return false;
+		}
+		dir = dir + File.separator + ID;
+		
+		//Attempts to delete the file
+		File delFile = new File(dir);
+		if(delFile.delete()) return true;
+		else return false;	
+	}
+	
 
 	
 }
