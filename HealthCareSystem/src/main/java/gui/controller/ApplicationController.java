@@ -7,7 +7,6 @@ import gui.view.RecordView;
 import gui.view.UserView;
 import hospitalmanagementsystem.Patient;
 import hospitalmanagementsystem.PersistenceLayer;
-import hospitalmanagementsystem.departments.*;
 
 /**
  * The main controller of the Graphical User Interface (GUI).

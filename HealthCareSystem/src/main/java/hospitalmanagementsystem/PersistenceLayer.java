@@ -10,8 +10,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import hospitalmanagementsystem.departments.Department;
-import hospitalmanagementsystem.departments.Management;
-import hospitalmanagementsystem.users.User;
 
 
 /**
@@ -25,53 +23,60 @@ public class PersistenceLayer {
 	 * folder structure if it doesn't already exist.
 	 */
 	public PersistenceLayer() {
-		File root = new File("Departments");
-		root.mkdir();
+		File folder = new File("Departments");
+		folder.mkdir();
 		for (String department : departments) {
-			File folder = new File(root, department);
+			folder = new File("Departments" + File.separator + department);
 			folder.mkdir();
-			for (String sub : subfolders) {
-				File subfolder = new File(folder, sub);
-				subfolder.mkdir();
+			for (String subfolder : subfolders) {
+				folder = new File("Departments" + File.separator + department + File.separator + subfolder);
+				folder.mkdir();
 			}
 		}
 	}
 	
+	/*
+	 * Saves either a department or 
+	 */
 	public boolean save(Department department) {
-		// save the Users
-		for(User user : department.getUserList()) {
-			save(user, user.getUserID(), department);
-		}
+		// Creates directory path for the department
+		String dir = "Departments" + File.separator + department.getName()
+		+ File.separator + department.getName();
 		
-		// save all the patients
-		if(!department.equals(Management.getInstance())) {
-			for(Patient patient : department.getPatientList()) {
-				save(patient, patient.getPatientId(), department);
-			}
+		// Writes department object to the file specified by the directory
+		XMLEncoder e = null;
+		try{
+			e = new XMLEncoder(
+                new BufferedOutputStream(
+                    new FileOutputStream(dir)));
+		} catch(FileNotFoundException fileNotFound) {
+			return false;
 		}
-		
+		System.out.println(dir);
+		e.writeObject(department);
+		e.close();
 		return true;
 	}
 	
 	public boolean save(Object obj, String ID, Department department) {
 		//TODO Consider changing from Object to something less general
 		// Creates the directory for the object to be stored
-		String dir = "Departments" + "/" + department.getName();
+		String dir = "Departments" + File.separator + department.getName();
 		char type = ID.charAt(0);
 		switch (type) {
 			case 'U':
-				dir = dir + "/" + "Users";
+				dir = dir + File.separator + "Users";
 				break;
 			case 'P':
-				dir = dir + "/" + "Patients";
+				dir = dir + File.separator + "Patients";
 				break;
 			case 'B':
-				dir = dir + "/" + "Beds";
+				dir = dir + File.separator + "Beds";
 				break;
 			default:
 				return false;
 		}
-		dir = dir + "/" + ID;
+		dir = dir + File.separator + ID;
 		
 		// Writes object to the file specified by the directory
 		XMLEncoder e = null;
@@ -88,6 +93,11 @@ public class PersistenceLayer {
 	}
 	
 	//TEST
+	
+	//load department
+	//load beds
+	//load patients
+	//load users
 	
 	// Loads class contained in given file
 	public Object load(String filename) {
@@ -106,12 +116,40 @@ public class PersistenceLayer {
 	}
 	
 	// Deletes the file
-	public Boolean delete(String filename) {
-		return true;
+	public Boolean delete(Department department) {
+		// Creates directory path for the department
+		String dir = "Departments" + File.separator + department.getName()
+			+ File.separator + department.getName();
+		File delFile = new File(dir);
+		if(delFile.delete()) return true;
+		else return false;
 	}
 	
-	//updates a file
-	public void update() {}
+	public Boolean delete(String ID, Department department) {
+		// Creates the directory for the object to be stored
+		String dir = "Departments" + File.separator + department.getName();
+		char type = ID.charAt(0);
+		switch (type) {
+			case 'U':
+				dir = dir + File.separator + "Users";
+				break;
+			case 'P':
+				dir = dir + File.separator + "Patients";
+				break;
+			case 'B':
+				dir = dir + File.separator + "Beds";
+				break;
+			default:
+				return false;
+		}
+		dir = dir + File.separator + ID;
+		
+		//Attempts to delete the file
+		File delFile = new File(dir);
+		if(delFile.delete()) return true;
+		else return false;	
+	}
+	
 
 	
 }
