@@ -4,6 +4,7 @@ import hospitalmanagementsystem.departments.*;
 
 public class HMS {
 
+	
 	/**
 	 * This method searches for and returns the Department with the given name.
 	 * If no department matches that name then an error is thrown.
