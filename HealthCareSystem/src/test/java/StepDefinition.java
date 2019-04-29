@@ -60,6 +60,7 @@ public class StepDefinition {
 	@Given("^A department$")
 	public void a_department(){
 	    // create a department
+		//d1=new Department();
 	}
 
 	@When("^I request the number of available beds$")
