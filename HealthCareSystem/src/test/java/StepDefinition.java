@@ -18,7 +18,7 @@ public class StepDefinition {
 	// variables
 	User u1;
 	Patient p1;
-	Department d1;
+	Emergency d1;
 	Admin a1;
 	Nurse n1;
 	@Given("^Any user of the program and a patient that has not been admitted$")
@@ -60,12 +60,13 @@ public class StepDefinition {
 	@Given("^A department$")
 	public void a_department(){
 	    // create a department
-		//d1=new Department();
+		d1=Emergency.getInstance();
 	}
 
 	@When("^I request the number of available beds$")
 	public void i_request_the_number_of_available_beds(){
-	    //department.capacity
+	    //return number of available beds
+		
 	}
 
 	@Then("^an integer is returned with the number of free beds$")
