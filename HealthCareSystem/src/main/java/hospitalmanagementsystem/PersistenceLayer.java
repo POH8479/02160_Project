@@ -92,15 +92,34 @@ public class PersistenceLayer {
 		return true;
 	}
 	
-	//TEST
+	/*
+	 * Loads a department
+	 */
+	public Object loadDepartment(Department department) {
+		String dir = "Departments" + File.separator + department.getName()
+		+ File.separator + department.getName();
+		
+		XMLDecoder d = null;
+		try {
+			d = new XMLDecoder(
+	                new BufferedInputStream(
+	                    new FileInputStream(dir)));
+		}catch(FileNotFoundException fileNotFound) {
+			System.out.println("Error: Could not find or open the file");
+		}
+		Object obj = new Object();
+		obj = d.readObject();
+		return obj;		
+	}
+
 	
-	//load department
+	
 	//load beds
 	//load patients
 	//load users
 	
 	// Loads class contained in given file
-	public Object load(String filename) {
+	/*public Object load(String filename) {
 		XMLDecoder d = null;
 		try{
 			d = new XMLDecoder(
@@ -113,7 +132,7 @@ public class PersistenceLayer {
 		Object obj = new Object();
 		obj = d.readObject();
 		return obj;
-	}
+	}*/
 	
 	// Deletes the file
 	public Boolean delete(Department department) {
