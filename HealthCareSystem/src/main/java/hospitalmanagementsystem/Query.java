@@ -81,5 +81,3 @@ public static int totUsers() {
 
 }
 
-//number of patients discharged
-//
