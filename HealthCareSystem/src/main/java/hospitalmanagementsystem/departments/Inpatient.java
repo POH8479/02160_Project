@@ -23,6 +23,7 @@ public class Inpatient extends Department {
     	this.capacity = 100;
     	patientList = new ArrayList<Patient>();
     	bedList = new ArrayList<Bed>();
+    	userList = new ArrayList<User>();
     }
 	
     // static method to create instance of Inpatient class 
@@ -54,5 +55,9 @@ public class Inpatient extends Department {
 	
 	public ArrayList<User> getUserList() {
 		return this.userList;
+	}
+	
+	public void addUser(User User) {
+		userList.add(User);
 	}
 }

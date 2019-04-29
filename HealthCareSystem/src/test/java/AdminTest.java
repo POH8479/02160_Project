@@ -1,6 +1,5 @@
 import static org.junit.Assert.*;
 
-import java.time.LocalDate;
 import java.util.Objects;
 
 import org.junit.BeforeClass;
@@ -44,8 +43,8 @@ public class AdminTest {
 		ad2 = new Admin("Andy Admin", "123 Main St Medicaltown, Germany", "+4912345678");
 
 		// create the Patients
-		p1 = new Patient("Pieter", "O\'Hearn", LocalDate.of(1990, 1,12), "259 Nordvej 2800 Kongens Lyngby", "+4562473948");
-		p2 = new Patient("Jack", "Rodman", LocalDate.of(1997, 6,28), "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
+		p1 = new Patient("Pieter", "O\'Hearn", "12/01/1990", "259 Nordvej 2800 Kongens Lyngby", "+4562473948");
+		p2 = new Patient("Jack", "Rodman", "28/06/1997", "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
 
 		// create the Departments
 		em = Emergency.getInstance();
@@ -62,7 +61,7 @@ public class AdminTest {
 	 */
 	@Test
 	public void admitPatientTest() throws IllegalAccessException {
-		
+
 		//test that error is thrown when admitting patient to management dept
 		try {
 			ad1.admitPatient(p1, man);
@@ -70,7 +69,7 @@ public class AdminTest {
 			} catch(IllegalAccessException expected) {
 				assertEquals("Can not admit a patient to the Management department.",expected.getMessage());
 			}
-		
+
 		// admit p1 to Inpatient and check both patients variable and departments list
 		ad2.dischargePatient(p1);
 		ad2.admitPatient(p1,inPa);
@@ -90,7 +89,7 @@ public class AdminTest {
 
 	/**
 	 * Tests the admitPatient method of the Admin Class when the patient already has a Department
-	 * @throws IllegalAccessException 
+	 * @throws IllegalAccessException
 	 */
 	@Test
 	public void admitPatientErrorTest() throws IllegalAccessException {
@@ -113,7 +112,7 @@ public class AdminTest {
 
 	/**
 	 * Tests the dischargePatient method of the Admin Class when the patient already has a Department
-	 * @throws IllegalAccessException 
+	 * @throws IllegalAccessException
 	 */
 	@Test
 	public void dischargePatientErrorTest() throws IllegalAccessException{
@@ -125,7 +124,7 @@ public class AdminTest {
 
 	/**
 	 * Tests the assignBed method of the Admin Class
-	 * @throws IllegalAccessException 
+	 * @throws IllegalAccessException
 	 */
 	@Test
 	public void assignBedTest() throws IllegalArgumentException, IllegalAccessException {
@@ -186,7 +185,7 @@ public class AdminTest {
 		ad1.removeUser(badUser);
 		assertFalse(badUser.getDepartment().getUserList().contains(badUser));
 	}
-	
+
 	/**
 	 * Tests the addUser method of the Admin Class
 	 */
@@ -195,17 +194,17 @@ public class AdminTest {
 		// Add one of each user
 		Admin a = (Admin) ad1.addUser("Admin", "Admin's Address", "Admins Phone", "Admin");
 		assertEquals('A',a.getUserInfo().get("User ID").charAt(0));
-		
+
 		Doctor d = (Doctor) ad1.addUser("Doctor", "Doctor's Address", "Doctors Phone", "Doctor");
 		assertEquals('D',d.getUserInfo().get("User ID").charAt(0));
-		
+
 		Nurse n = (Nurse) ad1.addUser("Nurse", "Nurse's Address", "Nurses Phone", "Nurse");
 		assertEquals('N',n.getUserInfo().get("User ID").charAt(0));
-		
+
 		User u = ad1.addUser("User", "User's Address", "Users Phone", "User");
 		assertEquals('U',u.getUserInfo().get("User ID").charAt(0));
 	}
-	
+
 	/**
 	 * Tests the getDepartment method of the Admin Class
 	 */

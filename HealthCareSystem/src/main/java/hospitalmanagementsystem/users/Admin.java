@@ -23,7 +23,9 @@ public class Admin extends User implements HealthStaff{
 		
 		// set the department to Admin
 		this.department = Management.getInstance();
-		// TODO add user to department List
+		
+		// update the departments list
+		Management.getInstance().addUser(this);
 	}
 
 	/**
@@ -152,5 +154,15 @@ public class Admin extends User implements HealthStaff{
 
 	public Department getDepartment() {
 		return this.department;
+	}
+	
+	@Override
+	public String getType() {
+		return "Admin";
+	}
+	
+	public void moveDepartment(Department department) {
+		// TODO Cannot change department
+		
 	}
 }

@@ -38,4 +38,9 @@ public class Management extends Department {
 	public ArrayList<User> getUserList() {
 		return this.userList;
 	}
+	
+	@Override
+	public void addUser(User User) {
+		userList.add(User);
+	}
 }

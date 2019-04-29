@@ -1,7 +1,5 @@
 import static org.junit.Assert.*;
 
-import java.time.LocalDate;
-
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -10,11 +8,11 @@ import hospitalmanagementsystem.*;
 import hospitalmanagementsystem.users.*;
 
 public class StepDefinition {
-	
+
 	// variables
 	User u1;
 	Patient p1;
-	
+
 	@Given("^Any user of the program and a patient that has not been admitted$")
 	public void any_user_of_the_program_and_a_patient_that_has_not_been_admitted() {
 	    // create a user
@@ -24,7 +22,7 @@ public class StepDefinition {
 	@When("^They enter a new patient's non-medical data$")
 	public void they_enter_a_new_patient_s_non_medical_data() {
 	    // create a new patient
-		p1 = new Patient("name", "surname", LocalDate.of(2000, 1,1), "address", "phoneNo");
+		p1 = new Patient("name", "surname", "01/01/2000", "address", "phoneNo");
 	}
 
 	@Then("^The data is saved in the system and a confirmation is displayed to the user$")

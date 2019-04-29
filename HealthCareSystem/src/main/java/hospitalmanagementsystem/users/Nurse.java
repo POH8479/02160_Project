@@ -14,18 +14,24 @@ public class Nurse extends User implements HealthStaff{
 		super(usersName, usersAddress, phone, "N");
     
 		//assign department based on input
-		switch(department) {
-		  case "Emergency":
-			  this.department = Emergency.getInstance();
-		    break;
-		  case "Inpatient":
-			  this.department = Inpatient.getInstance();
-		    break;
-		  case "Outpatient":
-			  this.department = Outpatient.getInstance();
-		    break;
-		  default:
-			  throw new IllegalArgumentException(String.format("%s is an invalid department.",department));
+		switch(department==null?"null":department) {
+			case "Emergency":
+				this.department = Emergency.getInstance();
+				Emergency.getInstance().addUser(this);
+				break;
+			case "Inpatient":
+				this.department = Inpatient.getInstance();
+				Inpatient.getInstance().addUser(this);
+				break;
+			case "Outpatient":
+				this.department = Outpatient.getInstance();
+				Outpatient.getInstance().addUser(this);
+				break;
+			case "null":
+				this.department = null;
+				break;
+			default:
+				throw new IllegalArgumentException(String.format("%s is an invalid department.",department));
 		}
 	}
 
@@ -120,5 +126,19 @@ public class Nurse extends User implements HealthStaff{
 	
 	public Department getDepartment() {
 		return this.department;
+	}
+	
+	@Override
+	public String getType() {
+		return "Nurse";
+	}
+	
+	public void moveDepartment(Department department) {
+		// change department
+		if(this.department != null) {
+			this.department.getUserList().remove(this);
+		}
+		this.department = department;
+		department.getUserList().add(this);
 	}
 }

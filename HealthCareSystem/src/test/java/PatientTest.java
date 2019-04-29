@@ -5,7 +5,6 @@ import org.junit.Test;
 import hospitalmanagementsystem.*;
 import hospitalmanagementsystem.departments.*;
 import hospitalmanagementsystem.users.*;
-import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -47,12 +46,12 @@ public class PatientTest {
 		man = Management.getInstance();
 
 		// Create Patients
-		p1 = new Patient("Pieter", "O\'Hearn", LocalDate.of(1990, 1,12), "259 Nordvej 2800 Kongens Lyngby", "+4562473948");
-		p2 = new Patient("Jack", "Rodman", LocalDate.of(1997, 6,28), "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
-		p3 = new Patient("Anna", "Hogan", LocalDate.of(1988, 8,21), "Georg Brandes Pl. 2-6, 1307 K??benhavn", "+4552373549");
-		p4 = new Patient("Asger", "Conradsen", LocalDate.of(1999, 5,29), "487 downtown 2800 Kongens Lyngby", "+4585476964");
-		p5 = new Patient("Karoline", "??stergaard", LocalDate.of(1994, 2,11), "259 Nordvej 2800 Kongens Lyngby", "+4582373943");
-		p6 = new Patient("Kun", "Zhu", LocalDate.of(1996, 6,8), "259 Nordvej 2800 Kongens Lyngby", "+4539562047");
+		p1 = new Patient("Pieter", "O\'Hearn", "12/01/1990", "259 Nordvej 2800 Kongens Lyngby", "+4562473948");
+		p2 = new Patient("Jack", "Rodman", "28/06/1997", "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
+		p3 = new Patient("Anna", "Hogan", "21/08/1988", "Georg Brandes Pl. 2-6, 1307 K??benhavn", "+4552373549");
+		p4 = new Patient("Asger", "Conradsen", "29/05/1999", "487 downtown 2800 Kongens Lyngby", "+4585476964");
+		p5 = new Patient("Karoline", "??stergaard", "11/02/1994", "259 Nordvej 2800 Kongens Lyngby", "+4582373943");
+		p6 = new Patient("Kun", "Zhu", "08/06/1996", "259 Nordvej 2800 Kongens Lyngby", "+4539562047");
 
 		// assign patients a Department
 		p1.updateDepartment(em);
@@ -81,7 +80,7 @@ public class PatientTest {
 	public void getPatientInfoTest() {
 		assertEquals("Pieter", p1.getPatientInfo().get("First Name"));
 		assertEquals("O'Hearn", p1.getPatientInfo().get("Last Name"));
-		assertEquals("12 1 1990", p1.getPatientInfo().get("Birth Date"));
+		assertEquals("12/01/1990", p1.getPatientInfo().get("Birth Date"));
 		assertEquals("259 Nordvej 2800 Kongens Lyngby", p1.getPatientInfo().get("Address"));
 		assertEquals("Emergency", p1.getPatientInfo().get("Department"));
 		assertEquals("false", p1.getPatientInfo().get("Deceased"));
@@ -118,7 +117,7 @@ public class PatientTest {
 
 	/**
 	 * Tests the updateBed method of the Patient class
-	 * @throws IllegalAccessException 
+	 * @throws IllegalAccessException
 	 */
 	@Test
 	public void updateBedTest() throws IllegalArgumentException, IllegalAccessException {
@@ -186,7 +185,7 @@ public class PatientTest {
 	@Test
 	public void testConstructor() {
 		// create a new Patient
-		Patient newPatient = new Patient("name", "surname", LocalDate.of(2000, 1,1), "address", "phoneNo");
+		Patient newPatient = new Patient("name", "surname", "01/01/2000", "address", "phoneNo");
 
 		// check variables
 		assertFalse(Objects.equals(newPatient.getPatientInfo().get("Patient ID"),null));

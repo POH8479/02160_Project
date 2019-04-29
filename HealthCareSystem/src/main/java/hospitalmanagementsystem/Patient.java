@@ -1,7 +1,5 @@
 package hospitalmanagementsystem;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Hashtable;
 import java.util.Objects;
 
@@ -22,7 +20,7 @@ public class Patient {
 	String name;
 	String surname;
 	final String patientID;
-	LocalDate bday;
+	String bday;
 	String address;
 	String phoneNo;
 	Boolean deceased;
@@ -31,7 +29,7 @@ public class Patient {
 	Bed bed;
 
 	//CONSTRUCTOR
-	public Patient(String name, String surname, LocalDate bday, String address, String phoneNo) {
+	public Patient(String name, String surname, String bday, String address, String phoneNo) {
 		//patient info input by user
 		this.name = name;
 		this.surname = surname;
@@ -93,12 +91,11 @@ public class Patient {
 	 * @param data
 	 */
 	public void updateRecord(String data) {
-		if(this.record != null) {
+		if(!Objects.equals(this.record,null)) {
 			this.record = this.record + "\n" + data;
 		} else {
 			this.record = data;
 		}
-		
 	}
 
 	/**
@@ -113,10 +110,7 @@ public class Patient {
 		patientInfo.put("First Name", this.name);
 		patientInfo.put("Last Name", this.surname);
 		patientInfo.put("Patient ID", this.patientID);
-		//string formatting for patient birth date parameter
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
-		String bdayString = bday.format(formatter);
-		patientInfo.put("Birth Date", bdayString);
+		patientInfo.put("Birth Date", this.bday);
 		patientInfo.put("Address", this.address);
 		patientInfo.put("Phone Number", this.phoneNo);
 		patientInfo.put("Deceased", "false");
@@ -168,6 +162,51 @@ public class Patient {
 	 */
 	public Department getDepartment() {
 		return this.dept;
+	}
+
+	public String getFirstName() {
+		return this.name;
+	}
+
+	public String getLastName() {
+		return this.surname;
+	}
+
+	public String getNumber() {
+		return this.phoneNo;
+	}
+
+	public String getAddress() {
+		return this.address;
+	}
+
+	public String getDOB() {
+		return this.bday;
+	}
+
+	public void setFirstName(String firstName) {
+		this.name = firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.surname = lastName;
+	}
+
+	public void setPhoneNo(String phone) {
+		this.phoneNo = phone;
+	}
+
+	public void setAddress(String newAddress) {
+		this.address = newAddress;
+	}
+
+	public void setPhone(String phone) {
+		this.phoneNo = phone;
+	}
+
+	public void setDOB(String dOB) {
+		this.bday = dOB;
+		
 	}
 	
 }
