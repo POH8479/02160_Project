@@ -132,9 +132,9 @@ public class ApplicationController {
 		PersistenceLayer persistenceLayer = new PersistenceLayer();
 		
 		// Save the information from all departments
-		persistenceLayer.save(Emergency.getInstance());
-		persistenceLayer.save(Inpatient.getInstance());
-		persistenceLayer.save(Outpatient.getInstance());
-		persistenceLayer.save(Management.getInstance());
+//		persistenceLayer.save(Emergency.getInstance());
+//		persistenceLayer.save(Inpatient.getInstance());
+//		persistenceLayer.save(Outpatient.getInstance());
+//		persistenceLayer.save(Management.getInstance());
 	}
 }
