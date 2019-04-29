@@ -13,6 +13,10 @@ public class StepDefinition {
 	User u1;
 	Patient p1;
 
+	Emergency d1;
+	Admin a1;
+	Nurse n1;
+  
 	@Given("^Any user of the program and a patient that has not been admitted$")
 	public void any_user_of_the_program_and_a_patient_that_has_not_been_admitted() {
 	    // create a user
@@ -21,8 +25,8 @@ public class StepDefinition {
 
 	@When("^They enter a new patient's non-medical data$")
 	public void they_enter_a_new_patient_s_non_medical_data() {
-	    // create a new patient
-		p1 = new Patient("name", "surname", "01/01/2000", "address", "phoneNo");
+    // create a new patient
+		p1 = new Patient("Jane", "Doe", LocalDate.of(2000, 1,1), "456 North St Anytown, Denmark", "+45234556789");
 	}
 
 	@Then("^The data is saved in the system and a confirmation is displayed to the user$")
@@ -50,63 +54,63 @@ public class StepDefinition {
 	}
 
 	@Given("^A department$")
-	public void a_department() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void a_department(){
+	    // create a department
+		d1=Emergency.getInstance();
 	}
 
 	@When("^I request the number of available beds$")
-	public void i_request_the_number_of_available_beds() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void i_request_the_number_of_available_beds(){
+	    //return number of available beds
+		
 	}
 
 	@Then("^an integer is returned with the number of free beds$")
-	public void an_integer_is_returned_with_the_number_of_free_beds() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void an_integer_is_returned_with_the_number_of_free_beds(){
+	    //check the data returned
+		//assertEquals(10,d1.capacity);
 	}
 
 	@Given("^A new patient$")
-	public void a_new_patient() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void a_new_patient() {
+	    // create a new patient
+		p1=new Patient("Jane", "Doe", LocalDate.of(2000, 1,1), "456 North St Anytown, Denmark", "+45234556789");	
 	}
 
 	@Given("^a User$")
-	public void a_User() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void a_User(){
+	    // create a new user
+		u1=new User("John Doe", "123 Main St Anytown, Denmark", "+4512345678");
 	}
 
 	@When("^The User registers a patient with their non medical data$")
-	public void the_User_registers_a_patient_with_their_non_medical_data() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void the_User_registers_a_patient_with_their_non_medical_data(){
+	    // register patient data
+		u1.registerPatient("Jane", "Doe", LocalDate.of(2000, 1,1), "456 North St Anytown, Denmark", "+45234556789");
 	}
 
 	@Then("^A new patient is created in the HMS$")
-	public void a_new_patient_is_created_in_the_HMS() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void a_new_patient_is_created_in_the_HMS(){
+	    // check that information was entered correctly
+		assertEquals("Jane", u1.getPatientData(p1));
 	}
 
 	@Given("^A new user$")
-	public void a_new_user() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void a_new_user(){
+		//create a new user
+		u1=new User("John Doe", "123 Main St Anytown, Denmark", "+4512345678");
 	}
 
 	@Given("^An Admin$")
-	public void an_Admin() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void an_Admin(){
+	    // create a new admin
+		a1=new Admin("John Doe", "123 Main St Anytown, Denmark", "+4512345678");
 	}
 
 	@When("^The Admin creates a new User$")
 	public void the_Admin_creates_a_new_User() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	    // create a new user
+		a1.addUser("John Doe", "123 Main St Anytown, Denmark", "+4512345678","Doctor");
 	}
 
 	@Then("^A new user is created in the HMS$")
@@ -117,14 +121,15 @@ public class StepDefinition {
 
 	@Given("^A nurse and a patient$")
 	public void a_nurse_and_a_patient() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	    // create a nurse and a patient
+		n1=new Nurse("John Doe","123 Main St Anytown, Denmark", "+4512345678","Emergency" );
+		p1=new Patient("Jane", "Doe", LocalDate.of(2000, 1,1), "456 North St Anytown, Denmark", "+45234556789");
 	}
 
 	@Then("^A nurse edits the patients data$")
 	public void a_nurse_edits_the_patients_data() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	    // Edit patient data
+		n1.editMedicalData(p1, "Jane");
 	}
 
 	@Then("^The new information is saved to the HMS$")
