@@ -1,16 +1,12 @@
-/**
- * @author Asger Conradsen
- */
-
 package hospitalmanagementsystem;
 
 import java.util.ArrayList;
-import hospitalmanagementsystem.departments.Emergency;
-import hospitalmanagementsystem.departments.Inpatient;
-import hospitalmanagementsystem.departments.Management;
-import hospitalmanagementsystem.departments.Outpatient;
+import hospitalmanagementsystem.departments.*;
 import hospitalmanagementsystem.users.User;
 
+/**
+ * @author Asger Conradsen
+ */
 public class LoginManager {
 	ArrayList<User> users;
 	
@@ -21,18 +17,18 @@ public class LoginManager {
 		Outpatient outpatient = Outpatient.getInstance();
 		
 		users = new ArrayList<User>();
-		users.addAll(emergency.getUsers());
-		users.addAll(inpatient.getUsers());
-		users.addAll(management.getUsers());
-		users.addAll(outpatient.getUsers());
+		users.addAll(emergency.getUserList());
+		users.addAll(inpatient.getUserList());
+		users.addAll(management.getUserList());
+		users.addAll(outpatient.getUserList());
 	}
 	
-	public boolean checkID(String userID) {
+	public boolean checkID(User userCheck) {
 		for (User user : users) {
-			if(userID.equals(user.getID())) return true;
+			if(userCheck.equals(user)) {
+				return true;
+			}
 		}
 		return false;
 	}
-	
-	
 }

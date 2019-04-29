@@ -1,6 +1,6 @@
 import static org.junit.Assert.*;
 
-import java.time.LocalDate;
+import java.util.Objects;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -43,8 +43,8 @@ public class AdminTest {
 		ad2 = new Admin("Andy Admin", "123 Main St Medicaltown, Germany", "+4912345678");
 
 		// create the Patients
-		p1 = new Patient("Pieter", "O\'Hearn", LocalDate.of(1990, 1,12), "259 Nordvej 2800 Kongens Lyngby", "+4562473948");
-		p2 = new Patient("Jack", "Rodman", LocalDate.of(1997, 6,28), "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
+		p1 = new Patient("Pieter", "O\'Hearn", "12/01/1990", "259 Nordvej 2800 Kongens Lyngby", "+4562473948");
+		p2 = new Patient("Jack", "Rodman", "28/06/1997", "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
 
 		// create the Departments
 		em = Emergency.getInstance();
@@ -61,28 +61,27 @@ public class AdminTest {
 	 */
 	@Test
 	public void admitPatientTest() throws IllegalAccessException {
-		
+
 		//test that error is thrown when admitting patient to management dept
 		try {
 			ad1.admitPatient(p1, man);
 			fail("Expected an AccessDeniedException to be thrown");
 			} catch(IllegalAccessException expected) {
-				//need assertion here
+				assertEquals("Can not admit a patient to the Management department.",expected.getMessage());
 			}
-		
+
 		// admit p1 to Inpatient and check both patients variable and departments list
-		assertEquals(null, p1.getPatientInfo().get("Department"));
+		ad2.dischargePatient(p1);
 		ad2.admitPatient(p1,inPa);
 		assertEquals("Inpatient",p1.getPatientInfo().get("Department"));
-		assertTrue(inPa.getPatientList().contains(p1.getPatientInfo().get("Patient ID")));
+		assertTrue(inPa.getPatientList().contains(p1));
 		assertEquals(null,p1.getPatientInfo().get("Bed"));
 
 		// admit p2 to Emergency and check that a bed is assigned and that both patients variable and departments list
-		assertEquals(null,p2.getPatientInfo().get("Department"));
+		assertEquals("None",p2.getPatientInfo().get("Department"));
 		ad1.admitPatient(p2,em);
 		assertEquals("Emergency",p2.getPatientInfo().get("Department"));
-		assertTrue(em.getPatientList().contains(p2.getPatientInfo().get("Patient ID")));
-		assertFalse(p2.getPatientInfo().get("Bed").equals(null));
+		assertTrue(em.getPatientList().contains(p2));
 	}
 
 	// create a rule
@@ -90,11 +89,12 @@ public class AdminTest {
 
 	/**
 	 * Tests the admitPatient method of the Admin Class when the patient already has a Department
-	 * @throws IllegalAccessException 
+	 * @throws IllegalAccessException
 	 */
 	@Test
 	public void admitPatientErrorTest() throws IllegalAccessException {
-		exception.expect(IllegalAccessException.class);
+		ad2.admitPatient(p1,outPa);
+		exception.expect(IllegalArgumentException.class);
 		exception.expectMessage("Can not admit a patient who is already admitted to a department.");
 		ad2.admitPatient(p1,outPa);
 	}
@@ -105,17 +105,18 @@ public class AdminTest {
 	@Test
 	public void dischargePatientTest() throws IllegalAccessException {
 		// ad2 discharges patient1 from Inpatient and check is Department is null
-		assertEquals("Inpatient",p1.getPatientInfo().get("Department"));
+		assertEquals("Outpatient",p1.getPatientInfo().get("Department"));
 		ad2.dischargePatient(p1);
-		assertEquals(null,p1.getPatientInfo().get("Department"));
+		assertEquals("None",p1.getPatientInfo().get("Department"));
 	}
 
 	/**
 	 * Tests the dischargePatient method of the Admin Class when the patient already has a Department
-	 * @throws IllegalAccessException 
+	 * @throws IllegalAccessException
 	 */
 	@Test
 	public void dischargePatientErrorTest() throws IllegalAccessException{
+		ad2.dischargePatient(p1);
 		exception.expect(IllegalArgumentException.class);
 		exception.expectMessage("Can not discharge a patient who is not already admitted into any department.");
 		ad2.dischargePatient(p1);
@@ -123,7 +124,7 @@ public class AdminTest {
 
 	/**
 	 * Tests the assignBed method of the Admin Class
-	 * @throws IllegalAccessException 
+	 * @throws IllegalAccessException
 	 */
 	@Test
 	public void assignBedTest() throws IllegalArgumentException, IllegalAccessException {
@@ -132,8 +133,8 @@ public class AdminTest {
 		ad1.assignBed(p1, b1);
 
 		// check that the patients info and beds info reflect this
-		assertEquals(p1, b1.getPatient());
-		assertEquals(b1.getBedID(),p1.getPatientInfo().get("Bed"));
+		assertEquals(p1.getPatientInfo().get("Patient ID"), b1.getPatient());
+		assertEquals(b1.getBedID(),p1.getPatientInfo().get("Bed ID"));
 
 		// try assign patient2 to the same bed, an IllegalArgumentException is expected
 		try {
@@ -174,4 +175,41 @@ public class AdminTest {
 		assertEquals("This Patient has died.\nSend patient to the morgue.",ad1.getMedicalData(p2));
 	}
 
+	/**
+	 * Tests the removeUser method of the Admin Class
+	 */
+	@Test
+	public void removeUserTest() {
+		User badUser = new User("Name", "Address", "Phone");
+		assertFalse(Objects.equals(badUser.getUserInfo().get("User ID"),"None"));
+		ad1.removeUser(badUser);
+		assertFalse(badUser.getDepartment().getUserList().contains(badUser));
+	}
+
+	/**
+	 * Tests the addUser method of the Admin Class
+	 */
+	@Test
+	public void addUserTest() {
+		// Add one of each user
+		Admin a = (Admin) ad1.addUser("Admin", "Admin's Address", "Admins Phone", "Admin");
+		assertEquals('A',a.getUserInfo().get("User ID").charAt(0));
+
+		Doctor d = (Doctor) ad1.addUser("Doctor", "Doctor's Address", "Doctors Phone", "Doctor");
+		assertEquals('D',d.getUserInfo().get("User ID").charAt(0));
+
+		Nurse n = (Nurse) ad1.addUser("Nurse", "Nurse's Address", "Nurses Phone", "Nurse");
+		assertEquals('N',n.getUserInfo().get("User ID").charAt(0));
+
+		User u = ad1.addUser("User", "User's Address", "Users Phone", "User");
+		assertEquals('U',u.getUserInfo().get("User ID").charAt(0));
+	}
+
+	/**
+	 * Tests the getDepartment method of the Admin Class
+	 */
+	@Test
+	public void getDepartmentTest() {
+		// TODO
+	}
 }

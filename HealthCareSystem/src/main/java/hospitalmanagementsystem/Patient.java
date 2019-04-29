@@ -1,8 +1,7 @@
 package hospitalmanagementsystem;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Hashtable;
+import java.util.Objects;
 
 import hospitalmanagementsystem.departments.Department;
 import hospitalmanagementsystem.departments.Management;
@@ -21,7 +20,7 @@ public class Patient {
 	String name;
 	String surname;
 	final String patientID;
-	LocalDate bday;
+	String bday;
 	String address;
 	String phoneNo;
 	Boolean deceased;
@@ -30,7 +29,7 @@ public class Patient {
 	Bed bed;
 
 	//CONSTRUCTOR
-	public Patient(String name, String surname, LocalDate bday, String address, String phoneNo) {
+	public Patient(String name, String surname, String bday, String address, String phoneNo) {
 		//patient info input by user
 		this.name = name;
 		this.surname = surname;
@@ -48,15 +47,13 @@ public class Patient {
 	/**
 	 * Updates a patient's department to enable admitting or moving a patient to a new department
 	 * @param department
-	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
 	 */
-	public void updateDepartment(Department department) throws IllegalAccessException {
+	public void updateDepartment(Department department) throws IllegalArgumentException {
 		// check if department is Management
 		if( department instanceof Management) {
-			throw new IllegalAccessException("Patients can not be assigned to the Managment Department");
-		}
-		//otherwise update department
-		else {
+			throw new IllegalArgumentException("Patients can not be assigned to the Managment Department");
+		} else { //otherwise update department
 			this.dept = department;
 		}
 	}
@@ -64,21 +61,20 @@ public class Patient {
 	/**
 	 * Updates a patient's assigned bed in case the patient is admitted or moved.
 	 * @param newbed
-	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
 	 */
-	public void updateBed(Bed newbed) throws IllegalAccessException {
+	public void updateBed(Bed newbed) throws IllegalArgumentException {
 		//check if bed is empty
 		if(newbed.getPatient() != null) {
-			throw new IllegalAccessException(String.format("Bed %s is already occupied", newbed.getBedID()));
+			throw new IllegalArgumentException(String.format("Bed %s is already occupied", newbed.getBedID()));
 		}
 		//check if bed is not in same department as patient
-		else if(newbed.getDepartment().equals(this.dept)) {
-			throw new IllegalAccessException(String.format("Bed %s is in a different department to %s", newbed.getBedID(), this.name));
+		else if(!Objects.equals(newbed.getDepartment(),this.dept)) {
+			throw new IllegalArgumentException(String.format("Bed %s is in a different department to %s", newbed.getBedID(), this.name));
 		}
 		//otherwise update bed
 		else {
 			this.bed = newbed;
-			//this.bed.addPatient(this); Is this step unnecessary?
 		}
   }
 
@@ -87,10 +83,6 @@ public class Patient {
 	 * @return
 	 */
 	public String getRecord() {
-		//returns a notification of no entry if nothing has been recorded yet
-		/*if(this.record == null) {
-			return "Patient does not have record entry";
-		}*/
 		return this.record;
 	}
 
@@ -99,7 +91,11 @@ public class Patient {
 	 * @param data
 	 */
 	public void updateRecord(String data) {
-		this.record = data;
+		if(!Objects.equals(this.record,null)) {
+			this.record = this.record + "\n" + data;
+		} else {
+			this.record = data;
+		}
 	}
 
 	/**
@@ -114,50 +110,103 @@ public class Patient {
 		patientInfo.put("First Name", this.name);
 		patientInfo.put("Last Name", this.surname);
 		patientInfo.put("Patient ID", this.patientID);
-		//string formatting for patient birth date parameter
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
-		String bdayString = bday.format(formatter);
-		patientInfo.put("Birth Date", bdayString);
+		patientInfo.put("Birth Date", this.bday);
 		patientInfo.put("Address", this.address);
 		patientInfo.put("Phone Number", this.phoneNo);
 		patientInfo.put("Deceased", "false");
-		patientInfo.put("Department", this.dept.toString());
-		patientInfo.put("Bed ID", this.bed.getBedID());
+		
+		if(this.dept == null) {
+			patientInfo.put("Department", "None");
+		} else {
+			patientInfo.put("Department", this.dept.getName());
+		}
+		
+		if(this.bed == null) {
+			patientInfo.put("Bed ID", "None");
+		} else {
+			patientInfo.put("Bed ID", this.bed.getBedID());
+		}
+		
 		
 		return patientInfo;
 	}
-//
-//	/**
-//	 * This method retrieves the bed object that is currently occupied by the patient
-//	 * @return bed
-//	 */
-//	public Bed getBed() {
-//		//if null is returned, patient has not yet been admitted to a bed
-//		return this.bed;
-//	}
-//
-//	/**
-//	 * This method retrieves a patients unique ID number
-//	 * @return ID number
-//	 */
-//	public int getPatientId() {
-//		return this.patientID;
-//	}
-//
-//	/**
-//	 * This method notifies the user if the patient is alive or dead
-//	 * @return true if a patient is deceased and false if a patient is alive
-//	 */
-//	public boolean getDeceased() {
-//		return this.deceased;
-//	}
-//
-//	/**
-//	 * This method retrieves the department that a patient belongs to
-//	 * @return Department object if admitted or null if department has not yet been assigned
-//	 */
-//	public Department getDepartment() {
-//		return this.dept;
-//	}
+
+	/**
+	 * This method retrieves the bed object that is currently occupied by the patient
+	 * @return bed
+	 */
+	public Bed getBed() {
+		//if null is returned, patient has not yet been admitted to a bed
+		return this.bed;
+	}
+
+	/**
+	 * This method retrieves a patients unique ID number
+	 * @return ID number
+	 */
+	public String getPatientId() {
+		return this.patientID;
+	}
+
+	/**
+	 * This method notifies the user if the patient is alive or dead
+	 * @return true if a patient is deceased and false if a patient is alive
+	 */
+	public boolean getDeceased() {
+		return this.deceased;
+	}
+
+	/**
+	 * This method retrieves the department that a patient belongs to
+	 * @return Department object if admitted or null if department has not yet been assigned
+	 */
+	public Department getDepartment() {
+		return this.dept;
+	}
+
+	public String getFirstName() {
+		return this.name;
+	}
+
+	public String getLastName() {
+		return this.surname;
+	}
+
+	public String getNumber() {
+		return this.phoneNo;
+	}
+
+	public String getAddress() {
+		return this.address;
+	}
+
+	public String getDOB() {
+		return this.bday;
+	}
+
+	public void setFirstName(String firstName) {
+		this.name = firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.surname = lastName;
+	}
+
+	public void setPhoneNo(String phone) {
+		this.phoneNo = phone;
+	}
+
+	public void setAddress(String newAddress) {
+		this.address = newAddress;
+	}
+
+	public void setPhone(String phone) {
+		this.phoneNo = phone;
+	}
+
+	public void setDOB(String dOB) {
+		this.bday = dOB;
+		
+	}
 	
 }

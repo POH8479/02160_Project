@@ -18,17 +18,9 @@
 #Sample Feature Definition Template
 @tag
 Feature: create a staff account
-  I want to use this template for creating a staff account
 
   @tag1
-  Scenario: creat an account
-    Given A new staff is emplyed
-    When I create a staff account with <name>, <position>, <birthday>, <contact info>
-    Then An account is created
-    And saved to database
-
-  @tag2
   Scenario Outline: data 
-    Given I want to write a step with <name>, <position>, <birthday>, <contact info>
-    When I check for the <value> in step
-    Then I verify the <status> in step
+    Given A User
+    When I update the users Address
+    Then The Users profile reflects this change

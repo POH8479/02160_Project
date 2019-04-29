@@ -21,29 +21,30 @@ Feature: User Management
 
   @tag1
   Scenario: A User
-    Given A User
-    When I use the system
-    Then I am not able to see any patients health data
-    And I am not able to see any staff members personal data
+    Given A User and a patient
+    When the user trys to access a patients medical record
+    Then An Exception is thrown
 
   @tag2
-  Scenario Outline: A doctor/nurse
-    Given A doctor/nurse
-    When I use the system
-    Then I can see all patients in my departments health data
-    And I cannot see or change staff members personal data
+  Scenario Outline: Nurse requesting other departments patient records
+    Given A nurse and a patient from another department
+    When The nurse requests the patient medical data
+    Then An Exception is thrown
  
-  @tag2
-  Scenario Outline: Admin
-    Given An admin user
-    When I use the system
-    Then I can see all patients in all departments health data
-    And I can see and change staff members personal data
-    And I can see all departments
+  @tag3
+  Scenario Outline: Admin requesting patient records
+    Given An admin and a patient from another department
+    When The admin requests the patient medical data
+    Then No Exception is thrown
 
-
-
-    Examples: 
-      | name  | value | status  |
-      | name1 |     5 | success |
-      | name2 |     7 | Fail    |
+  @tag4
+  Scenario Outline: Nurse reading User data
+    Given A nurse and a User
+    When The nurse requests the Users data
+    Then An Exception is thrown
+ 
+  @tag3
+  Scenario Outline: Admin reading User data
+    Given An admin and a User
+    When The admin requests the Users data
+    Then No Exception is thrown

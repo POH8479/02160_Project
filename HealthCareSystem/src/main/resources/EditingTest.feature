@@ -18,20 +18,15 @@
 #Sample Feature Definition Template
 @tag
 Feature: editting profile(s)
-  I want to use this template for editting profile(s)
 
   @tag1
-  Scenario: edit a profile
-    Given A user or patient has changed his personal info
-    And A patient has received a new treatment
-    And A patient is being transfered to another department
-    When I open the profile, then make the change
-    Then I confirm the changes
-    And save to the database
+  Scenario: edit a profile profile
+    Given A nurse and a patient
+    Then A nurse edits the patients data
+    And The new information is saved to the HMS
 
   @tag2
   Scenario Outline: verify the changes
-    Given I want to create a step with <name> etc 
-    When I type for the <name> in step
-    Then I verify the <patient number> is unique
-    And I want to verify <birth date> is in valid format
+    Given I have changed a Patients profile
+    When I request their information
+    Then The patients information has succesfully changed

@@ -1,9 +1,11 @@
 package hospitalmanagementsystem.users;
 
-import java.time.LocalDate;
+
 import java.util.Hashtable;
 
 import hospitalmanagementsystem.Patient;
+import hospitalmanagementsystem.departments.Department;
+import hospitalmanagementsystem.departments.Management;
 
 /**
  * A User of the Hospital Management System. They have the lowest privileges of
@@ -21,6 +23,7 @@ public class User {
 	final String userID;
 	String address;
 	String phoneNumber;
+	Department department;
 
 	/**
 	 * Creates a new User of the Hospital Management System
@@ -29,6 +32,18 @@ public class User {
 		// assign the User with a unique ID
 		idCounter++;
 		this.userID = "U" + Integer.toString(idCounter);
+		// assign the remaining information
+		this.name = usersName;
+		this.address = usersAddress;
+		this.phoneNumber = phone;
+		this.department = Management.getInstance();
+		Management.getInstance().getUserList().add(this);
+	}
+
+	public User(String usersName, String usersAddress, String phone, String classString) {
+		// assign the User with a unique ID
+		idCounter++;
+		this.userID = classString + Integer.toString(idCounter);
 		// assign the remaining information
 		this.name = usersName;
 		this.address = usersAddress;
@@ -47,7 +62,7 @@ public class User {
 		info.put("User ID", this.userID);
 		info.put("Address", this.address);
 		info.put("Phone Number", this.phoneNumber);
-		
+
 
 		// return info hash table
 		return info;
@@ -59,14 +74,14 @@ public class User {
 	 *
 	 * @return The Patient Object that has been registered to the HMS
 	 */
-	public Patient registerPatient(String name, String surname, LocalDate bday, String address, String phoneNo) {
+	public Patient registerPatient(String name, String surname, String bday, String address, String phoneNo) {
 		// create a new Patient
 		Patient newPatient = new Patient(name, surname, bday, address, phoneNo);
 
 		// return the Patient
 		return newPatient;
 	}
-	
+
 	/**
 	 * returns the patients basic data (Name, )
 	 *
@@ -77,4 +92,41 @@ public class User {
 		// return the patients info
 		return patient.getPatientInfo();
 	}
+
+	public Department getDepartment() {
+		return this.department;
+	}
+
+	public String getUserID() {
+		return this.userID;
+	}
+
+	public String getUserName() {
+		return this.name;
+	}
+
+	public String getType() {
+		return "User";
+	}
+
+	public String getAddress() {
+		return this.address;
+	}
+
+	public String getNumber() {
+		return this.phoneNumber;
+	}
+	
+	public void setUserName(String newName) {
+		this.name = newName;
+	}
+	
+	public void setAddress(String newAddress) {
+		this.address = newAddress;
+	}
+	
+	public void setPhone(String newPhone) {
+		this.phoneNumber = newPhone;
+	}
+
 }

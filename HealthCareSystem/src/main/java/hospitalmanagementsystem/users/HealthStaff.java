@@ -18,19 +18,20 @@ public interface HealthStaff {
 	 *
 	 * @param patient The Patient that is being admitted
 	 * @param department The department to admit the patient to
-	 * @throws IllegalAccessException 
-	 * @throws Exception
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
 	 */
-	public void admitPatient(Patient patient, Department department) throws Exception;
+	public void admitPatient(Patient patient, Department department) throws IllegalAccessException, IllegalArgumentException;
 
 	/**
 	 * Discharges the given patient from their department, removing the patient
 	 * from the Departments patient list and the patients department variable
 	 *
 	 * @param patient The Patient that is being discharged
-	 * @throws Exception 
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException 
 	 */
-	public void dischargePatient(Patient patient) throws Exception;
+	public void dischargePatient(Patient patient) throws IllegalAccessException;
 
 	/**
 	 * Assigns the given Patient a Bed in the department, updating the patients Bed
@@ -59,4 +60,13 @@ public interface HealthStaff {
 	 * @return A string of the patients updated medical data
 	 */
 	public String editMedicalData(Patient patient, String data);
+	
+	/**
+	 * This method returns the department of the HealthStaff User
+	 * @return a department object
+	 */
+	public Department getDepartment();
+	
+	public void moveDepartment(Department department);
+	
 }

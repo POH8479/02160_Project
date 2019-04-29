@@ -1,9 +1,6 @@
 package hospitalmanagementsystem;
 
-import hospitalmanagementsystem.departments.*;
-
 public class HMS {
-
 	
 	/**
 	 * This method searches for and returns the Department with the given name.
@@ -15,5 +12,7 @@ public class HMS {
 	public static Department getDepartment(String departmentName) {
 		return null;
 
+	public static void main(String[] args) {
+		// Do Stuff
 	}
 }

@@ -118,6 +118,11 @@ public class PersistenceLayer {
 	//load patients
 	//load users
 	
+	//load department
+	//load beds
+	//load patients
+	//load users
+	
 	// Loads class contained in given file
 	/*public Object load(String filename) {
 		XMLDecoder d = null;
