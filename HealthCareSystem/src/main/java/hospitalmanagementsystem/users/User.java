@@ -24,6 +24,7 @@ public class User {
 	String address;
 	String phoneNumber;
 	Department department;
+	String email;
 
 	/**
 	 * Creates a new User of the Hospital Management System
@@ -37,6 +38,7 @@ public class User {
 		this.address = usersAddress;
 		this.phoneNumber = phone;
 		this.department = Management.getInstance();
+		this.email = this.userID + "@kapjak.com";
 		Management.getInstance().getUserList().add(this);
 	}
 
@@ -91,6 +93,10 @@ public class User {
 	public Hashtable<String,String> getPatientData(Patient patient) {
 		// return the patients info
 		return patient.getPatientInfo();
+	}
+	
+	public String getEmail() {
+		return this.email;
 	}
 
 	public Department getDepartment() {
