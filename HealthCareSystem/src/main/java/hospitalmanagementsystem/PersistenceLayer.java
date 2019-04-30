@@ -94,6 +94,7 @@ public class PersistenceLayer {
 	
 	/*
 	 * Loads a department
+	 * Note that it returns an object so the returned value must be cast
 	 */
 	public Object loadDepartment(Department department) {
 		String dir = "Departments" + File.separator + department.getName()
