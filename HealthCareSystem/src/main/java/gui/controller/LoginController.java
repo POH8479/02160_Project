@@ -42,6 +42,8 @@ public class LoginController {
 		String [] input = username.split("@");
 		User user = findUser(input[0]);
 		
+		//TODO causes error if doctor/nurse has unassigned department
+		
 		// check if the loginManager returns true
 		if (loginManager.checkID(user)) {
 			

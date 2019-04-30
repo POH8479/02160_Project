@@ -50,6 +50,7 @@ public class User {
 		this.name = usersName;
 		this.address = usersAddress;
 		this.phoneNumber = phone;
+		this.email = this.userID + "@kapjak.com";
 	}
 
 	/**
