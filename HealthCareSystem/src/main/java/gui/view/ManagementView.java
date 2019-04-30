@@ -2,6 +2,7 @@ package gui.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -10,9 +11,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
@@ -42,6 +45,12 @@ public class ManagementView extends JFrame {
 	private JLabel lblSession;
 	private JScrollPane userPane;
 	private JScrollPane patientPane;
+	private JTextField idSearchField;
+	private JTextField nameSearchField;
+	private JTextField thirdSearchField;
+	private JTextField departmentSearchField;
+	private JLabel lblSearchName;
+	private JLabel lblThirdSearch;
 	
 	/**
 	 * Constructor for the Management View sets up the view by calling the initGUI() method.
@@ -74,17 +83,6 @@ public class ManagementView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// When clicked add a user 
 				controller.addUser();
-			}
-		});
-		
-		// Create a new button "Assign Department" with an Action Listener and set Enabled to false
-		JButton btnAssignDept = new JButton("Assign Department");
-		btnAssignDept.setEnabled(false);
-		btnAssignDept.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// When clicked assign the selected user a department
-				controller.assignDepartment(tblUsers.getSelectedRow());
 			}
 		});
 		
@@ -169,6 +167,44 @@ public class ManagementView extends JFrame {
 			}
 		});
 		
+		// Create a new button "Clear" with an Action Listener and set Enabled to false
+		JButton btnClear = new JButton("Clear");
+		btnClear.setEnabled(false);
+		btnClear.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// When clicked reset to the original patient model
+				controller.clearSearch();
+				btnClear.setEnabled(false);
+			}
+		});
+		
+		// Create a new button "Search" with an Action Listener
+		JButton btnSearch = new JButton("Search");
+		btnSearch.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// When clicked Search
+				btnClear.setEnabled(true);
+				
+				if(tabbedPane.getSelectedIndex() == 1) {
+					controller.patientSearch(idSearchField.getText(), nameSearchField.getText(), thirdSearchField.getText(), departmentSearchField.getText());
+				} else if(tabbedPane.getSelectedIndex() == 0) {
+					controller.userSearch(idSearchField.getText(), nameSearchField.getText(), thirdSearchField.getText(), departmentSearchField.getText());
+				}
+			}
+		});
+		
+		// Create a new button "Query" with an Action Listener
+		JButton btnQuery = new JButton("Query");
+		btnQuery.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// When clicked reset to the original patient model
+				controller.advancedQuery();
+			}
+		});
+		
 		// TOOLBAR
 		// create a new label and set Horizontal Alignment right
 		lblSession = new JLabel();
@@ -177,19 +213,45 @@ public class ManagementView extends JFrame {
 		// create a new JToolBar and add all buttons and the above label
 		JToolBar toolbar = new JToolBar();
 		toolbar.add(btnAddUser);
-		toolbar.add(btnAssignDept);
 		toolbar.add(btnRemoveUser);
 		toolbar.add(btnRegisterPatient);
 		toolbar.add(btnAdmitPatient);
 		toolbar.add(btnDischargePatient);
 		toolbar.add(btnEdit);
 		toolbar.add(btnRecord);
+		toolbar.add(btnQuery);
 		toolbar.add(Box.createHorizontalGlue());
-		toolbar.add(btnLogOut);
 		toolbar.add(lblSession);
+		toolbar.add(btnLogOut);
 		
-		// Place the toolbar on the top of the page
-		add(toolbar, BorderLayout.NORTH);
+		// create a label and Text are for the search bar
+		JLabel lblSearchID = new JLabel("ID:");
+		idSearchField = new JTextField(5);
+		lblSearchName = new JLabel("Name:");
+		nameSearchField = new JTextField(5);
+		lblThirdSearch = new JLabel("Email:");
+		thirdSearchField = new JTextField(5);
+		JLabel lblSearchDepartment = new JLabel("Department:");
+		departmentSearchField = new JTextField(5);
+		
+		// create a new JToolBar and add all search features
+		JToolBar searchBar = new JToolBar();
+		searchBar.add(lblSearchID);
+		searchBar.add(idSearchField);
+		searchBar.add(lblSearchName);
+		searchBar.add(nameSearchField);
+		searchBar.add(lblThirdSearch);
+		searchBar.add(thirdSearchField);
+		searchBar.add(lblSearchDepartment);
+		searchBar.add(departmentSearchField);
+		searchBar.add(btnSearch);
+		searchBar.add(btnClear);
+		
+		// Place the toolbars in a JPanel with a Grid Layout and add to the Frame
+		JPanel toolbars = new JPanel(new GridLayout(0, 1));
+		toolbars.add(toolbar);
+		toolbars.add(searchBar);
+		add(toolbars, BorderLayout.NORTH);
 		
 		// TABLES
 		// create a table for the users with an Selection Listener and set the Selection mode to single selection
@@ -200,7 +262,6 @@ public class ManagementView extends JFrame {
 			public void valueChanged(ListSelectionEvent e) {
 				// When a row is selected enable the following buttons
 				btnRemoveUser.setEnabled((tblUsers.getSelectedRow() >= 0));
-				btnAssignDept.setEnabled(((tblUsers.getSelectedRow() >= 0) && (((String) tblUsers.getValueAt(tblUsers.getSelectedRow(), 0)).charAt(0) != 'U') && (((String) tblUsers.getValueAt(tblUsers.getSelectedRow(), 0)).charAt(0) != 'A')));
 				btnEdit.setEnabled((tabbedPane.getSelectedIndex() == 0 && tblUsers.getSelectedRow() >= 0));
 			}
 		});
@@ -244,6 +305,10 @@ public class ManagementView extends JFrame {
 					btnAdmitPatient.setEnabled(false);
 					btnDischargePatient.setEnabled(false);
 					btnRecord.setEnabled(false);
+					
+					// change the following labels
+					lblSearchName.setText("Name:");
+					lblThirdSearch.setText("Email:");
 				} // if the Patients tab is selected  
 				else if(tabbedPane.getSelectedIndex() == 1) {
 					// enable the Register Patient button
@@ -252,6 +317,10 @@ public class ManagementView extends JFrame {
 					// and disable the following buttons
 					btnAddUser.setEnabled(false);
 					btnRemoveUser.setEnabled(false);
+					
+					// change the following labels
+					lblSearchName.setText("First Name:");
+					lblThirdSearch.setText("Last Name:");
 				}
 			}
 		});
@@ -284,7 +353,7 @@ public class ManagementView extends JFrame {
 	 */
 	public void setSession(Session sessionModel) {
 		// set the text of the lblSession
-		lblSession.setText("<html>" + sessionModel.getUser().getUserName() + " <i>(" + sessionModel.getUser().getType()+ ")</i></html>");
+		lblSession.setText("<html>" + sessionModel.getUser().getUserName() + " <i>(" + sessionModel.getUser().getType()+ ") </i></html>");
 	}
 
 	/**

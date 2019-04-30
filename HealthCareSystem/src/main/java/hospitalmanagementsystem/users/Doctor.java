@@ -16,8 +16,8 @@ public class Doctor extends User implements HealthStaff{
 	Department department;
 	//String specialty; TODO
 
-	public Doctor(String usersName, String usersAddress, String phone, String department) {
-		super(usersName, usersAddress, phone, "D");
+	public Doctor(String usersName, String phone, String department) {
+		super(usersName, phone, "D");
 		
 		//assign department based on input
 		switch(department==null?"null":department) {
@@ -145,5 +145,4 @@ public class Doctor extends User implements HealthStaff{
 		this.department = department;
 		department.getUserList().add(this);
 	}
-	
 }

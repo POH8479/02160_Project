@@ -1,6 +1,7 @@
 package gui.controller;
 
 import gui.model.*;
+import gui.view.AdvancedQueryView;
 import gui.view.HealthStaffView;
 import gui.view.ManagementView;
 import gui.view.RecordView;
@@ -20,6 +21,7 @@ public class ApplicationController {
 	private RecordController recordController;
 	private HealthStaffController healthStaffController;
 	private UserController userController;
+	private AdvancedQueryController advancedQueryController;
 	
 	/**
 	 * Login method for the HMS application which initialises a new LoginController and displays the login window.
@@ -130,10 +132,21 @@ public class ApplicationController {
 		// create a new Persistence Layer
 		PersistenceLayer persistenceLayer = new PersistenceLayer();
 		
+		
 		// Save the information from all departments
 //		persistenceLayer.save(Emergency.getInstance());
 //		persistenceLayer.save(Inpatient.getInstance());
 //		persistenceLayer.save(Outpatient.getInstance());
 //		persistenceLayer.save(Management.getInstance());
+	}
+
+	public void query(Session session) {
+	// initialise a new query Controller
+	advancedQueryController = new AdvancedQueryController(session, this);
+
+	// create a new Advanced Query View and display the Query Window
+	AdvancedQueryView advancedQueryView = new AdvancedQueryView(advancedQueryController);
+	advancedQueryController.setView(advancedQueryView);
+	advancedQueryController.display();
 	}
 }

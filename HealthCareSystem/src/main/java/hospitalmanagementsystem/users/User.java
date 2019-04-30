@@ -1,8 +1,5 @@
 package hospitalmanagementsystem.users;
 
-
-import java.util.Hashtable;
-
 import hospitalmanagementsystem.Patient;
 import hospitalmanagementsystem.departments.Department;
 import hospitalmanagementsystem.departments.Management;
@@ -21,51 +18,41 @@ public class User {
 	// Instance Variables
 	String name;
 	final String userID;
-	String address;
+	String email;
 	String phoneNumber;
 	Department department;
 
 	/**
 	 * Creates a new User of the Hospital Management System
+	 * @param usersName
+	 * @param phone
 	 */
-	public User(String usersName, String usersAddress, String phone){
+	public User(String usersName,  String phone){
 		// assign the User with a unique ID
 		idCounter++;
 		this.userID = "U" + Integer.toString(idCounter);
 		// assign the remaining information
 		this.name = usersName;
-		this.address = usersAddress;
+//		this.email = email; TODO
 		this.phoneNumber = phone;
 		this.department = Management.getInstance();
 		Management.getInstance().getUserList().add(this);
 	}
 
-	public User(String usersName, String usersAddress, String phone, String classString) {
+	/**
+	 * Creates a new non generic type ofUser to the Hospital Management System
+	 * @param usersName
+	 * @param phone
+	 * @param classString
+	 */
+	public User(String usersName, String phone, String classString) {
 		// assign the User with a unique ID
 		idCounter++;
 		this.userID = classString + Integer.toString(idCounter);
 		// assign the remaining information
 		this.name = usersName;
-		this.address = usersAddress;
+//		this.email = email; TODO
 		this.phoneNumber = phone;
-	}
-
-	/**
-	 * Returns the Users Info as a String in the format
-	 *
-	 * @return String
-	 */
-	public Hashtable<String,String> getUserInfo() {
-		// create a Hash table and add the Users info
-		Hashtable<String,String> info = new Hashtable<String,String>();
-		info.put("Name", this.name);
-		info.put("User ID", this.userID);
-		info.put("Address", this.address);
-		info.put("Phone Number", this.phoneNumber);
-
-
-		// return info hash table
-		return info;
 	}
 
 	/**
@@ -80,17 +67,6 @@ public class User {
 
 		// return the Patient
 		return newPatient;
-	}
-
-	/**
-	 * returns the patients basic data (Name, )
-	 *
-	 * @param patient The
-	 * @return The patients basic data in String format
-	 */
-	public Hashtable<String,String> getPatientData(Patient patient) {
-		// return the patients info
-		return patient.getPatientInfo();
 	}
 
 	public Department getDepartment() {
@@ -110,7 +86,7 @@ public class User {
 	}
 
 	public String getAddress() {
-		return this.address;
+		return this.email;
 	}
 
 	public String getNumber() {
@@ -122,7 +98,7 @@ public class User {
 	}
 	
 	public void setAddress(String newAddress) {
-		this.address = newAddress;
+		this.email = newAddress;
 	}
 	
 	public void setPhone(String newPhone) {

@@ -111,17 +111,32 @@ public class UserModel extends AbstractTableModel {
 	 * Edits the Users Information.
 	 * @param userId The User ID
 	 * @param name The Users Name
+	 * @param department 
 	 * @param address The Users Address
-	 * @param phone The Users Phone Number
 	 */
-	public void edit(String userId, String name, String address, String phone) {
+	public void edit(String userId, String name, String phone, String department) {
 		// find the user with this userID
 		User toEdit = findUser(userId);
 		
 		// set the users information to that provided by the arguments
-		toEdit.setAddress(address);
 		toEdit.setPhone(phone);
 		toEdit.setUserName(name);
+		
+		// if a healthStaff Worker
+		if(!(toEdit.getType().equals("Admin") || toEdit.getType().equals("User"))) {
+			// cast toEdit to HealthStaff
+			HealthStaff healthUser = (HealthStaff) toEdit;
+			
+			// and change the department
+			switch(department) {
+				case "Emergency":
+					healthUser.moveDepartment(Emergency.getInstance());
+				case "Inpatient":
+					healthUser.moveDepartment(Inpatient.getInstance());
+				case "Outpatient":
+					healthUser.moveDepartment(Outpatient.getInstance());
+				}
+		}
 		
 		// notify the views that data changed
 		fireTableDataChanged();
@@ -170,7 +185,7 @@ public class UserModel extends AbstractTableModel {
 		} else if (column == 2) {
 			return "Department";
 		} else if (column == 3) {
-			return "Address";
+			return "Email";
 		} else if (column == 4) {
 			return "Phone Number";
 		}
