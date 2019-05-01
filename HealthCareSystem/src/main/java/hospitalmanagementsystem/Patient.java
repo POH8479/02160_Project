@@ -1,6 +1,5 @@
 package hospitalmanagementsystem;
 
-import java.util.Hashtable;
 import java.util.Objects;
 import hospitalmanagementsystem.departments.*;
 
@@ -21,7 +20,7 @@ public class Patient {
 	String bday;
 	String address;
 	String phoneNo;
-	Boolean deceased;
+	String deceased;
 	String record;
 	String dept;
 	Bed bed;
@@ -36,10 +35,10 @@ public class Patient {
 		this.bday = bday;
 		this.address = address;
 		this.phoneNo = phoneNo;
-		this.deceased = false;
-		this.record = "";
+		this.deceased = "false";
+		this.record = null;
 		this.dept = null;
-		this.bed = new Bed();
+		this.bed = null;
 	}
 
 	public Patient() {}
@@ -54,7 +53,11 @@ public class Patient {
 		if( department instanceof Management) {
 			throw new IllegalArgumentException("Patients can not be assigned to the Managment Department");
 		} else { //otherwise update department
-			this.dept = department.getName();
+			if(department == null) {
+				this.dept = null;
+			} else {
+				this.dept = department.getName();
+			}
 		}
 		
 		// Save the new Patient
@@ -103,12 +106,12 @@ public class Patient {
 		return this.address;
 	}
 	
-	public String getNumber() {
+	public String getPhoneNo() {
 		return this.phoneNo;
 	}
 	
 	public String getDeceased() {
-		return Boolean.toString(this.deceased);
+		return this.deceased;
 	}
 	
 	public String getRecord() {
@@ -150,18 +153,14 @@ public class Patient {
 	}
 
 	public void setDeceased(String deceased) {
-		if(deceased.equals("true")) {
-			this.deceased = true;
-		} else {
-			this.deceased = false;
-		}
+		this.deceased = deceased;
 	}
 	
 	/**
 	 * Updates a patients medical record
 	 * @param data
 	 */
-	public void updateRecord(String data) {
+	public void setRecord(String data) {
 		if(!Objects.equals(this.record,null)) {
 			this.record = this.record + "\n" + data;
 		} else {

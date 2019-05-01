@@ -80,6 +80,8 @@ public class Admin extends User implements HealthStaff{
 			
 			// Update the patients department variable
 			patient.updateDepartment(null);
+			PersistenceLayer persist = new PersistenceLayer();
+			persist.save(patient, patient.getpatientID(), null);
 		}
 	}
 
@@ -122,7 +124,7 @@ public class Admin extends User implements HealthStaff{
 	 */
 	public String editMedicalData(Patient patient, String data){
 		// append the data to the patients medical data
-		patient.updateRecord(data);
+		patient.setRecord(data);
 
 		// request the updated record and return it
 		return patient.getRecord();

@@ -133,7 +133,7 @@ public class Doctor extends User implements HealthStaff{
 	 */
 	public String editMedicalData(Patient patient, String data) {
 		// append the data to the patients medical data
-		patient.updateRecord(data);
+		patient.setRecord(data);
 
 		// request the updated record and return it
 		return patient.getRecord();

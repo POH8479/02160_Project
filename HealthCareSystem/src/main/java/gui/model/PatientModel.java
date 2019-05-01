@@ -158,7 +158,7 @@ public class PatientModel extends AbstractTableModel {
 			}
 			return patients.get(rowIndex).getDepartment();
 		} else if (columnIndex == 4) {
-			return patients.get(rowIndex).getNumber();
+			return patients.get(rowIndex).getPhoneNo();
 		} else if (columnIndex == 5) {
 			return patients.get(rowIndex).getAddress();
 		} else if (columnIndex == 6) {

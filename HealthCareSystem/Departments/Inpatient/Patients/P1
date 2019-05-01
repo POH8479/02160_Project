@@ -11,7 +11,7 @@
    <string>false</string>
   </void>
   <void property="department">
-   <string>Emergency</string>
+   <string>Inpatient</string>
   </void>
   <void property="firstName">
    <string>A</string>

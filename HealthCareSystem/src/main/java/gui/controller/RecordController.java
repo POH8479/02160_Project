@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import gui.model.Session;
 import gui.view.RecordView;
 import hospitalmanagementsystem.Patient;
+import hospitalmanagementsystem.PersistenceLayer;
 import hospitalmanagementsystem.users.HealthStaff;
 
 /**
@@ -84,6 +85,9 @@ public class RecordController {
 		} else {
 			this.applicationController.healthStaffDisplay(this.sessionModel);
 		}
+		
+		PersistenceLayer persist = new PersistenceLayer();
+		persist.save(patient, patient.getpatientID(), patient.getDepartment());
 	}
 
 	/**

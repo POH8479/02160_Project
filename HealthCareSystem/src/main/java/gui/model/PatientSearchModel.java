@@ -43,7 +43,7 @@ public class PatientSearchModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		if (columnIndex == 0) {
-			return patients.get(rowIndex).getPatientId();
+			return patients.get(rowIndex).getpatientID();
 		} else if (columnIndex == 1) {
 			return patients.get(rowIndex).getFirstName();
 		} else if (columnIndex == 2) {
@@ -52,9 +52,9 @@ public class PatientSearchModel extends AbstractTableModel {
 			if(Objects.equals(null,patients.get(rowIndex).getDepartment())) {
 				return "-";
 			}
-			return patients.get(rowIndex).getDepartment().getName();
+			return patients.get(rowIndex).getDepartment();
 		} else if (columnIndex == 4) {
-			return patients.get(rowIndex).getNumber();
+			return patients.get(rowIndex).getPhoneNo();
 		} else if (columnIndex == 5) {
 			return patients.get(rowIndex).getAddress();
 		} else if (columnIndex == 6) {
