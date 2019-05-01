@@ -1,5 +1,7 @@
 package hospitalmanagementsystem;
 
+import hospitalmanagementsystem.departments.Department;
+
 public class HMS {
 	
 	/**
@@ -10,7 +12,7 @@ public class HMS {
 	 * @return the Department
 	 */
 	public static Department getDepartment(String departmentName) {
-		return null;
+		return null;}
 
 	public static void main(String[] args) {
 		// Do Stuff

@@ -53,6 +53,8 @@ import java.util.Objects;
 		b1 = new Bed(em);
 	}
 	 
+
+	
 	 /**
 	 * Tests the save method of PersistenceLayer.
 	 * Note that save is overloaded and returns a bool (true when succesfully saved) so that is what we check for.
@@ -66,16 +68,16 @@ import java.util.Objects;
 		assertEquals(true, persist.save(man));
 		
 		//Saving a patient
-		assertEquals(true, persist.save(p1, p1.getID(), em));
+		assertEquals(true, persist.save(p1, p1.getPatientId(), em));
 		
 		//Saving users
-		assertEquals(true, persist.save(admin, admin.getID(), em));
-		assertEquals(true, persist.save(doc, doc.getID(), inPa));
-		assertEquals(true, persist.save(nurse, nurse.getID(), outPa));
-		assertEquals(true, persist.save(user, user.getID(), man));
+		assertEquals(true, persist.save(admin, admin.getUserID(), em));
+		assertEquals(true, persist.save(doc, doc.getUserID(), inPa));
+		assertEquals(true, persist.save(nurse, nurse.getUserID(), outPa));
+		assertEquals(true, persist.save(user, user.getUserID(), man));
 		
 		//Saving a bed
-		assertEquals(true, persist.save(b1, b1.getID(), inPa));
+		assertEquals(true, persist.save(b1, b1.getBedID(), inPa));
 	}
 	
 	@Test
@@ -95,18 +97,22 @@ import java.util.Objects;
 		assertEquals(true, persist.delete(inPa));
 		
 		//Delete patient/user/bed (returns true when deleted and false when it cannot find the file)
-		persist.save(p1, p1.getID(), em);
-		persist.save(doc, doc.getID(), inPa);
-		persist.save(b1, b1.getID(), inPa);
+		persist.save(p1, p1.getPatientId(), em);
+		persist.save(doc, doc.getUserID(), inPa);
+		persist.save(b1, b1.getBedID(), inPa);
 		
-		assertEquals(true, persist.delete(p1.getID(), em));
-		assertEquals(true, persist.delete(doc.getID(), inPa));
-		assertEquals(true, persist.delete(b1.getID(), inPa));
-		assertEquals(false, persist.delete(p1.getID(), man));
-		assertEquals(false, persist.delete(nurse.getID(), inPa));
-		assertEquals(false, persist.delete(b1.getID(), outPa));
+		assertEquals(true, persist.delete(p1.getPatientId(), em));
+		assertEquals(true, persist.delete(doc.getUserID(), inPa));
+		assertEquals(true, persist.delete(b1.getBedID(), inPa));
+		assertEquals(false, persist.delete(p1.getPatientId(), man));
+		assertEquals(false, persist.delete(nurse.getUserID(), inPa));
+		assertEquals(false, persist.delete(b1.getBedID(), outPa));
 	}
 	 
 	 
+	@Test
+	public void loadObjs() {
+		
+	}
 	 
  }

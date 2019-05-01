@@ -114,50 +114,53 @@ public class PersistenceLayer {
 		return obj;		
 	}
 
+	/*
+	 * Returns an ArrayList of either users, patients or beds in the given departmen
+	 * based on which "type" is passed to the method.
+	 */
 	public ArrayList<Object> loadObjs(Department department, String type){
+		ArrayList<Object> objs = new ArrayList<Object>();
 		type = type.toLowerCase();
+		char charType;
 		String dir = "Departments" + File.separator + department.getName();
 		switch (type) {
 			case "users":
 				dir = dir + File.separator + "Users";
-				//Arraylist<User> users = new Arraylist();
+				charType = 'U';
 				break;
 			case "patients":
 				dir = dir + File.separator + "Patients";
+				charType = 'P';
 				break;
 			case "beds":
 				dir = dir + File.separator + "Beds";
+				charType = 'B';
 				break;
 			default:
-				return 
+				return objs;	
 		}
 		
+		// Gets a list of files in the directory and checks if they are valid
+		XMLDecoder d = null;
+		File[] files = new File(dir).listFiles();
+		
+		for(File file : files) {
+			if(file.isFile() && Character.toUpperCase(file.getName().charAt(0)) == charType) {
+				try{
+					d = new XMLDecoder(
+		                new BufferedInputStream(
+		                    new FileInputStream(dir + File.separator + file.getName())));
+				} catch(FileNotFoundException fileNotFound) {
+					System.out.println("Error: Could not find or open the file");
+				}
+				Object obj = new Object();
+				obj = d.readObject();
+				objs.add(obj);
+			}
+		}
+		return objs;
 	}
 	
-	//load beds
-	//load patients
-	//load users
-	
-	//load department
-	//load beds
-	//load patients
-	//load users
-	
-	// Loads class contained in given file
-	/*public Object load(String filename) {
-		XMLDecoder d = null;
-		try{
-			d = new XMLDecoder(
-                new BufferedInputStream(
-                    new FileInputStream(filename)));
-		} catch(FileNotFoundException fileNotFound) {
-			System.out.println("Error: Could not find or open the file");
-		}
-		
-		Object obj = new Object();
-		obj = d.readObject();
-		return obj;
-	}*/
 	
 	// Deletes the file
 	public Boolean delete(Department department) {
