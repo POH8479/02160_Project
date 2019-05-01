@@ -39,8 +39,8 @@ public class AdminTest {
 	@BeforeClass
 	public static void setUpBeforeClass() {
 		// create Administrators
-		ad1 = new Admin("John Doe", "123 Main St Anytown, Denmark", "+4512345678");
-		ad2 = new Admin("Andy Admin", "123 Main St Medicaltown, Germany", "+4912345678");
+		ad1 = new Admin("John Doe", "+4512345678");
+		ad2 = new Admin("Andy Admin", "+4912345678");
 
 		// create the Patients
 		p1 = new Patient("Pieter", "O\'Hearn", "12/01/1990", "259 Nordvej 2800 Kongens Lyngby", "+4562473948");
@@ -181,7 +181,7 @@ public class AdminTest {
 	@Test
 	public void removeUserTest() {
 		User badUser = new User("Name", "Address", "Phone");
-		assertFalse(Objects.equals(badUser.getUserInfo().get("User ID"),"None"));
+		assertFalse(Objects.equals(badUser.getUserID(),"None"));
 		ad1.removeUser(badUser);
 		assertFalse(badUser.getDepartment().getUserList().contains(badUser));
 	}
@@ -193,16 +193,16 @@ public class AdminTest {
 	public void addUserTest() {
 		// Add one of each user
 		Admin a = (Admin) ad1.addUser("Admin", "Admin's Address", "Admins Phone", "Admin");
-		assertEquals('A',a.getUserInfo().get("User ID").charAt(0));
+		assertEquals('A',a.getUserID().charAt(0));
 
 		Doctor d = (Doctor) ad1.addUser("Doctor", "Doctor's Address", "Doctors Phone", "Doctor");
-		assertEquals('D',d.getUserInfo().get("User ID").charAt(0));
+		assertEquals('D',d.getUserID().charAt(0));
 
 		Nurse n = (Nurse) ad1.addUser("Nurse", "Nurse's Address", "Nurses Phone", "Nurse");
-		assertEquals('N',n.getUserInfo().get("User ID").charAt(0));
+		assertEquals('N',n.getUserID().charAt(0));
 
 		User u = ad1.addUser("User", "User's Address", "Users Phone", "User");
-		assertEquals('U',u.getUserInfo().get("User ID").charAt(0));
+		assertEquals('U',u.getUserID().charAt(0));
 	}
 
 	/**

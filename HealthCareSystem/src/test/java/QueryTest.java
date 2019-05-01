@@ -1,10 +1,7 @@
-package hospitalmanagementsystem;
-
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.Test;
-
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+import hospitalmanagementsystem.Patient;
+import hospitalmanagementsystem.Query;
 import hospitalmanagementsystem.departments.Emergency;
 import hospitalmanagementsystem.departments.Inpatient;
 import hospitalmanagementsystem.departments.Management;
@@ -68,34 +65,27 @@ class QueryTest {
 			in.addUser(u8);
 		}
 	@Test
-	@SuppressWarnings("unlikely-arg-type")
 	void depMostPatientsTest() {
 		assertEquals("Emergency",Query.depMostPatients());
 	}
 	@Test
-	@SuppressWarnings("unlikely-arg-type")
 	void depLeastPatientsTest() {
 		assertEquals("Outpatient",Query.depMostPatients());
 	}
 	@Test
-	@SuppressWarnings("unlikely-arg-type")
 	void depMostUsersTest() {
 		assertEquals("Outpatient",Query.depMostUsers());
 	}
 	@Test
-	@SuppressWarnings("unlikely-arg-type")
 	void depLeastUsersTest() {
 		assertEquals("Emergency",Query.depMostUsers());
 	}
 	@Test
-	@SuppressWarnings("unlikely-arg-type")
 	void totPatientsTest() {
 		assertEquals(6,Query.totPatients());
 	}
 	@Test
-	@SuppressWarnings("unlikely-arg-type")
 	void totUsersTest(){
 		assertEquals(8,Query.totUsers());
 	}
-
 }

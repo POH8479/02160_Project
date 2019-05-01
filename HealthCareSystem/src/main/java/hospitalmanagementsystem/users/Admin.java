@@ -17,9 +17,9 @@ public class Admin extends User implements HealthStaff{
 	/**
 	 * Creates a new Admin of the Hospital Management
 	 */
-	public Admin(String usersName, String usersAddress, String phone) {
+	public Admin(String usersName, String phone) {
 		// call the super
-		super(usersName, usersAddress, phone, "A");
+		super(usersName, phone, "A");
 		
 		// set the department to Admin
 		this.department = Management.getInstance();
@@ -128,13 +128,13 @@ public class Admin extends User implements HealthStaff{
 		// check what typeOfUser
 		switch(typeOfUser) {
 			case "Admin":
-				return new Admin(usersName, usersAddress, phone);
+				return new Admin(usersName, phone);
 			case "Doctor":
-				return new Doctor(usersName, usersAddress, phone,"Emergency");
+				return new Doctor(usersName, phone, "Emergency");
 			case "Nurse":
-				return new Nurse(usersName, usersAddress, phone,"Emergency");
+				return new Nurse(usersName, phone, "Emergency");
 			default:
-				return new User(usersName, usersAddress, phone);
+				return new User(usersName, phone);
 		}
 	}
 

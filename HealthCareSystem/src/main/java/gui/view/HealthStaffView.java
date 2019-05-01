@@ -2,15 +2,19 @@ package gui.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
@@ -35,6 +39,10 @@ public class HealthStaffView extends JFrame {
 	private JTable tblPatients;
 	private JLabel lblSession;
 	private JScrollPane patientPane;
+	private JTextField idSearchField;
+	private JTextField nameSearchField;
+	private JTextField surnameSearchField;
+	private JTextField departmentSearchField;
 	
 	/**
 	 * Constructor for the HealthStaff View sets up the view by calling the initGUI() method.
@@ -120,6 +128,38 @@ public class HealthStaffView extends JFrame {
 			}
 		});
 		
+		// Create a new button "Clear" with an Action Listener and set Enabled to false
+		JButton btnClear = new JButton("Clear");
+		btnClear.setEnabled(false);
+		btnClear.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// When clicked reset to the original patient model
+				controller.clearSearch();
+				btnClear.setEnabled(false);
+			}
+		});
+		
+		// Create a new button "Search" with an Action Listener
+		JButton btnSearch = new JButton("Search");
+		btnSearch.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// When clicked Search for the patient(s)
+				controller.patientSearch(idSearchField.getText(), nameSearchField.getText(), surnameSearchField.getText(), departmentSearchField.getText());
+				btnClear.setEnabled(true);
+			}
+		});
+		
+		// Create a new button "Query" with an Action Listener
+		JButton btnQuery = new JButton("Query");
+		btnQuery.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// When clicked reset to the original patient model
+				controller.advancedQuery();
+			}
+		});
 		
 		// TOOLBAR
 		// create a new label and set Horizontal Alignment right
@@ -133,12 +173,39 @@ public class HealthStaffView extends JFrame {
 		toolbar.add(btnDischargePatient);
 		toolbar.add(btnEdit);
 		toolbar.add(btnRecord);
+		toolbar.add(btnQuery);
 		toolbar.add(Box.createHorizontalGlue());
-		toolbar.add(btnLogOut);
 		toolbar.add(lblSession);
+		toolbar.add(btnLogOut);
 		
-		// Place the toolbar on the top of the page
-		add(toolbar, BorderLayout.NORTH);
+		// create a label and Text are for the search bar
+		JLabel lblSearchID = new JLabel("ID:");
+		idSearchField = new JTextField(5);
+		JLabel lblSearchName = new JLabel("First Name:");
+		nameSearchField = new JTextField(5);
+		JLabel lblSurnameSearch = new JLabel("Last Name:");
+		surnameSearchField = new JTextField(5);
+		JLabel lblSearchDepartment = new JLabel("Department:");
+		departmentSearchField = new JTextField(5);
+		
+		// create a new JToolBar and add all search features
+		JToolBar searchBar = new JToolBar();
+		searchBar.add(lblSearchID);
+		searchBar.add(idSearchField);
+		searchBar.add(lblSearchName);
+		searchBar.add(nameSearchField);
+		searchBar.add(lblSurnameSearch);
+		searchBar.add(surnameSearchField);
+		searchBar.add(lblSearchDepartment);
+		searchBar.add(departmentSearchField);
+		searchBar.add(btnSearch);
+		searchBar.add(btnClear);
+		
+		// Place the toolbars in a JPanel with a Grid Layout and add to the Frame
+		JPanel toolbars = new JPanel(new GridLayout(0, 1));
+		toolbars.add(toolbar);
+		toolbars.add(searchBar);
+		add(toolbars, BorderLayout.NORTH);
 		
 		// TABLES
 		// create a table for the patients with an Selection Listener and set the Selection mode to single selection
@@ -179,7 +246,7 @@ public class HealthStaffView extends JFrame {
 	 */
 	public void setSession(Session sessionModel) {
 		// set the text of the lblSession
-		lblSession.setText("<html>" + sessionModel.getUser().getUserName() + " <i>(" + sessionModel.getUser().getType()+ ")</i></html>");
+		lblSession.setText("<html>" + sessionModel.getUser().getUserName() + " <i>(" + sessionModel.getUser().getType()+ ") </i></html>");
 	}
 
 	/**
