@@ -12,7 +12,7 @@ import hospitalmanagementsystem.*;
  */
 public class Admin extends User implements HealthStaff{
 	// Instance Variables
-	Department department;
+	String department;
 
 	/**
 	 * Creates a new Admin of the Hospital Management
@@ -22,10 +22,15 @@ public class Admin extends User implements HealthStaff{
 		super(usersName, phone, "A");
 		
 		// set the department to Admin
-		this.department = Management.getInstance();
+		this.department = Management.getInstance().getName();
 		
 		// update the departments list
 		Management.getInstance().addUser(this);
+
+		// Save the new User
+		PersistenceLayer persist = new PersistenceLayer();
+		boolean saved = persist.save(this, this.userID, this.department);
+		if(!saved) {System.out.println("Admin Not Saved!!!");}
 	}
 
 	/**
@@ -145,14 +150,19 @@ public class Admin extends User implements HealthStaff{
 	 */
 	public void removeUser(User oldUser) {
 		// remove patient from department userlist
-		oldUser.getDepartment().getUserList().remove(oldUser);
-		
-		// set user to null
-		// TODO we need setter methods for this
-		// TODO Maybe we can remove the user from the file system using Persistence layer
+		switch(oldUser.getDepartment()) {
+			case "Emergency":
+				Emergency.getInstance().getUserList().remove(oldUser);
+			case "Outpatient": 
+				Outpatient.getInstance().getUserList().remove(oldUser);
+			case "Inpatient": 
+				Inpatient.getInstance().getUserList().remove(oldUser);
+			case "Management": 
+				Management.getInstance().getUserList().remove(oldUser);
+		}
 	}
 
-	public Department getDepartment() {
+	public String getDepartment() {
 		return this.department;
 	}
 	
@@ -161,8 +171,6 @@ public class Admin extends User implements HealthStaff{
 		return "Admin";
 	}
 	
-	public void moveDepartment(Department department) {
-		// TODO Cannot change department
-		
-	}
+	// Cannot change department
+	public void moveDepartment(String department) {}
 }
