@@ -8,14 +8,12 @@ import hospitalmanagementsystem.users.User;
 public class Emergency extends Department {
 	// static variable single_instance of type Emergency 
     private static Emergency single_instance = null; 
-    ArrayList<Patient> patientList;
-    ArrayList<User> userList;
-    int capacity;
     
     private Emergency() {
-    	this.capacity = 100;
+    	this.name = "Emergency";
     	patientList = new ArrayList<Patient>();
     	userList = new ArrayList<User>();
+    	bedList = new ArrayList<Bed>();
     }
 	
     // static method to create instance of Emergency class 
@@ -28,19 +26,32 @@ public class Emergency extends Department {
         return single_instance; 
     }
 	
-	public void addPatient(Patient Patient) {
-		patientList.add(Patient);
+	public void addPatient(Patient patient) {
+		patientList.add(patient);
 	}
 	
-	public void removePatient(Patient Patient) {
-		patientList.remove(Patient);
+	public void removePatient(Patient patient) {
+		patientList.remove(patient);
 	
 	}
 	
+	public void addUser(User user) {
+		userList.add(user);
+	}
+	
+	public void removeUser(User user) {
+		userList.remove(user);
+	}
+	
+	//Getters		
 	public String getName() {
-		return "Emergency";
-	}
-	
+			return "Emergency";
+		}
+		
+	public ArrayList<Bed> getBedList(){
+			return this.bedList;
+		}
+		
 	public ArrayList<Patient> getPatientList() {
 		return this.patientList;
 	}
@@ -48,8 +59,22 @@ public class Emergency extends Department {
 	public ArrayList<User> getUserList() {
 		return this.userList;
 	}
-	
-	public void addUser(User User) {
-		userList.add(User);
+		
+	//Setters
+	public void setName(String Name) {
+		this.name = Name;
 	}
+		
+	public void setBedList(ArrayList<Bed> beds) {
+		this.bedList = beds;
+	}
+		
+	public void setPatientList(ArrayList<Patient> patients) {
+		this.patientList = patients;
+	}
+		
+	public void setUserList(ArrayList<User> users) {
+		this.userList = users;
+	}
+	
 }
