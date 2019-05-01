@@ -1,7 +1,6 @@
 package gui.controller;
 
 import gui.model.*;
-import gui.view.AdvancedQueryView;
 import gui.view.HealthStaffView;
 import gui.view.ManagementView;
 import gui.view.RecordView;
@@ -22,7 +21,6 @@ public class ApplicationController {
 	private RecordController recordController;
 	private HealthStaffController healthStaffController;
 	private UserController userController;
-	private AdvancedQueryController advancedQueryController;
 	
 	public ApplicationController() {
 		PersistenceLayer persist = new PersistenceLayer();
@@ -132,15 +130,5 @@ public class ApplicationController {
 		// initialise the ApplicationController app and call the login method to Start
 		ApplicationController app = new ApplicationController();
 		app.login();
-	}
-
-	public void query(Session session) {
-	// initialise a new query Controller
-	advancedQueryController = new AdvancedQueryController(session, this);
-
-	// create a new Advanced Query View and display the Query Window
-	AdvancedQueryView advancedQueryView = new AdvancedQueryView(advancedQueryController);
-	advancedQueryController.setView(advancedQueryView);
-	advancedQueryController.display();
 	}
 }

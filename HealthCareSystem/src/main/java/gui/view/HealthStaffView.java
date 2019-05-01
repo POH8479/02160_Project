@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,6 +25,7 @@ import javax.swing.table.TableModel;
 
 import gui.controller.HealthStaffController;
 import gui.model.Session;
+import hospitalmanagementsystem.Query;
 
 /**
  * The View for the HealthStaff Users
@@ -156,11 +158,48 @@ public class HealthStaffView extends JFrame {
 		btnQuery.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// When clicked reset to the original patient model
-				controller.advancedQuery();
+				// When clicked Display the JPanel using a JOptionPane and store the confirmation result
+				JPanel queryPanel = new JPanel();
+				String[] typesOfQuerys = { "Department with most Patients", "Department with least Patients", "Department with most Users", "Department with least Users", "Total number of Patients", "Total number of Users" };
+				JComboBox<String> querys = new JComboBox<String>(typesOfQuerys);
+				queryPanel.add(querys);
+	
+		        int confirmation = JOptionPane.showConfirmDialog(null, queryPanel, "Please Choose an Advanced Query", JOptionPane.OK_CANCEL_OPTION);
+
+		        // check the confirmation result
+		        if (confirmation == JOptionPane.OK_OPTION) {
+		        	// if OK was selected create a new result label
+		        	JLabel result = new JLabel();
+		        	
+		        	// create a new Advanced Query Object
+		        	Query q = new Query();
+		        	
+		        	// check what query was selected
+		        	if(querys.getSelectedIndex() == 0) {
+		        		// Print the result
+		        		result.setText("Department with most Patients:  " + q.depMostPatients());
+		        	} else if(querys.getSelectedIndex() == 1) {
+		        		// Print the result
+		        		result.setText("Department with least Patients:  " + q.depLeastPatients());
+		        	} else if(querys.getSelectedIndex() == 2) {
+		        		// Print the result
+		        		result.setText("Department with most Users:  " + q.depMostUsers());
+		        	} else if(querys.getSelectedIndex() == 3) {
+		        		// Print the result
+		        		result.setText("Department with least Users:  " + q.depLeastUsers());
+		        	} else if(querys.getSelectedIndex() == 4) {
+		        		// Print the result
+		        		result.setText("Total number of Patients:  " + q.totPatients());
+		        	} else if(querys.getSelectedIndex() == 5) {
+		        		// Print the result
+		        		result.setText("Total number of Users:  " + q.totUsers());
+		        	} 
+		        	
+		        	JOptionPane.showConfirmDialog(null, result, "Advanced Query Result", JOptionPane.OK_CANCEL_OPTION);
+		        }
 			}
 		});
-		
+
 		// TOOLBAR
 		// create a new label and set Horizontal Alignment right
 		lblSession = new JLabel();

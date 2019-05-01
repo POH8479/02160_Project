@@ -16,11 +16,11 @@ public class User {
 	public static int idCounter = 0;
 
 	// Instance Variables
-	String name;
-	String userID;
-	String email;
-	String phoneNumber;
-	String department;
+	protected String name;
+	protected String userID;
+	protected String email;
+	protected String phoneNumber;
+	private String department;
 
 	/**
 	 * Creates a new User of the Hospital Management System

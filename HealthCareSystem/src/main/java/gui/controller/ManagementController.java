@@ -428,13 +428,4 @@ public class ManagementController {
 		// retrieve the original patient and user model and set it again
 		this.view.setTableModel(userModel, patientModel);
 	}
-
-	/**
-	 * Opens the Advanced Query Window.
-	 */
-	public void advancedQuery() {
-		// close the Management view and start the advanced query controller 
-		this.view.setVisible(false);
-		this.applicationController.query(this.sessionModel);
-	}
 }

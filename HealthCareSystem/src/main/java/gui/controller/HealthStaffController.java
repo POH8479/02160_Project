@@ -252,13 +252,4 @@ public class HealthStaffController {
 		// retrieve the original patient model and set it again
 		this.view.setTableModel(patientModel);
 	}
-
-	/**
-	 * Opens the Advanced Query Window.
-	 */
-	public void advancedQuery() {
-		// close the HealthStaff view and start the advanced query controller 
-		this.view.setVisible(false);
-		this.applicationController.query(this.sessionModel);
-	}
 }
