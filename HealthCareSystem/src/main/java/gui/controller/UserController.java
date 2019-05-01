@@ -161,7 +161,6 @@ public class UserController {
 	public void logOut() {
 		// close the User view and call the login method for the next user
 		view.setVisible(false);
-		applicationController.save();
 		applicationController.login();	
 	}
 	

@@ -83,7 +83,7 @@ public class UserModel extends AbstractTableModel {
 		HealthStaff u = (HealthStaff) findUser(userID);
 		
 		// update the users department
-		u.moveDepartment(dept);
+		u.moveDepartment(dept.getName());
 		
 		// notify the views that data changed
 		fireTableDataChanged();
@@ -119,7 +119,7 @@ public class UserModel extends AbstractTableModel {
 		User toEdit = findUser(userId);
 		
 		// set the users information to that provided by the arguments
-		toEdit.setPhone(phone);
+		toEdit.setNumber(phone);
 		toEdit.setUserName(name);
 		
 		// if a healthStaff Worker
@@ -130,11 +130,11 @@ public class UserModel extends AbstractTableModel {
 			// and change the department
 			switch(department) {
 				case "Emergency":
-					healthUser.moveDepartment(Emergency.getInstance());
+					healthUser.moveDepartment(Emergency.getInstance().getName());
 				case "Inpatient":
-					healthUser.moveDepartment(Inpatient.getInstance());
+					healthUser.moveDepartment(Inpatient.getInstance().getName());
 				case "Outpatient":
-					healthUser.moveDepartment(Outpatient.getInstance());
+					healthUser.moveDepartment(Outpatient.getInstance().getName());
 				}
 		}
 		
@@ -166,10 +166,10 @@ public class UserModel extends AbstractTableModel {
 			if(Objects.equals(null, users.get(rowIndex).getDepartment())) {
 				return "-";
 			} else {
-				return users.get(rowIndex).getDepartment().getName();
+				return users.get(rowIndex).getDepartment();
 			}
 		} else if (columnIndex == 3) {
-			return users.get(rowIndex).getAddress();
+			return users.get(rowIndex).getEmail();
 		} else if (columnIndex == 4) {
 			return users.get(rowIndex).getNumber();
 		}

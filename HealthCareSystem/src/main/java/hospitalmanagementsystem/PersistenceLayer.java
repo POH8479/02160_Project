@@ -59,10 +59,10 @@ public class PersistenceLayer {
 		return true;
 	}
 	
-	public boolean save(Object obj, String ID, Department department) {
+	public boolean save(Object obj, String ID, String department) {
 		//TODO Consider changing from Object to something less general
 		// Creates the directory for the object to be stored
-		String dir = "Departments" + File.separator + department.getName();
+		String dir = "Departments" + File.separator + department;
 		char type = ID.charAt(0);
 		switch (type) {
 			case 'U':

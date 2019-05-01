@@ -2,9 +2,7 @@ package hospitalmanagementsystem;
 
 import java.util.Hashtable;
 import java.util.Objects;
-
-import hospitalmanagementsystem.departments.Department;
-import hospitalmanagementsystem.departments.Management;
+import hospitalmanagementsystem.departments.*;
 
 /**
  * 
@@ -25,7 +23,7 @@ public class Patient {
 	String phoneNo;
 	Boolean deceased;
 	String record;
-	Department dept;
+	String dept;
 	Bed bed;
 
 	//CONSTRUCTOR
@@ -54,8 +52,12 @@ public class Patient {
 		if( department instanceof Management) {
 			throw new IllegalArgumentException("Patients can not be assigned to the Managment Department");
 		} else { //otherwise update department
-			this.dept = department;
+			this.dept = department.getName();
 		}
+		
+		// Save the new Patient
+		PersistenceLayer persist = new PersistenceLayer();
+		persist.save(this, this.patientID, this.dept);
 	}
   
 	/**
@@ -118,7 +120,7 @@ public class Patient {
 		if(this.dept == null) {
 			patientInfo.put("Department", "None");
 		} else {
-			patientInfo.put("Department", this.dept.getName());
+			patientInfo.put("Department", this.dept);
 		}
 		
 		if(this.bed == null) {
@@ -161,7 +163,19 @@ public class Patient {
 	 * @return Department object if admitted or null if department has not yet been assigned
 	 */
 	public Department getDepartment() {
-		return this.dept;
+		switch(this.dept) {
+			case "Emergency":
+				return Emergency.getInstance();
+			case "Inpatient":
+				return Inpatient.getInstance();
+			case "Outpatient":
+				return Outpatient.getInstance();
+			case "Management":
+				return Management.getInstance();
+			default:
+				// Error
+				return null;
+		}
 	}
 
 	public String getFirstName() {

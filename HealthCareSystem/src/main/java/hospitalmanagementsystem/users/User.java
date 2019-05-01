@@ -1,7 +1,7 @@
 package hospitalmanagementsystem.users;
 
 import hospitalmanagementsystem.Patient;
-import hospitalmanagementsystem.departments.Department;
+import hospitalmanagementsystem.PersistenceLayer;
 import hospitalmanagementsystem.departments.Management;
 
 /**
@@ -20,7 +20,7 @@ public class User {
 	final String userID;
 	String email;
 	String phoneNumber;
-	Department department;
+	String department;
 
 	/**
 	 * Creates a new User of the Hospital Management System
@@ -35,8 +35,19 @@ public class User {
 		this.name = usersName;
 //		this.email = email; TODO
 		this.phoneNumber = phone;
-		this.department = Management.getInstance();
+		this.department = Management.getInstance().getName();
 		Management.getInstance().getUserList().add(this);
+		
+		// Save the new User
+		PersistenceLayer persist = new PersistenceLayer();
+		boolean saved = persist.save(this, this.userID, this.department);
+		if(!saved) {System.out.println("User Not Saved111");}
+	}
+	
+	public User() {
+		// assign the User with a unique ID
+		idCounter++;
+		this.userID = "U" + Integer.toString(idCounter);
 	}
 
 	/**
@@ -68,41 +79,50 @@ public class User {
 		// return the Patient
 		return newPatient;
 	}
-
-	public Department getDepartment() {
-		return this.department;
-	}
-
-	public String getUserID() {
-		return this.userID;
-	}
-
-	public String getUserName() {
-		return this.name;
-	}
-
+	
 	public String getType() {
 		return "User";
 	}
 
-	public String getAddress() {
+	// Gets
+	public String getUserName() {
+		return this.name;
+	}
+	
+	public String getUserID() {
+		return this.userID;
+	}
+	
+	public String getEmail() {
 		return this.email;
 	}
-
+	
 	public String getNumber() {
 		return this.phoneNumber;
 	}
 	
+	public String getDepartment() {
+		return this.department;
+	}
+
+	// Sets
 	public void setUserName(String newName) {
 		this.name = newName;
 	}
 	
-	public void setAddress(String newAddress) {
-		this.email = newAddress;
+//	public void setUserID(String newID) {
+//		this.userID = newID;
+//	}
+	
+	public void setEmail(String newEmail) {
+		this.email = newEmail;
 	}
 	
-	public void setPhone(String newPhone) {
+	public void setNumber(String newPhone) {
 		this.phoneNumber = newPhone;
 	}
 
+	public void setDepartment(String newDepartment) {
+		this.department = newDepartment;
+	}
 }
