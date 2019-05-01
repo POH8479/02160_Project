@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import hospitalmanagementsystem.departments.Department;
+import hospitalmanagementsystem.users.User;
 
 
 /**
@@ -114,27 +115,40 @@ public class PersistenceLayer {
 	}*/
 	
 	public void loadDepartment(Department department) {
-		String dir = "Departments" + File.separator + department.getName();
+		String dir = "Departments" + File.separator + department.getName()
+		+ File.separator + department.getName();
 		
 		//Loads department
 		XMLDecoder d = null;
 		try {
 			d = new XMLDecoder(
 	                new BufferedInputStream(
-	                    new FileInputStream(dir + File.separator + department.getName())));
+	                    new FileInputStream(dir)));
 		}catch(FileNotFoundException fileNotFound) {
 			System.out.println("Error: Could not find or open the file");
 		}
 		department = (Department) d.readObject();
 		
 		//Loads users in the department
-		department.setUserList(loadObjs(department, "users"));
+		ArrayList<User> users = new ArrayList<User>();
+		for(Object o : loadObjs(department, "users")) {
+			users.add((User) o);
+		}
+		department.setUserList(users);
 		
 		//Loads patients in the department
-		department.setPatientList(loadObjs(department, "patients"));
+		ArrayList<Patient> patients = new ArrayList<Patient>();
+		for(Object o : loadObjs(department, "patients")) {
+			patients.add((Patient) o);
+		}
+		department.setPatientList(patients);
 		
 		//Loads beds in the department
-		department.setBedList(loadObjs(department, "beds"));
+		ArrayList<Bed> beds = new ArrayList<Bed>();
+		for(Object o : loadObjs(department, "beds")) {
+			beds.add((Bed) o);
+		}
+		department.setBedList(beds);
 	}
 
 	/*

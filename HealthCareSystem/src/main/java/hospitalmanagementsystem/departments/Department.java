@@ -13,7 +13,6 @@ import hospitalmanagementsystem.users.*;
  */
 
 public abstract class Department {
-	String ID;
 	String name;
 	ArrayList<Bed> bedList;
 	ArrayList<User> userList;
@@ -32,10 +31,27 @@ public abstract class Department {
 
 	public abstract void removePatient(Patient patient);
 	
+
+	//Getters
 	public abstract String getName();
+	
+	public abstract ArrayList<Bed> getBedList();
 	
 	public abstract ArrayList<Patient> getPatientList();
 	
 	public abstract ArrayList<User> getUserList();
+	
+	//Setters
+	public abstract void setName(String Name);
+	
+	public abstract void setBedList(ArrayList<Bed> beds);
+	
+	public abstract void setPatientList(ArrayList<Patient> patients);
+	
+	public abstract void setUserList(ArrayList<User> users);
+	
+	
+
+	
 	
 }
