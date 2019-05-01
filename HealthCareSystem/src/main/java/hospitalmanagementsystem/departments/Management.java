@@ -2,17 +2,19 @@ package hospitalmanagementsystem.departments;
 
 import java.util.ArrayList;
 
+import hospitalmanagementsystem.Bed;
 import hospitalmanagementsystem.Patient;
 import hospitalmanagementsystem.users.*;
 
 public class Management extends Department {
-	private final ArrayList<Patient> emptyList = null;
 	// static variable single_instance of type Management 
     private static Management single_instance = null; 
-    ArrayList<User> userList;
     
     private Management() {
+    	this.name = "Emergency";
+    	patientList = new ArrayList<Patient>();
     	userList = new ArrayList<User>();
+    	bedList = new ArrayList<Bed>();
     }
 	
     // static method to create instance of Management class 
@@ -25,22 +27,54 @@ public class Management extends Department {
         return single_instance; 
     }
     
-    public String getName() {
-		return "Management";
+	public void addPatient(Patient patient) {
+		patientList.add(patient);
 	}
-    
+	
+	public void removePatient(Patient patient) {
+		patientList.remove(patient);
+	
+	}
+	
+	public void addUser(User user) {
+		userList.add(user);
+	}
+	
+	public void removeUser(User user) {
+		userList.remove(user);
+	}
+	
+	//Getters		
+	public String getName() {
+			return "Emergency";
+		}
+		
+	public ArrayList<Bed> getBedList(){
+			return this.bedList;
+		}
+		
 	public ArrayList<Patient> getPatientList() {
-		return this.emptyList;
+		return this.patientList;
 	}
-
-	public void removePatient(Patient patient) {}
-
+	
 	public ArrayList<User> getUserList() {
 		return this.userList;
 	}
-	
-	@Override
-	public void addUser(User User) {
-		userList.add(User);
+		
+	//Setters
+	public void setName(String Name) {
+		this.name = Name;
+	}
+		
+	public void setBedList(ArrayList<Bed> beds) {
+		this.bedList = beds;
+	}
+		
+	public void setPatientList(ArrayList<Patient> patients) {
+		this.patientList = patients;
+	}
+		
+	public void setUserList(ArrayList<User> users) {
+		this.userList = users;
 	}
 }

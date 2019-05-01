@@ -28,7 +28,9 @@ import hospitalmanagementsystem.users.*;
 	static Bed b1;
 	
 	static Patient p1;
-	
+	static Patient p2;
+	static Patient p3;
+	static Patient p4;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws IllegalAccessException {
@@ -43,8 +45,8 @@ import hospitalmanagementsystem.users.*;
 		p1 = new Patient("Asger", "Conradsen", "04/10/1995", "487 downtown 2800 Kongens Lyngby", "+4585476964");
 		p1.updateDepartment(em);
 		
-		
 		admin = new Admin("Steve Jobs","+180249625");
+
 		doc = new Doctor("Dr. Smith", "+4545252525", "Emergency");
 		nurse = new Nurse("John Doe", "+4512345678", "Emergency");
 		user = new User("James Gosling", "+141558396");
@@ -73,7 +75,7 @@ import hospitalmanagementsystem.users.*;
 		assertEquals(true, persist.save(admin, admin.getUserID(), em));
 		assertEquals(true, persist.save(doc, doc.getUserID(), inPa));
 		assertEquals(true, persist.save(nurse, nurse.getUserID(), outPa));
-		assertEquals(true, persist.save(user, user.getUserID(), man));
+		assertEquals(true, persist.save(user, user.getUserID(), em));
 		
 		//Saving a bed
 		assertEquals(true, persist.save(b1, b1.getBedID(), inPa));
@@ -111,6 +113,11 @@ import hospitalmanagementsystem.users.*;
 	 
 	@Test
 	public void loadObjs() {
+		persist.save(p2, p2.getPatientId(), man);
+		persist.save(p3, p3.getPatientId(), man);
+		persist.save(p4, p4.getPatientId(), man);
+		
+		
 		
 	}
 	 
