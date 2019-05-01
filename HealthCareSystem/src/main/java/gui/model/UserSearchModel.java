@@ -49,10 +49,10 @@ public class UserSearchModel extends AbstractTableModel {
 			if(Objects.equals(null, users.get(rowIndex).getDepartment())) {
 				return "-";
 			} else {
-				return users.get(rowIndex).getDepartment().getName();
+				return users.get(rowIndex).getDepartment();
 			}
 		} else if (columnIndex == 3) {
-			return users.get(rowIndex).getAddress();
+			return users.get(rowIndex).getEmail();
 		} else if (columnIndex == 4) {
 			return users.get(rowIndex).getNumber();
 		}
