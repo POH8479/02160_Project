@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 
 import hospitalmanagementsystem.departments.Department;
 
@@ -113,7 +114,25 @@ public class PersistenceLayer {
 		return obj;		
 	}
 
-	
+	public ArrayList<Object> loadObjs(Department department, String type){
+		type = type.toLowerCase();
+		String dir = "Departments" + File.separator + department.getName();
+		switch (type) {
+			case "users":
+				dir = dir + File.separator + "Users";
+				//Arraylist<User> users = new Arraylist();
+				break;
+			case "patients":
+				dir = dir + File.separator + "Patients";
+				break;
+			case "beds":
+				dir = dir + File.separator + "Beds";
+				break;
+			default:
+				return 
+		}
+		
+	}
 	
 	//load beds
 	//load patients
