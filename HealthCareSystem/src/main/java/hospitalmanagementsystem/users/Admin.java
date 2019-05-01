@@ -46,7 +46,7 @@ public class Admin extends User implements HealthStaff{
 		// if department is Management then throw an exception
 		if(department instanceof Management) {
 			throw new IllegalAccessException("Can not admit a patient to the Management department.");
-		} else if(!Objects.equals(patient.getPatientInfo().get("Department"), "None")) { 
+		} else if(!Objects.equals(patient.getDepartment(), null)) { 
 			throw new IllegalArgumentException("Can not admit a patient who is already admitted to a department.");
 		} else {
 			// Update the patients department variable
@@ -65,11 +65,18 @@ public class Admin extends User implements HealthStaff{
 	 */
 	public void dischargePatient(Patient patient) throws IllegalArgumentException{
 		// check if already checked out
-		if(patient.getPatientInfo().get("Department").equals("None")) {
+		if(patient.getDepartment().equals("None")) {
 			throw new IllegalArgumentException("Can not discharge a patient who is not already admitted into any department.");
 		} else {
 			// remove the Patient from the departments patient list
-			patient.getDepartment().removePatient(patient);
+			switch(patient.getDepartment()) {
+				case "Emergency":
+					Emergency.getInstance().removePatient(patient);
+				case "Inpatient":
+					Inpatient.getInstance().removePatient(patient);
+				case "Outpatient":
+					Outpatient.getInstance().removePatient(patient);
+			}
 			
 			// Update the patients department variable
 			patient.updateDepartment(null);

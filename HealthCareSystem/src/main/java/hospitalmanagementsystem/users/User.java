@@ -17,7 +17,7 @@ public class User {
 
 	// Instance Variables
 	String name;
-	final String userID;
+	String userID;
 	String email;
 	String phoneNumber;
 	String department;
@@ -110,9 +110,9 @@ public class User {
 		this.name = newName;
 	}
 	
-//	public void setUserID(String newID) {
-//		this.userID = newID;
-//	}
+	public void setUserID(String newID) {
+		this.userID = newID;
+	}
 	
 	public void setEmail(String newEmail) {
 		this.email = newEmail;

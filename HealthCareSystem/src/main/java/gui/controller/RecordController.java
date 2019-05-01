@@ -91,6 +91,6 @@ public class RecordController {
 	 * @return the patients patient ID
 	 */
 	public String getPatientId() {
-		return this.patient.getPatientId();
+		return this.patient.getpatientID();
 	}
 }

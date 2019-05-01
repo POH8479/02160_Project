@@ -233,8 +233,8 @@ public class HealthStaffController {
 			// check patient matches the given criteria
 			if((firstName.isEmpty() || patient.getFirstName().equals(firstName)) &&
 					(lastName.isEmpty() || patient.getLastName().equals(lastName)) &&
-					(id.isEmpty() || patient.getPatientId().equals(id)) &&
-					 (department.isEmpty() || patient.getDepartment().getName().equals(department))) {
+					(id.isEmpty() || patient.getpatientID().equals(id)) &&
+					 (department.isEmpty() || patient.getDepartment().equals(department))) {
 				// if it does add patient to the searchedPatients list
 				foundPatients.add(patient);
 			}

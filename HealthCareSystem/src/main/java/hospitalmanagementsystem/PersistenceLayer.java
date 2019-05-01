@@ -118,37 +118,52 @@ public class PersistenceLayer {
 		String dir = "Departments" + File.separator + department.getName()
 		+ File.separator + department.getName();
 		
+		File departmentFile = new File(dir);
+		
 		//Loads department
-		XMLDecoder d = null;
-		try {
-			d = new XMLDecoder(
-	                new BufferedInputStream(
-	                    new FileInputStream(dir)));
-		}catch(FileNotFoundException fileNotFound) {
-			System.out.println("Error: Could not find or open the file");
+		if(departmentFile.isFile()) {
+			XMLDecoder d = null;
+			try {
+				d = new XMLDecoder(
+		                new BufferedInputStream(
+		                    new FileInputStream(dir)));
+			}catch(FileNotFoundException fileNotFound) {
+				System.out.println(fileNotFound.getMessage());
+			}
+			
+			department = (Department) d.readObject();
 		}
-		department = (Department) d.readObject();
+		
 		
 		//Loads users in the department
-		ArrayList<User> users = new ArrayList<User>();
-		for(Object o : loadObjs(department, "users")) {
-			users.add((User) o);
+		ArrayList<Object> loadedUsers = loadObjs(department, "users");
+		if(!loadedUsers.isEmpty()) {
+			ArrayList<User> users = new ArrayList<User>();
+			for(Object o : loadedUsers) {
+				users.add((User) o);
+			}
+			department.setUserList(users);
 		}
-		department.setUserList(users);
 		
 		//Loads patients in the department
-		ArrayList<Patient> patients = new ArrayList<Patient>();
-		for(Object o : loadObjs(department, "patients")) {
-			patients.add((Patient) o);
+		ArrayList<Object> loadedPatients = loadObjs(department, "patients");
+		if(!loadedPatients.isEmpty()) {
+			ArrayList<Patient> patients = new ArrayList<Patient>();
+			for(Object o : loadedPatients) {
+				patients.add((Patient) o);
+			}
+			department.setPatientList(patients);
 		}
-		department.setPatientList(patients);
 		
 		//Loads beds in the department
-		ArrayList<Bed> beds = new ArrayList<Bed>();
-		for(Object o : loadObjs(department, "beds")) {
-			beds.add((Bed) o);
+		ArrayList<Object> loadedBeds = loadObjs(department, "beds");
+		if(!loadedBeds.isEmpty()) {
+			ArrayList<Bed> beds = new ArrayList<Bed>();
+			for(Object o : loadedBeds) {
+				beds.add((Bed) o);
+			}
+			department.setBedList(beds);
 		}
-		department.setBedList(beds);
 	}
 
 	/*
@@ -188,13 +203,14 @@ public class PersistenceLayer {
 		                new BufferedInputStream(
 		                    new FileInputStream(dir + File.separator + file.getName())));
 				} catch(FileNotFoundException fileNotFound) {
-					System.out.println("Error: Could not find or open the file");
+					System.out.println(fileNotFound.getMessage());
 				}
 				Object obj = new Object();
 				obj = d.readObject();
 				objs.add(obj);
 			}
 		}
+		
 		return objs;
 	}
 	

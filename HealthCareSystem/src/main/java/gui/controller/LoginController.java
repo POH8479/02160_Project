@@ -42,7 +42,7 @@ public class LoginController {
 		User user = findUser(username);
 		
 		// check if the loginManager returns true
-		if (loginManager.checkID(user)) {
+		if (user != null && loginManager.checkID(user)) {
 			// set the User for the session and close the Login Window
 			session.setUser(findUser(username));
 			view.setVisible(false);

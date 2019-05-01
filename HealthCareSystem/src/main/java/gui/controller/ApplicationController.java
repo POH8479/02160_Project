@@ -26,10 +26,10 @@ public class ApplicationController {
 	
 	public ApplicationController() {
 		PersistenceLayer persist = new PersistenceLayer();
-//		persist.loadDepartment(Emergency.getInstance());
-//		persist.loadDepartment(Outpatient.getInstance());
-//		persist.loadDepartment(Inpatient.getInstance());
-//		persist.loadDepartment(Management.getInstance());
+		persist.loadDepartment(Emergency.getInstance());
+		persist.loadDepartment(Outpatient.getInstance());
+		persist.loadDepartment(Inpatient.getInstance());
+		persist.loadDepartment(Management.getInstance());
 	}
 	
 	/**

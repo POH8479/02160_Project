@@ -95,7 +95,7 @@ public class PatientModel extends AbstractTableModel {
 		// search through each patient in the List
 		for(Patient p : patients) {
 			// if a match is found return that patient
-			if(p.getPatientId().equals(patientId)) {
+			if(p.getpatientID().equals(patientId)) {
 				return p;
 			}
 		}
@@ -122,7 +122,7 @@ public class PatientModel extends AbstractTableModel {
 		toEdit.setLastName(lastName);
 		toEdit.setPhoneNo(phone);
 		toEdit.setAddress(address);
-		toEdit.setPhone(phone);
+		toEdit.setPhoneNo(phone);
 		toEdit.setDOB(dOB);
 		
 		// notify the views that data changed
@@ -147,7 +147,7 @@ public class PatientModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		if (columnIndex == 0) {
-			return patients.get(rowIndex).getPatientId();
+			return patients.get(rowIndex).getpatientID();
 		} else if (columnIndex == 1) {
 			return patients.get(rowIndex).getFirstName();
 		} else if (columnIndex == 2) {
@@ -156,7 +156,7 @@ public class PatientModel extends AbstractTableModel {
 			if(Objects.equals(null,patients.get(rowIndex).getDepartment())) {
 				return "-";
 			}
-			return patients.get(rowIndex).getDepartment().getName();
+			return patients.get(rowIndex).getDepartment();
 		} else if (columnIndex == 4) {
 			return patients.get(rowIndex).getNumber();
 		} else if (columnIndex == 5) {
