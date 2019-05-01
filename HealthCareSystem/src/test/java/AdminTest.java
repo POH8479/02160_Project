@@ -183,7 +183,7 @@ public class AdminTest {
 		User badUser = new User("Name", "Address", "Phone");
 		assertFalse(Objects.equals(badUser.getUserID(),"None"));
 		ad1.removeUser(badUser);
-		assertFalse(badUser.getDepartment().getUserList().contains(badUser));
+		assertFalse(Management.getInstance().getUserList().contains(badUser));
 	}
 
 	/**

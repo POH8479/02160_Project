@@ -67,16 +67,16 @@ import hospitalmanagementsystem.users.*;
 		assertEquals(true, persist.save(man));
 		
 		//Saving a patient
-		assertEquals(true, persist.save(p1, p1.getPatientId(), em));
+		assertEquals(true, persist.save(p1, p1.getPatientId(), em.getName()));
 		
 		//Saving users
-		assertEquals(true, persist.save(admin, admin.getUserID(), em));
-		assertEquals(true, persist.save(doc, doc.getUserID(), inPa));
-		assertEquals(true, persist.save(nurse, nurse.getUserID(), outPa));
-		assertEquals(true, persist.save(user, user.getUserID(), man));
+		assertEquals(true, persist.save(admin, admin.getUserID(), em.getName()));
+		assertEquals(true, persist.save(doc, doc.getUserID(), inPa.getName()));
+		assertEquals(true, persist.save(nurse, nurse.getUserID(), outPa.getName()));
+		assertEquals(true, persist.save(user, user.getUserID(), man.getName()));
 		
 		//Saving a bed
-		assertEquals(true, persist.save(b1, b1.getBedID(), inPa));
+		assertEquals(true, persist.save(b1, b1.getBedID(), inPa.getName()));
 	}
 	
 	@Test
@@ -96,9 +96,9 @@ import hospitalmanagementsystem.users.*;
 		assertEquals(true, persist.delete(inPa));
 		
 		//Delete patient/user/bed (returns true when deleted and false when it cannot find the file)
-		persist.save(p1, p1.getPatientId(), em);
-		persist.save(doc, doc.getUserID(), inPa);
-		persist.save(b1, b1.getBedID(), inPa);
+		persist.save(p1, p1.getPatientId(), em.getName());
+		persist.save(doc, doc.getUserID(), inPa.getName());
+		persist.save(b1, b1.getBedID(), inPa.getName());
 		
 		assertEquals(true, persist.delete(p1.getPatientId(), em));
 		assertEquals(true, persist.delete(doc.getUserID(), inPa));

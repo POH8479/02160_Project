@@ -118,7 +118,7 @@ public class DoctorTest {
 		// check doctors from other departments can discharge Patients
 		p2.updateDepartment(outPa);
 		assertEquals("Outpatient",p2.getPatientInfo().get("Department"));
-		assertEquals("Emergency",d1.getDepartment().getName());
+		assertEquals("Emergency",d1.getDepartment());
 		d1.dischargePatient(p2);
 		assertEquals("None",p2.getPatientInfo().get("Department"));
 	}
