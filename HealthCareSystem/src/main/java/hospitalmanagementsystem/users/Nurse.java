@@ -8,7 +8,7 @@ import hospitalmanagementsystem.*;
 
 public class Nurse extends User implements HealthStaff{
 	// Instance variables
-	Department department;
+	String department;
 
 	public Nurse(String usersName, String phone, String department) {
 		super(usersName, phone, "N");
@@ -16,15 +16,15 @@ public class Nurse extends User implements HealthStaff{
 		//assign department based on input
 		switch(department==null?"null":department) {
 			case "Emergency":
-				this.department = Emergency.getInstance();
+				this.department = department;
 				Emergency.getInstance().addUser(this);
 				break;
 			case "Inpatient":
-				this.department = Inpatient.getInstance();
+				this.department = department;
 				Inpatient.getInstance().addUser(this);
 				break;
 			case "Outpatient":
-				this.department = Outpatient.getInstance();
+				this.department = department;
 				Outpatient.getInstance().addUser(this);
 				break;
 			case "null":
@@ -33,6 +33,11 @@ public class Nurse extends User implements HealthStaff{
 			default:
 				throw new IllegalArgumentException(String.format("%s is an invalid department.",department));
 		}
+		
+		// Save the new User
+		PersistenceLayer persist = new PersistenceLayer();
+		boolean saved = persist.save(this, this.userID, this.department);
+		if(!saved) {System.out.println("Nurse Not Saved111");}
 	}
 
 	/**
@@ -124,7 +129,7 @@ public class Nurse extends User implements HealthStaff{
 		
 	}
 	
-	public Department getDepartment() {
+	public String getDepartment() {
 		return this.department;
 	}
 	
@@ -133,12 +138,30 @@ public class Nurse extends User implements HealthStaff{
 		return "Nurse";
 	}
 	
-	public void moveDepartment(Department department) {
+	public void moveDepartment(String department) {
 		// change department
 		if(this.department != null) {
-			this.department.getUserList().remove(this);
+			switch(this.department) {
+				case "Emergency":
+					Emergency.getInstance().getUserList().add(this);
+				case "Outpatient": 
+					Outpatient.getInstance().getUserList().add(this);
+				case "Inpatient": 
+					Inpatient.getInstance().getUserList().add(this);
+				case "Management": 
+					Management.getInstance().getUserList().add(this);
+			}
 		}
 		this.department = department;
-		department.getUserList().add(this);
+		switch(department) {
+			case "Emergency":
+				Emergency.getInstance().getUserList().add(this);
+			case "Outpatient": 
+				Outpatient.getInstance().getUserList().add(this);
+			case "Inpatient": 
+				Inpatient.getInstance().getUserList().add(this);
+			case "Management": 
+				Management.getInstance().getUserList().add(this);
+		}
 	}
 }
