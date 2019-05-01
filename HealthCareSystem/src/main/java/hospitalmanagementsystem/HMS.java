@@ -12,7 +12,8 @@ public class HMS {
 	 * @return the Department
 	 */
 	public static Department getDepartment(String departmentName) {
-		return null;}
+		return null;
+  }
 
 	public static void main(String[] args) {
 		// Do Stuff

@@ -5,6 +5,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import hospitalmanagementsystem.*;
+import hospitalmanagementsystem.departments.Emergency;
 import hospitalmanagementsystem.users.*;
 
 public class StepDefinition {
@@ -26,7 +27,7 @@ public class StepDefinition {
 	@When("^They enter a new patient's non-medical data$")
 	public void they_enter_a_new_patient_s_non_medical_data() {
     // create a new patient
-		p1 = new Patient("Jane", "Doe", LocalDate.of(2000, 1,1), "456 North St Anytown, Denmark", "+45234556789");
+		p1 = new Patient("Jane", "Doe", "01/01/2000", "456 North St Anytown, Denmark", "+45234556789");
 	}
 
 	@Then("^The data is saved in the system and a confirmation is displayed to the user$")
@@ -74,7 +75,7 @@ public class StepDefinition {
 	@Given("^A new patient$")
 	public void a_new_patient() {
 	    // create a new patient
-		p1=new Patient("Jane", "Doe", LocalDate.of(2000, 1,1), "456 North St Anytown, Denmark", "+45234556789");	
+		p1=new Patient("Jane", "Doe", "01/01/2000", "456 North St Anytown, Denmark", "+45234556789");	
 	}
 
 	@Given("^a User$")
@@ -86,13 +87,13 @@ public class StepDefinition {
 	@When("^The User registers a patient with their non medical data$")
 	public void the_User_registers_a_patient_with_their_non_medical_data(){
 	    // register patient data
-		u1.registerPatient("Jane", "Doe", LocalDate.of(2000, 1,1), "456 North St Anytown, Denmark", "+45234556789");
+		u1.registerPatient("Jane", "Doe", "01/01/2000", "456 North St Anytown, Denmark", "+45234556789");
 	}
 
 	@Then("^A new patient is created in the HMS$")
 	public void a_new_patient_is_created_in_the_HMS(){
 	    // check that information was entered correctly
-		assertEquals("Jane", u1.getPatientData(p1));
+		assertEquals("Jane", p1.getPatientInfo().get("First Name"));
 	}
 
 	@Given("^A new user$")
@@ -104,7 +105,7 @@ public class StepDefinition {
 	@Given("^An Admin$")
 	public void an_Admin(){
 	    // create a new admin
-		a1=new Admin("John Doe", "123 Main St Anytown, Denmark", "+4512345678");
+		a1=new Admin("John Doe", "+4512345678");
 	}
 
 	@When("^The Admin creates a new User$")
@@ -122,8 +123,8 @@ public class StepDefinition {
 	@Given("^A nurse and a patient$")
 	public void a_nurse_and_a_patient() throws Throwable {
 	    // create a nurse and a patient
-		n1=new Nurse("John Doe","123 Main St Anytown, Denmark", "+4512345678","Emergency" );
-		p1=new Patient("Jane", "Doe", LocalDate.of(2000, 1,1), "456 North St Anytown, Denmark", "+45234556789");
+		n1=new Nurse("John Doe", "+4512345678","Emergency" );
+		p1=new Patient("Jane", "Doe", "01/01/2000", "456 North St Anytown, Denmark", "+45234556789");
 	}
 
 	@Then("^A nurse edits the patients data$")

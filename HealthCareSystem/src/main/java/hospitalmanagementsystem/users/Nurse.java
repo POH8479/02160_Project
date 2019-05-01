@@ -10,8 +10,8 @@ public class Nurse extends User implements HealthStaff{
 	// Instance variables
 	Department department;
 
-	public Nurse(String usersName, String usersAddress, String phone, String department) {
-		super(usersName, usersAddress, phone, "N");
+	public Nurse(String usersName, String phone, String department) {
+		super(usersName, phone, "N");
     
 		//assign department based on input
 		switch(department==null?"null":department) {

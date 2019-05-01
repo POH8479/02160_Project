@@ -8,8 +8,11 @@ import hospitalmanagementsystem.departments.Management;
 import hospitalmanagementsystem.departments.Emergency;
 import hospitalmanagementsystem.departments.Outpatient;
 
-//@author Karoline 
-
+/**
+ * 
+ * @author Karoline
+ *
+ */
 public class Query {
 // static variable single_instance of type Query
 private static Query single_instance = null; 

@@ -67,9 +67,9 @@ public class PatientTest {
 		b3 = new Bed(em);
 
 		// create Users
-		admin = new Admin("Steve Jobs", "Cupertino, California, United States", "+180249625");
-		doc = new Doctor("Dr. Smith", "Anker Engelunds Vej 1 Bygning 101A, 2800 Kgs. Lyngby", "+4545252525", "Emergency");
-		nurse = new Nurse("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Emergency");
+		admin = new Admin("Steve Jobs", "+180249625");
+		doc = new Doctor("Dr. Smith", "+4545252525", "Emergency");
+		nurse = new Nurse("John Doe", "+4512345678", "Emergency");
 		user = new User("James Gosling", "San Francisco Bay Area, California, U.S.", "+141558396");
 	}
 
