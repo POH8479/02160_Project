@@ -8,7 +8,6 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import hospitalmanagementsystem.*;
 
-import hospitalmanagementsystem.departments.*;
 
 import hospitalmanagementsystem.departments.Emergency;
 
@@ -35,7 +34,6 @@ public class StepDefinition {
 	public void they_enter_a_new_patient_s_non_medical_data() {
     // create a new patient
 		p1 = new Patient("Jane", "Doe", "01/01/2000", "456 North St Anytown, Denmark", "+45234556789");
-
 	}
 
 	@Then("^The data is saved in the system and a confirmation is displayed to the user$")
@@ -97,7 +95,6 @@ public class StepDefinition {
 	public void the_User_registers_a_patient_with_their_non_medical_data(){
 	    // register patient data
 		u1.registerPatient("Jane", "Doe", "01/01/2000", "456 North St Anytown, Denmark", "+45234556789");
-
 	}
 
 	@Then("^A new patient is created in the HMS$")
@@ -133,7 +130,6 @@ public class StepDefinition {
 	@Given("^A nurse and a patient$")
 	public void a_nurse_and_a_patient() throws Throwable {
 	    // create a nurse and a patient
-
 		n1=new Nurse("John Doe", "+4512345678","Emergency" );
 		p1=new Patient("Jane", "Doe", "01/01/2000", "456 North St Anytown, Denmark", "+45234556789");
 	}
