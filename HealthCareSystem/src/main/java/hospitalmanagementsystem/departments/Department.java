@@ -2,6 +2,7 @@ package hospitalmanagementsystem.departments;
 
 import java.util.ArrayList;
 
+import hospitalmanagementsystem.Bed;
 import hospitalmanagementsystem.Patient;
 import hospitalmanagementsystem.users.*;
 
@@ -14,8 +15,9 @@ import hospitalmanagementsystem.users.*;
 public abstract class Department {
 	String ID;
 	String name;
-	ArrayList<User> userList = new ArrayList<User>();
-	ArrayList<Patient> patientList = new ArrayList<Patient>();
+	ArrayList<Bed> bedList;
+	ArrayList<User> userList;
+	ArrayList<Patient> patientList;
 
 	public abstract void addUser(User User);
 

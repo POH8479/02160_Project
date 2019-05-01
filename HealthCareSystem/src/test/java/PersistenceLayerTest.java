@@ -29,7 +29,9 @@ import java.util.Objects;
 	static Bed b1;
 	
 	static Patient p1;
-	
+	static Patient p2;
+	static Patient p3;
+	static Patient p4;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws IllegalAccessException {
@@ -45,10 +47,18 @@ import java.util.Objects;
 		p1.updateDepartment(em);
 		
 		
-		admin = new Admin("Steve Jobs", "Cupertino, California, United States", "+180249625");
-		doc = new Doctor("Dr. Smith", "Anker Engelunds Vej 1 Bygning 101A, 2800 Kgs. Lyngby", "+4545252525", "Emergency");
-		nurse = new Nurse("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Emergency");
-		user = new User("James Gosling", "San Francisco Bay Area, California, U.S.", "+141558396");
+		p2 = new Patient("John", "Conradsen", "04/10/1995", "487 downtown 2800 Kongens Lyngby", "+4585476964");
+		p3 = new Patient("Niels", "Conradsen", "04/10/1995", "487 downtown 2800 Kongens Lyngby", "+4585476964");
+		p4 = new Patient("Bo", "Conradsen", "04/10/1995", "487 downtown 2800 Kongens Lyngby", "+4585476964");
+		p2.updateDepartment(man);
+		p3.updateDepartment(man);
+		p4.updateDepartment(man);
+		
+		
+		admin = new Admin("Steve Jobs", "+180249625");
+		doc = new Doctor("Dr. Smith", "+4545252525", "Emergency");
+		nurse = new Nurse("John Doe", "+4512345678", "Emergency");
+		user = new User("James Gosling", "+141558396");
 		
 		b1 = new Bed(em);
 	}
@@ -74,7 +84,7 @@ import java.util.Objects;
 		assertEquals(true, persist.save(admin, admin.getUserID(), em));
 		assertEquals(true, persist.save(doc, doc.getUserID(), inPa));
 		assertEquals(true, persist.save(nurse, nurse.getUserID(), outPa));
-		assertEquals(true, persist.save(user, user.getUserID(), man));
+		assertEquals(true, persist.save(user, user.getUserID(), em));
 		
 		//Saving a bed
 		assertEquals(true, persist.save(b1, b1.getBedID(), inPa));
@@ -112,6 +122,11 @@ import java.util.Objects;
 	 
 	@Test
 	public void loadObjs() {
+		persist.save(p2, p2.getPatientId(), man);
+		persist.save(p3, p3.getPatientId(), man);
+		persist.save(p4, p4.getPatientId(), man);
+		
+		
 		
 	}
 	 
