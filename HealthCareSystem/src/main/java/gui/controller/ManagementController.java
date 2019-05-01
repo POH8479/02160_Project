@@ -104,7 +104,7 @@ public class ManagementController {
     	    		break;
         		case 1: // if Doctor was selected, create a new Doctor User
         			try {
-    	    			 new Doctor(name.getText(), phone.getText(),(String)departments.getSelectedItem());
+        				u = new Doctor(name.getText(), phone.getText(),(String)departments.getSelectedItem());
         			} catch(IllegalArgumentException e) {
         				view.showError(e.getMessage());
         				return;
@@ -247,7 +247,6 @@ public class ManagementController {
 	public void logOut() {
 		// close the Management view and call the login method for the next user 
 		view.setVisible(false);
-		applicationController.save();
 		applicationController.login();
 	}
 	
@@ -409,9 +408,9 @@ public class ManagementController {
 		for(User user : usersToSearch) {
 			// check user matches the given criteria
 			if((name.isEmpty() || user.getUserName().equals(name)) &&
-					(email.isEmpty() || user.getAddress().equals(email)) &&
+					(email.isEmpty() || user.getEmail().equals(email)) &&
 					(id.isEmpty() || user.getUserID().equals(id)) &&
-					 (department.isEmpty() || user.getDepartment().getName().equals(department))) {
+					 (department.isEmpty() || user.getDepartment().equals(department))) {
 				// if it does add patient to the searchedPatients list
 				foundUsers.add(user);
 			}
