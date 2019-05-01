@@ -1,7 +1,6 @@
 package gui.controller;
 
 import java.util.ArrayList;
-
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
