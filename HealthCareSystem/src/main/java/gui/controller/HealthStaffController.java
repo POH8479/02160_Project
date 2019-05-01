@@ -1,7 +1,6 @@
 package gui.controller;
 
 import java.util.ArrayList;
-
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -161,7 +160,6 @@ public class HealthStaffController {
 	public void logOut() {
 		// close the HealthStaff view and call the login method for the next user
 		view.setVisible(false);
-		applicationController.save();
 		applicationController.login();
 	}
 	

@@ -5,7 +5,6 @@ import org.junit.Test;
 import hospitalmanagementsystem.*;
 import hospitalmanagementsystem.departments.*;
 import hospitalmanagementsystem.users.*;
-import java.util.Objects;
 
 /**
  *
@@ -46,16 +45,8 @@ import java.util.Objects;
 		p1 = new Patient("Asger", "Conradsen", "04/10/1995", "487 downtown 2800 Kongens Lyngby", "+4585476964");
 		p1.updateDepartment(em);
 		
-		
-		p2 = new Patient("John", "Conradsen", "04/10/1995", "487 downtown 2800 Kongens Lyngby", "+4585476964");
-		p3 = new Patient("Niels", "Conradsen", "04/10/1995", "487 downtown 2800 Kongens Lyngby", "+4585476964");
-		p4 = new Patient("Bo", "Conradsen", "04/10/1995", "487 downtown 2800 Kongens Lyngby", "+4585476964");
-		p2.updateDepartment(man);
-		p3.updateDepartment(man);
-		p4.updateDepartment(man);
-		
-		
-		admin = new Admin("Steve Jobs", "+180249625");
+		admin = new Admin("Steve Jobs","+180249625");
+
 		doc = new Doctor("Dr. Smith", "+4545252525", "Emergency");
 		nurse = new Nurse("John Doe", "+4512345678", "Emergency");
 		user = new User("James Gosling", "+141558396");
