@@ -11,7 +11,7 @@ import hospitalmanagementsystem.departments.*;
 
 public class Patient {
 	// Static Variables
-	public static int idnum = 0;
+	private static PersistenceLayer persist = new PersistenceLayer();
 
 	//INSTANCE VARIABLES
 	String name;
@@ -30,8 +30,9 @@ public class Patient {
 		//patient info input by user
 		this.name = name;
 		this.surname = surname;
-		idnum++;
-		this.patientID = "P" + Integer.toString(idnum);;
+		int idCounter = persist.loadCounter() + 1;
+		this.patientID = "P" + Integer.toString(idCounter);;
+		persist.saveCounter(idCounter);
 		this.bday = bday;
 		this.address = address;
 		this.phoneNo = phoneNo;
@@ -39,6 +40,8 @@ public class Patient {
 		this.record = null;
 		this.dept = null;
 		this.bed = null;
+		
+		persist.save(this, this.patientID, this.dept);
 	}
 
 	public Patient() {}

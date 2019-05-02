@@ -25,10 +25,8 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableModel;
-
 import gui.controller.*;
 import gui.model.Session;
-import hospitalmanagementsystem.Patient;
 import hospitalmanagementsystem.Query;
 
 /**

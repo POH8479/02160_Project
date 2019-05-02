@@ -11,7 +11,7 @@ public class Management extends Department {
     private static Management single_instance = null; 
     
     private Management() {
-    	this.name = "Emergency";
+    	this.name = "Management";
     	patientList = new ArrayList<Patient>();
     	userList = new ArrayList<User>();
     	bedList = new ArrayList<Bed>();
@@ -46,7 +46,7 @@ public class Management extends Department {
 	
 	//Getters		
 	public String getName() {
-			return "Emergency";
+			return "Management";
 		}
 		
 	public ArrayList<Bed> getBedList(){

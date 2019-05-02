@@ -1,18 +1,17 @@
 package hospitalmanagementsystem.users;
 
 import hospitalmanagementsystem.departments.*;
-
 import java.util.Objects;
-
 import hospitalmanagementsystem.*;
 
 public class Nurse extends User implements HealthStaff{
 	// Instance variables
 	String department;
+	private PersistenceLayer persist = new PersistenceLayer();;
 
 	public Nurse(String usersName, String phone, String department) {
 		super(usersName, phone, "N");
-    
+
 		//assign department based on input
 		switch(department==null?"null":department) {
 			case "Emergency":
@@ -33,12 +32,12 @@ public class Nurse extends User implements HealthStaff{
 			default:
 				throw new IllegalArgumentException(String.format("%s is an invalid department.",department));
 		}
-		
+
 		// Save the new User
-		PersistenceLayer persist = new PersistenceLayer();
-		boolean saved = persist.save(this, this.userID, this.department);
-		if(!saved) {System.out.println("Nurse Not Saved111");}
+		persist.save(this, this.userID, this.department);
 	}
+	
+	public Nurse() {}
 
 	/**
 	 * Admits a given patient to a given department, updating the patients
@@ -53,7 +52,7 @@ public class Nurse extends User implements HealthStaff{
 		// if department is Management then throw an exception
 		if(department instanceof Management) {
 			throw new IllegalAccessException("Can not admit a patient to the Management department.");
-		} else if(!Objects.equals(patient.getDepartment(), null)) { 
+		} else if(!Objects.equals(patient.getDepartment(), null)) {
 			throw new IllegalArgumentException("Can not admit a patient who is already admitted to a department.");
 		} else {
 			// Update the patients department variable
@@ -84,7 +83,7 @@ public class Nurse extends User implements HealthStaff{
 				case "Outpatient":
 					Outpatient.getInstance().removePatient(patient);
 			}
-			
+
 			// Update the patients department variable
 			patient.updateDepartment(null);
 		}
@@ -105,7 +104,7 @@ public class Nurse extends User implements HealthStaff{
 		bed.addPatient(patient);
 
 		return bed;
-		
+
 	}
 
 	/**
@@ -133,42 +132,53 @@ public class Nurse extends User implements HealthStaff{
 
 		// request the updated record and return it
 		return patient.getRecord();
-		
 	}
-	
+
+	@Override
 	public String getDepartment() {
 		return this.department;
 	}
 	
 	@Override
+	public void setDepartment(String newDepartment) {
+		this.department = newDepartment;
+	}
+
+	@Override
 	public String getType() {
 		return "Nurse";
 	}
-	
+
 	public void moveDepartment(String department) {
 		// change department
 		if(this.department != null) {
 			switch(this.department) {
 				case "Emergency":
-					Emergency.getInstance().getUserList().add(this);
-				case "Outpatient": 
-					Outpatient.getInstance().getUserList().add(this);
-				case "Inpatient": 
-					Inpatient.getInstance().getUserList().add(this);
-				case "Management": 
-					Management.getInstance().getUserList().add(this);
+					Emergency.getInstance().getUserList().remove(this);
+				case "Outpatient":
+					Outpatient.getInstance().getUserList().remove(this);
+				case "Inpatient":
+					Inpatient.getInstance().getUserList().remove(this);
 			}
 		}
+
+		// delete the xml user file from the current department
+		persist.delete(this.userID, this.department);
+
+		// change the department
 		this.department = department;
+
+		// add the user to the new department list
 		switch(department) {
 			case "Emergency":
 				Emergency.getInstance().getUserList().add(this);
-			case "Outpatient": 
+			case "Outpatient":
 				Outpatient.getInstance().getUserList().add(this);
-			case "Inpatient": 
+			case "Inpatient":
 				Inpatient.getInstance().getUserList().add(this);
-			case "Management": 
-				Management.getInstance().getUserList().add(this);
 		}
+
+		// Save the updated User
+		persist.save(this, this.userID, this.department);
 	}
 }

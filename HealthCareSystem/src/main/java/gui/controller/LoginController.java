@@ -50,6 +50,7 @@ public class LoginController {
 		else if(user == null && username.equals("A1")) {
 			// create a new generic Admin user and add it to the user model
 			user = new Admin("Super Admin", "+45 12345678");
+			
 			session.getUserModel().addNewUser(user);
 			
 			// set the User for the session and close the Login Window

@@ -1,9 +1,7 @@
 package hospitalmanagementsystem.users;
 
 import hospitalmanagementsystem.departments.*;
-
 import java.util.Objects;
-
 import hospitalmanagementsystem.*;
 
 /**
@@ -12,7 +10,8 @@ import hospitalmanagementsystem.*;
  */
 public class Admin extends User implements HealthStaff{
 	// Instance Variables
-	String department;
+	private String department;
+	private PersistenceLayer persist = new PersistenceLayer();
 
 	/**
 	 * Creates a new Admin of the Hospital Management
@@ -20,18 +19,18 @@ public class Admin extends User implements HealthStaff{
 	public Admin(String usersName, String phone) {
 		// call the super
 		super(usersName, phone, "A");
-		
+
 		// set the department to Admin
 		this.department = Management.getInstance().getName();
-		
+
 		// update the departments list
 		Management.getInstance().addUser(this);
 
 		// Save the new User
-		PersistenceLayer persist = new PersistenceLayer();
-		boolean saved = persist.save(this, this.userID, this.department);
-		if(!saved) {System.out.println("Admin Not Saved!!!");}
+		persist.save(this, this.userID, this.department);
 	}
+	
+	public Admin() {}
 
 	/**
 	 * Admits a given patient to a given department, updating the patients
@@ -46,7 +45,7 @@ public class Admin extends User implements HealthStaff{
 		// if department is Management then throw an exception
 		if(department instanceof Management) {
 			throw new IllegalAccessException("Can not admit a patient to the Management department.");
-		} else if(!Objects.equals(patient.getDepartment(), null)) { 
+		} else if(!Objects.equals(patient.getDepartment(), null)) {
 			throw new IllegalArgumentException("Can not admit a patient who is already admitted to a department.");
 		} else {
 			// Update the patients department variable
@@ -77,11 +76,6 @@ public class Admin extends User implements HealthStaff{
 				case "Outpatient":
 					Outpatient.getInstance().removePatient(patient);
 			}
-			
-			// Update the patients department variable
-			patient.updateDepartment(null);
-			PersistenceLayer persist = new PersistenceLayer();
-			persist.save(patient, patient.getpatientID(), null);
 		}
 	}
 
@@ -91,7 +85,7 @@ public class Admin extends User implements HealthStaff{
 	 *
 	 * @param patient The Patient who is being assigned a Bed
 	 * @return The Bed the patient is assigned to
-	 * @throws IllegalAccessException 
+	 * @throws IllegalAccessException
 	 */
 	public Bed assignBed(Patient patient, Bed bed) throws IllegalAccessException {
 		// Update the patients Bed variable
@@ -99,7 +93,7 @@ public class Admin extends User implements HealthStaff{
 
 		// Add the Patient to the beds patient variable
 		bed.addPatient(patient);
-		
+
 		return bed;
 	}
 
@@ -162,24 +156,30 @@ public class Admin extends User implements HealthStaff{
 		switch(oldUser.getDepartment()) {
 			case "Emergency":
 				Emergency.getInstance().getUserList().remove(oldUser);
-			case "Outpatient": 
+			case "Outpatient":
 				Outpatient.getInstance().getUserList().remove(oldUser);
-			case "Inpatient": 
+			case "Inpatient":
 				Inpatient.getInstance().getUserList().remove(oldUser);
-			case "Management": 
+			case "Management":
 				Management.getInstance().getUserList().remove(oldUser);
 		}
 	}
 
+	@Override
 	public String getDepartment() {
 		return this.department;
 	}
 	
 	@Override
+	public void setDepartment(String newDepartment) {
+		this.department = newDepartment;
+	}
+
+	@Override
 	public String getType() {
 		return "Admin";
 	}
-	
+
 	// Cannot change department
 	public void moveDepartment(String department) {}
 }

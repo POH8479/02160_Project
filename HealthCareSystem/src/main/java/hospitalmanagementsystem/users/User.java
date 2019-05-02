@@ -13,7 +13,8 @@ import hospitalmanagementsystem.departments.Management;
  */
 public class User {
 	// Static Variables
-	public static int idCounter = 0;
+	private static PersistenceLayer persist = new PersistenceLayer();
+//	public static int idCounter = 0;
 
 	// Instance Variables
 	protected String name;
@@ -29,26 +30,21 @@ public class User {
 	 */
 	public User(String usersName,  String phone){
 		// assign the User with a unique ID
-		idCounter++;
+		int idCounter = persist.loadCounter() + 1;
 		this.userID = "U" + Integer.toString(idCounter);
 		// assign the remaining information
 		this.name = usersName;
-//		this.email = email; TODO
+		this.email = this.userID + "@kapjak.com.dk";
 		this.phoneNumber = phone;
 		this.department = Management.getInstance().getName();
 		Management.getInstance().getUserList().add(this);
-		
+
 		// Save the new User
-		PersistenceLayer persist = new PersistenceLayer();
-		boolean saved = persist.save(this, this.userID, this.department);
-		if(!saved) {System.out.println("User Not Saved111");}
+		persist.save(this, this.userID, this.department);
+		persist.saveCounter(idCounter);
 	}
-	
-	public User() {
-		// assign the User with a unique ID
-		idCounter++;
-		this.userID = "U" + Integer.toString(idCounter);
-	}
+
+	public User() {}
 
 	/**
 	 * Creates a new non generic type ofUser to the Hospital Management System
@@ -58,11 +54,13 @@ public class User {
 	 */
 	public User(String usersName, String phone, String classString) {
 		// assign the User with a unique ID
-		idCounter++;
+		int idCounter = persist.loadCounter() + 1;
 		this.userID = classString + Integer.toString(idCounter);
+		persist.saveCounter(idCounter);
+		
 		// assign the remaining information
 		this.name = usersName;
-//		this.email = email; TODO
+		this.email = this.userID + "@kapjak.com.dk";
 		this.phoneNumber = phone;
 	}
 
@@ -76,31 +74,44 @@ public class User {
 		// create a new Patient
 		Patient newPatient = new Patient(name, surname, bday, address, phoneNo);
 
+		// Save the updated User
+		persist.save(this, this.userID, this.department);
+
 		// return the Patient
 		return newPatient;
 	}
-	
+
 	public String getType() {
 		return "User";
+	}
+	
+	public void editUser(String newName, String newPhone) {
+		// set the users
+		this.setUserName(newName);
+		this.setNumber(newPhone);
+		
+		// Save the updated User
+		persist.delete(this.userID, this.getDepartment());
+		persist.save(this, this.userID, this.getDepartment());
 	}
 
 	// Gets
 	public String getUserName() {
 		return this.name;
 	}
-	
+
 	public String getUserID() {
 		return this.userID;
 	}
-	
+
 	public String getEmail() {
 		return this.email;
 	}
-	
+
 	public String getNumber() {
 		return this.phoneNumber;
 	}
-	
+
 	public String getDepartment() {
 		return this.department;
 	}
@@ -109,15 +120,15 @@ public class User {
 	public void setUserName(String newName) {
 		this.name = newName;
 	}
-	
+
 	public void setUserID(String newID) {
 		this.userID = newID;
 	}
-	
+
 	public void setEmail(String newEmail) {
 		this.email = newEmail;
 	}
-	
+
 	public void setNumber(String newPhone) {
 		this.phoneNumber = newPhone;
 	}
