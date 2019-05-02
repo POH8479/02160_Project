@@ -39,18 +39,28 @@ public class LoginController {
 		LoginManager loginManager = new LoginManager();
 		
 		// Find the user with that username and store in a local variable
-		User user = findUser(username);
+		String [] input = username.split("@");
+		User user = findUser(input[0]);
+		
+		//TODO causes error if doctor/nurse has unassigned department
 		
 		// check if the loginManager returns true
 		if (user != null && loginManager.checkID(user)) {
+			
+			//check to make sure username entry is in email format
+			if (!username.contains("@kapjak.com")){ 
+				view.showError();
+				return;
+			}
+      
 			// set the User for the session and close the Login Window
-			session.setUser(findUser(username));
+			session.setUser(findUser(input[0]));
 			view.setVisible(false);
 		} // if the username is "A1" but no user is found
 		else if(user == null && username.equals("A1")) {
-			// create a new generic Admin user and add it to the user model
-			user = new Admin("Super Admin", "+45 12345678");
-			
+		
+      // create a new generic Admin user and add it to the user model
+			user = new Admin("Super Admin", "Super Admin's Address", "12345678");
 			session.getUserModel().addNewUser(user);
 			
 			// set the User for the session and close the Login Window

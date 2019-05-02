@@ -86,6 +86,15 @@ public class HealthStaffController {
 
         // check the confirmation result
         if (confirmation == JOptionPane.OK_OPTION) {
+        	
+        	//check HS input of patient information is in correct format
+        	InputController inputcheck = new InputController();
+        	String error = inputcheck.checkPatientInput(firstName.getText(), lastName.getText(), bDay.getText(), address.getText(), phoneNo.getText());
+        	if (error != null) {
+        		view.showError(error);
+        		return;
+        	}
+        	
         	// if OK was selected, create a new patient with the provided information and add to the patient Model
         	Patient p = new Patient(firstName.getText(), lastName.getText(), bDay.getText(), address.getText(), phoneNo.getText());
         	patientModel.addNewPatient(p);
@@ -253,3 +262,7 @@ public class HealthStaffController {
 		this.view.setTableModel(patientModel);
 	}
 }
+
+
+	
+

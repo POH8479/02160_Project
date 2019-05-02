@@ -62,6 +62,7 @@ public class User {
 		this.name = usersName;
 		this.email = this.userID + "@kapjak.com.dk";
 		this.phoneNumber = phone;
+		this.email = this.userID + "@kapjak.com";
 	}
 
 	/**
@@ -80,6 +81,7 @@ public class User {
 		// return the Patient
 		return newPatient;
 	}
+
 
 	public String getType() {
 		return "User";

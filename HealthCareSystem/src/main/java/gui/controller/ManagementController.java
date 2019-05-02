@@ -93,6 +93,14 @@ public class ManagementController {
         	// if OK was selected, create a user variable u
         	User u = null;
         	
+        	//check management input of user information
+        	InputController inputcheck = new InputController();
+        	String error = inputcheck.checkUserInput(name.getText(), phone.getText());
+        	if (error != null) {
+        		view.showError(error);
+        		return;
+        	}
+        	
         	// check what Type of user to create 
         	switch(type.getSelectedIndex()) {
         		case 0: // if Admin was selected, create a new Admin User
@@ -173,6 +181,15 @@ public class ManagementController {
 
         // check the confirmation result
         if (confirmation == JOptionPane.OK_OPTION) {
+        	
+        	//check management input of patient information
+        	InputController inputcheck = new InputController();
+        	String error = inputcheck.checkPatientInput(firstName.getText(), lastName.getText(), bDay.getText(), address.getText(), phoneNo.getText());
+        	if (error != null) {
+        		view.showError(error);
+        		return;
+        	}
+        	
         	// if OK was selected, create a new patient with the provided information and add to the patient Model
         	Patient p = new Patient(firstName.getText(), lastName.getText(), bDay.getText(), address.getText(), phoneNo.getText());
         	patientModel.addNewPatient(p);
