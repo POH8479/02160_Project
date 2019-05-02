@@ -81,55 +81,6 @@ public class PersistenceLayer {
 	}
 
 	/**
-	 * Saves an object in a specified department to the appropriate folder. Same return as before.
-	 * @param obj
-	 * @param ID
-	 * @param department
-	 * @return
-	 */
-	public boolean save(Object obj, String ID, String department) {
-		// if department is null change to Temp
-		department = department==null?"Temp":department;
-		
-		// Creates the directory for the object to be stored
-		String dir = "Departments" + File.separator + department;
-		char type = ID.charAt(0);
-
-		// if type is another type of user set type to 'U'
-		if(type == 'A' || type == 'N' || type == 'D') {
-			type = 'U';
-		}
-
-		switch (type) {
-			case 'U':
-				dir = dir + File.separator + "Users";
-				break;
-			case 'P':
-				dir = dir + File.separator + "Patients";
-				break;
-			case 'B':
-				dir = dir + File.separator + "Beds";
-				break;
-			default:
-				return false;
-		}
-		dir = dir + File.separator + ID;
-
-		// Writes object to the file specified by the directory
-		XMLEncoder e = null;
-		try{
-			e = new XMLEncoder(
-                new BufferedOutputStream(
-                    new FileOutputStream(dir)));
-		} catch(FileNotFoundException fileNotFound) {
-			return false;
-		}
-		e.writeObject(obj);
-		e.close();
-		return true;
-	}
-
-	/**
 	 * 
 	 * @param department
 	 */
@@ -229,10 +180,95 @@ public class PersistenceLayer {
 
 		return objs;
 	}
+	
 
+	/**
+	 * 
+	 * @return
+	 */
+	public int loadCounter() {
+		// Gets a list of files in the directory and checks if they are valid
+		XMLDecoder d = null;
+		String dir = "Departments" + File.separator + "Temp";
+		File[] files = new File(dir).listFiles();
+
+		Object obj = new Object();
+		
+		for(File file : files) {
+			if(file.getName().equals("Counter")) {
+				try{
+					d = new XMLDecoder(
+		                new BufferedInputStream(
+		                    new FileInputStream(dir + File.separator + file.getName())));
+				} catch(FileNotFoundException fileNotFound) {
+					System.out.println(fileNotFound.getMessage());
+				}
+				obj = d.readObject();
+				d.close();
+				return (int) obj;
+			}
+		}
+		// else return 0
+		return 0;
+	}
+
+	/**
+	 * Saves an object in a specified department to the appropriate folder. Same return as before.
+	 * @param obj
+	 * @param ID
+	 * @param department
+	 * @return
+	 */
+	public boolean save(Object obj, String ID, String department) {
+		// if department is null change to Temp
+		department = department==null?"Temp":department;
+		
+		// Creates the directory for the object to be stored
+		String dir = "Departments" + File.separator + department;
+		char type = ID.charAt(0);
+
+		// if type is another type of user set type to 'U'
+		if(type == 'A' || type == 'N' || type == 'D') {
+			type = 'U';
+		}
+
+		switch (type) {
+			case 'U':
+				dir = dir + File.separator + "Users";
+				break;
+			case 'P':
+				dir = dir + File.separator + "Patients";
+				break;
+			case 'B':
+				dir = dir + File.separator + "Beds";
+				break;
+			default:
+				return false;
+		}
+		dir = dir + File.separator + ID;
+
+		// Writes object to the file specified by the directory
+		XMLEncoder e = null;
+		try{
+			e = new XMLEncoder(
+                new BufferedOutputStream(
+                    new FileOutputStream(dir)));
+		} catch(FileNotFoundException fileNotFound) {
+			return false;
+		}
+		e.writeObject(obj);
+		e.close();
+		return true;
+	}
+	
+	/**
+	 * 
+	 * @param counter
+	 * @return
+	 */
 	public Boolean saveCounter(int counter) {
 		// Creates directory path for the department
-		String dir = "Departments";
+		String dir = "Departments" + File.separator + "Temp";
 
 		// Writes department object to the file specified by the directory
 		XMLEncoder e = null;
@@ -247,46 +283,6 @@ public class PersistenceLayer {
 		e.writeObject(counter);
 		e.close();
 		return true;
-	}
-	
-	
-	public int loadCounter() {
-		// Gets a list of files in the directory and checks if they are valid
-		XMLDecoder d = null;
-		File[] files = new File("Departments").listFiles();
-
-		Object obj = new Object();
-		
-		for(File file : files) {
-			if(file.getName().equals("Counter")) {
-				try{
-					d = new XMLDecoder(
-		                new BufferedInputStream(
-		                    new FileInputStream("Departments" + File.separator + file.getName())));
-				} catch(FileNotFoundException fileNotFound) {
-					System.out.println(fileNotFound.getMessage());
-				}
-				obj = d.readObject();
-				d.close();
-				return (int) obj;
-			}
-		}
-		// else return 0
-		return 0;
-	}
-
-	/**
-	 * Deletes the file
-	 * @param department
-	 * @return
-	 */
-	public Boolean delete(Department department) {
-		// Creates directory path for the department
-		String dir = "Departments" + File.separator + department.getName()
-			+ File.separator + department.getName();
-		File delFile = new File(dir);
-		if(delFile.delete()) return true;
-		else return false;
 	}
 
 	/**
