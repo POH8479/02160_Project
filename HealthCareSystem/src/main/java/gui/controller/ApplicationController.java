@@ -7,11 +7,12 @@ import gui.view.RecordView;
 import gui.view.UserView;
 import hospitalmanagementsystem.Patient;
 import hospitalmanagementsystem.PersistenceLayer;
+import hospitalmanagementsystem.departments.*;
 
 /**
  * The main controller of the Graphical User Interface (GUI).
  * @author Pieter O'Hearn
- * 
+ *
  */
 public class ApplicationController {
 	// Instance variables
@@ -20,7 +21,15 @@ public class ApplicationController {
 	private RecordController recordController;
 	private HealthStaffController healthStaffController;
 	private UserController userController;
-	
+
+	public ApplicationController() {
+		PersistenceLayer persist = new PersistenceLayer();
+		persist.loadDepartment(Emergency.getInstance());
+		persist.loadDepartment(Outpatient.getInstance());
+		persist.loadDepartment(Inpatient.getInstance());
+		persist.loadDepartment(Management.getInstance());
+	}
+
 	/**
 	 * Login method for the HMS application which initialises a new LoginController and displays the login window.
 	 */
@@ -29,7 +38,7 @@ public class ApplicationController {
 		loginController = new LoginController(this);
 		loginController.display();
 	}
-	
+
 	/**
 	 * Starts the Management Controller used by the Admin User.
 	 * @param session The current session
@@ -37,13 +46,13 @@ public class ApplicationController {
 	public void manage(Session session) {
 		// initialise a new Management Controller
 		managementController = new ManagementController(session, this);
-		
+
 		// create a new Management View and display the Management Window
 		ManagementView manView = new ManagementView(managementController);
 		managementController.setView(manView);
 		managementController.display();
 	}
-	
+
 	/**
 	 * Display the Management Display again once it has already been initialised.
 	 */
@@ -51,15 +60,15 @@ public class ApplicationController {
 		// try displaying the already initialised management Controller
 		try {
 			managementController.display();
-		} // if not initialised, catch the exception and and call manage()  
+		} // if not initialised, catch the exception and and call manage()
 		catch(NullPointerException e) {
 			manage(session);
 		}
 	}
-	
+
 	/**
 	 * Starts the record Controller for a given patient.
-	 * @param session The current session 
+	 * @param session The current session
 	 * @param patient The patient whose record is being read/edited
 	 */
 	public void record(Session session, Patient patient) {
@@ -74,7 +83,7 @@ public class ApplicationController {
 
 	/**
 	 * Starts the healthStaff Controller used by all healthStaff Users who do not have admin privilages.
-	 * @param session The current session 
+	 * @param session The current session
 	 */
 	public void healthStaff(Session session) {
 		// initialise a new healthStaff Controller
@@ -85,7 +94,7 @@ public class ApplicationController {
 		healthStaffController.setView(healthStaffView);
 		healthStaffController.display();
 	}
-	
+
 	/**
 	 * Display the healthStaff Display again once it has already been initialised.
 	 */
@@ -93,7 +102,7 @@ public class ApplicationController {
 		// try displaying the already initialised healthStaff Controller
 		try {
 			healthStaffController.display();
-		} // if not initialised, catch the exception and and call healthStaff()  
+		} // if not initialised, catch the exception and and call healthStaff()
 		catch(NullPointerException e) {
 			healthStaff(session);
 		}
@@ -101,7 +110,7 @@ public class ApplicationController {
 
 	/**
 	 * Starts the User Controller used by all generic users.
-	 * @param session The current session 
+	 * @param session The current session
 	 */
 	public void user(Session session) {
 		// initialise a new User Controller
@@ -121,19 +130,5 @@ public class ApplicationController {
 		// initialise the ApplicationController app and call the login method to Start
 		ApplicationController app = new ApplicationController();
 		app.login();
-	}
-
-	/**
-	 * Saves the Users and Patients to file.
-	 */
-	public void save() {
-		// create a new Persistence Layer
-		PersistenceLayer persistenceLayer = new PersistenceLayer();
-		
-		// Save the information from all departments
-//		persistenceLayer.save(Emergency.getInstance());
-//		persistenceLayer.save(Inpatient.getInstance());
-//		persistenceLayer.save(Outpatient.getInstance());
-//		persistenceLayer.save(Management.getInstance());
 	}
 }

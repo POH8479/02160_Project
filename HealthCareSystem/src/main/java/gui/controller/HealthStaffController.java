@@ -1,11 +1,13 @@
 package gui.controller;
 
+import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import gui.model.PatientModel;
+import gui.model.PatientSearchModel;
 import gui.model.Session;
 import gui.view.HealthStaffView;
 import hospitalmanagementsystem.Patient;
@@ -167,7 +169,6 @@ public class HealthStaffController {
 	public void logOut() {
 		// close the HealthStaff view and call the login method for the next user
 		view.setVisible(false);
-		applicationController.save();
 		applicationController.login();
 	}
 	
@@ -217,6 +218,48 @@ public class HealthStaffController {
 		// close the HealthStaff view and start the patient record controller 
 		this.view.setVisible(false);
 		this.applicationController.record(this.sessionModel, p);
+	}
+
+	/**
+	 * Searches through all the registered patients and returns the ones that match the given criteria.
+	 * @param id The Patients ID
+	 * @param firstName The Patients First Name
+	 * @param lastName The Patients Last Name
+	 * @param department The Department the Patient is admitted to
+	 */
+	public void patientSearch(String id, String firstName, String lastName, String department) {
+		// create a new ArrayList to store the search results
+		ArrayList<Patient> foundPatients = new ArrayList<Patient>();
+		
+		// store all the patients in one ArrayList
+		ArrayList<Patient> patientsToSearch = new ArrayList<Patient>();
+		patientsToSearch.addAll(Emergency.getInstance().getPatientList());
+		patientsToSearch.addAll(Inpatient.getInstance().getPatientList());
+		patientsToSearch.addAll(Outpatient.getInstance().getPatientList());
+		
+		// check all the patients in the list
+		for(Patient patient : patientsToSearch) {
+			// check patient matches the given criteria
+			if((firstName.isEmpty() || patient.getFirstName().equals(firstName)) &&
+					(lastName.isEmpty() || patient.getLastName().equals(lastName)) &&
+					(id.isEmpty() || patient.getpatientID().equals(id)) &&
+					 (department.isEmpty() || patient.getDepartment().equals(department))) {
+				// if it does add patient to the searchedPatients list
+				foundPatients.add(patient);
+			}
+		}
+		
+		// create a new Patient Search model and update the Table model
+		PatientSearchModel patientSearchModel = new PatientSearchModel(foundPatients);
+		this.view.setTableModel(patientSearchModel);
+	}
+
+	/**
+	 * Resets the Patient Model to the original.
+	 */
+	public void clearSearch() {
+		// retrieve the original patient model and set it again
+		this.view.setTableModel(patientModel);
 	}
 }
 

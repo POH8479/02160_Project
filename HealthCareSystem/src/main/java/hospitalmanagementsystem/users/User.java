@@ -1,10 +1,7 @@
 package hospitalmanagementsystem.users;
 
-
-import java.util.Hashtable;
-
 import hospitalmanagementsystem.Patient;
-import hospitalmanagementsystem.departments.Department;
+import hospitalmanagementsystem.PersistenceLayer;
 import hospitalmanagementsystem.departments.Management;
 
 /**
@@ -16,59 +13,56 @@ import hospitalmanagementsystem.departments.Management;
  */
 public class User {
 	// Static Variables
-	public static int idCounter = 0;
+	private static PersistenceLayer persist = new PersistenceLayer();
+//	public static int idCounter = 0;
 
 	// Instance Variables
-	String name;
-	final String userID;
-	String address;
-	String phoneNumber;
-	Department department;
-	String email;
+	protected String name;
+	protected String userID;
+	protected String email;
+	protected String phoneNumber;
+	private String department;
 
 	/**
 	 * Creates a new User of the Hospital Management System
+	 * @param usersName
+	 * @param phone
 	 */
-	public User(String usersName, String usersAddress, String phone){
+	public User(String usersName,  String phone){
 		// assign the User with a unique ID
-		idCounter++;
+		int idCounter = persist.loadCounter() + 1;
 		this.userID = "U" + Integer.toString(idCounter);
 		// assign the remaining information
 		this.name = usersName;
-		this.address = usersAddress;
+		this.email = this.userID + "@kapjak.com.dk";
 		this.phoneNumber = phone;
-		this.department = Management.getInstance();
-		this.email = this.userID + "@kapjak.com";
+		this.department = Management.getInstance().getName();
 		Management.getInstance().getUserList().add(this);
+
+		// Save the new User
+		persist.save(this, this.userID, this.department);
+		persist.saveCounter(idCounter);
 	}
 
-	public User(String usersName, String usersAddress, String phone, String classString) {
-		// assign the User with a unique ID
-		idCounter++;
-		this.userID = classString + Integer.toString(idCounter);
-		// assign the remaining information
-		this.name = usersName;
-		this.address = usersAddress;
-		this.phoneNumber = phone;
-		this.email = this.userID + "@kapjak.com";
-	}
+	public User() {}
 
 	/**
-	 * Returns the Users Info as a String in the format
-	 *
-	 * @return String
+	 * Creates a new non generic type ofUser to the Hospital Management System
+	 * @param usersName
+	 * @param phone
+	 * @param classString
 	 */
-	public Hashtable<String,String> getUserInfo() {
-		// create a Hash table and add the Users info
-		Hashtable<String,String> info = new Hashtable<String,String>();
-		info.put("Name", this.name);
-		info.put("User ID", this.userID);
-		info.put("Address", this.address);
-		info.put("Phone Number", this.phoneNumber);
-
-
-		// return info hash table
-		return info;
+	public User(String usersName, String phone, String classString) {
+		// assign the User with a unique ID
+		int idCounter = persist.loadCounter() + 1;
+		this.userID = classString + Integer.toString(idCounter);
+		persist.saveCounter(idCounter);
+		
+		// assign the remaining information
+		this.name = usersName;
+		this.email = this.userID + "@kapjak.com.dk";
+		this.phoneNumber = phone;
+		this.email = this.userID + "@kapjak.com";
 	}
 
 	/**
@@ -81,59 +75,67 @@ public class User {
 		// create a new Patient
 		Patient newPatient = new Patient(name, surname, bday, address, phoneNo);
 
+		// Save the updated User
+		persist.save(this, this.userID, this.department);
+
 		// return the Patient
 		return newPatient;
 	}
 
-	/**
-	 * returns the patients basic data (Name, )
-	 *
-	 * @param patient The
-	 * @return The patients basic data in String format
-	 */
-	public Hashtable<String,String> getPatientData(Patient patient) {
-		// return the patients info
-		return patient.getPatientInfo();
+
+	public String getType() {
+		return "User";
 	}
 	
-	public String getEmail() {
-		return this.email;
+	public void editUser(String newName, String newPhone) {
+		// set the users
+		this.setUserName(newName);
+		this.setNumber(newPhone);
+		
+		// Save the updated User
+		persist.delete(this.userID, this.getDepartment());
+		persist.save(this, this.userID, this.getDepartment());
 	}
 
-	public Department getDepartment() {
-		return this.department;
+	// Gets
+	public String getUserName() {
+		return this.name;
 	}
 
 	public String getUserID() {
 		return this.userID;
 	}
 
-	public String getUserName() {
-		return this.name;
-	}
-
-	public String getType() {
-		return "User";
-	}
-
-	public String getAddress() {
-		return this.address;
+	public String getEmail() {
+		return this.email;
 	}
 
 	public String getNumber() {
 		return this.phoneNumber;
 	}
-	
+
+	public String getDepartment() {
+		return this.department;
+	}
+
+	// Sets
 	public void setUserName(String newName) {
 		this.name = newName;
 	}
-	
-	public void setAddress(String newAddress) {
-		this.address = newAddress;
+
+	public void setUserID(String newID) {
+		this.userID = newID;
 	}
-	
-	public void setPhone(String newPhone) {
+
+	public void setEmail(String newEmail) {
+		this.email = newEmail;
+	}
+
+	public void setNumber(String newPhone) {
 		this.phoneNumber = newPhone;
 	}
 
+	public void setDepartment(String newDepartment) {
+		this.department = newDepartment;
+	}
 }

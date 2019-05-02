@@ -65,8 +65,8 @@ public interface HealthStaff {
 	 * This method returns the department of the HealthStaff User
 	 * @return a department object
 	 */
-	public Department getDepartment();
+	public String getDepartment();
 	
-	public void moveDepartment(Department department);
+	public void moveDepartment(String department);
 	
 }

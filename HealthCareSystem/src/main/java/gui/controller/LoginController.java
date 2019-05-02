@@ -45,21 +45,21 @@ public class LoginController {
 		//TODO causes error if doctor/nurse has unassigned department
 		
 		// check if the loginManager returns true
-		if (loginManager.checkID(user)) {
+		if (user != null && loginManager.checkID(user)) {
 			
 			//check to make sure username entry is in email format
 			if (!username.contains("@kapjak.com")){ 
 				view.showError();
 				return;
 			}
-			
-			
+      
 			// set the User for the session and close the Login Window
 			session.setUser(findUser(input[0]));
 			view.setVisible(false);
 		} // if the username is "A1" but no user is found
 		else if(user == null && username.equals("A1")) {
-			// create a new generic Admin user and add it to the user model
+		
+      // create a new generic Admin user and add it to the user model
 			user = new Admin("Super Admin", "Super Admin's Address", "12345678");
 			session.getUserModel().addNewUser(user);
 			

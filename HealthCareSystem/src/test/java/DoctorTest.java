@@ -38,8 +38,8 @@ public class DoctorTest {
 	@BeforeClass
 	public static void setUpBeforeClass() {
 		// create Doctors
-		d1 = new Doctor("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Emergency");
-		d2 = new Doctor("Jane Doctor", "123 Main St Medicaltown, Germany", "+4912345678", "Inpatient");
+		d1 = new Doctor("John Doe", "+4512345678", "Emergency");
+		d2 = new Doctor("Jane Doctor", "+4912345678", "Inpatient");
 
 		// create the Patients
 		p1 = new Patient("Pieter", "O\'Hearn", "12/01/1990", "259 Nordvej 2800 Kongens Lyngby", "+4562473948");
@@ -118,7 +118,7 @@ public class DoctorTest {
 		// check doctors from other departments can discharge Patients
 		p2.updateDepartment(outPa);
 		assertEquals("Outpatient",p2.getPatientInfo().get("Department"));
-		assertEquals("Emergency",d1.getDepartment().getName());
+		assertEquals("Emergency",d1.getDepartment());
 		d1.dischargePatient(p2);
 		assertEquals("None",p2.getPatientInfo().get("Department"));
 	}
@@ -193,12 +193,12 @@ public class DoctorTest {
 	@Test
 	public void ConstructorTest() {
 		// create a doctor in Outpatient and check it works
-		Doctor d3 = new Doctor("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Outpatient");
+		Doctor d3 = new Doctor("John Doe", "+4512345678", "Outpatient");
 		assertEquals(outPa, d3.getDepartment());
 		
 		// create a doctor with an invalid department and expect an exception
 		try {
-			d3 = new Doctor("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Blahh");
+			d3 = new Doctor("John Doe", "+4512345678", "Blahh");
 			fail("Expected an IllegalArgumentException");
 		} catch(IllegalArgumentException e) {
 			assertEquals("Blahh is an invalid department.", e.getMessage());

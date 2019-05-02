@@ -56,9 +56,9 @@ public class Bed {
 		if(this.patient != null) {
 			// if full throw IllegalArgumentException
 			throw new IllegalArgumentException(String.format("Bed %s is already occupied", this.bedID));
-		} else if(!patient.getPatientInfo().get("Department").equals(this.department.getName())) {
+		} else if(!patient.getDepartment().equals(this.department.getName())) {
 			// if bed is in wrong department throw IllegalArgumentException
-			throw new IllegalArgumentException(String.format("Bed %s is in a different Department to %s", this.bedID, patient.getPatientInfo().get("First Name")));
+			throw new IllegalArgumentException(String.format("Bed %s is in a different Department to %s", this.bedID, patient.getFirstName()));
 		} else {
 			// if empty and in the same department update patient
 			this.patient = patient;
@@ -77,7 +77,7 @@ public class Bed {
 		}
 		
 		// if not null return patient ID
-		return this.patient.getPatientInfo().get("Patient ID");
+		return this.patient.getpatientID();
 	}
 
 	/**

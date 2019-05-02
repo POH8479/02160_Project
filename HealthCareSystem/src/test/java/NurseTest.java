@@ -37,8 +37,8 @@ public class NurseTest {
 	@BeforeClass
 	public static void setUpBeforeClass() {
 		// create a Nurses
-		n1 = new Nurse("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Emergency");
-		n2 = new Nurse("Jane nurse", "123 Main St Medicaltown, Germany", "+4912345678", "Inpatient");
+		n1 = new Nurse("John Doe", "+4512345678", "Emergency");
+		n2 = new Nurse("Jane nurse", "+4912345678", "Inpatient");
 
 		// create the Patients
 		p1 = new Patient("Pieter", "O\'Hearn", "12/01/1990", "259 Nordvej 2800 Kongens Lyngby", "+4562473948");
@@ -193,12 +193,12 @@ public class NurseTest {
 	@Test
 	public void ConstructorTest() {
 		// create a nurse in Outpatient and check it works
-		Nurse n3 = new Nurse("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Outpatient");
+		Nurse n3 = new Nurse("John Doe", "+4512345678", "Outpatient");
 		assertEquals(outPa, n3.getDepartment());
 
 		// create a doctor with an invalid department and expect an exception
 		try {
-			n3 = new Nurse("John Doe", "123 Main St Anytown, Denmark", "+4512345678", "Blahh");
+			n3 = new Nurse("John Doe", "+4512345678", "Blahh");
 			fail("Expected an IllegalArgumentException");
 		} catch(IllegalArgumentException e) {
 			assertEquals("Blahh is an invalid department.", e.getMessage());

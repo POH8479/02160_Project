@@ -51,7 +51,7 @@ public class RecordController {
 	}
 
 	/**
-	 * Returns the record of the patient as a String. 
+	 * Returns the record of the patient as a String.
 	 * @return The Patients medical record
 	 */
 	public String getRecord() {
@@ -59,7 +59,7 @@ public class RecordController {
 		if(this.patient.getRecord() == null) {
 			return "";
 		}
-		
+
 		// otherwise get the patients record and return
 		return this.patient.getRecord();
 	}
@@ -71,13 +71,13 @@ public class RecordController {
 	public void saveRecord(String text) {
 		// add the Users name and a time stamp to the entry
 		String recordUpdate = "\n" + this.sessionModel.getUser().getUserID() + "  " + this.sessionModel.getUser().getUserName() + "\n" + LocalDate.now().toString() +"    " + LocalTime.now() + "\n" + text;
-		
+
 		// save the record to the HMS
 		((HealthStaff) sessionModel.getUser()).editMedicalData(this.patient, recordUpdate);
-		
+
 		// close the record view
 		this.view.setVisible(false);
-		
+
 		// open the users main department view
 		if(this.sessionModel.getUser().getType().equals("Admin")) {
 			this.applicationController.manageDisplay(this.sessionModel);
@@ -91,6 +91,6 @@ public class RecordController {
 	 * @return the patients patient ID
 	 */
 	public String getPatientId() {
-		return this.patient.getPatientId();
+		return this.patient.getpatientID();
 	}
 }

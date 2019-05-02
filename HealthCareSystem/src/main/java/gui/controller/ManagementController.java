@@ -1,5 +1,6 @@
 package gui.controller;
 
+import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -63,7 +64,6 @@ public class ManagementController {
 	public void addUser() {
 		// Create a JTextField for each input
 		JTextField name = new JTextField(5);
-		JTextField address = new JTextField(10);
 		JTextField phone = new JTextField(5);
 		
 		// create a JComboBox to check what type of user to create
@@ -71,15 +71,19 @@ public class ManagementController {
 		JComboBox<String> type = new JComboBox<String>(typesOfUsers);
 		type.setSelectedIndex(3);
 
+		// create a JComboBox to check what Department
+		String[] departmentNames = { "Emergency", "Inpatient", "Outpatient", "Management" };
+		JComboBox<String> departments = new JComboBox<String>(departmentNames);
+		departments.setSelectedIndex(3);
+		
 		// create a new JPanel and add each of the above Fields along with their corresponding Labels 
 		JPanel userPanel = new JPanel();
 		userPanel.add(new JLabel("Name:"));
 		userPanel.add(name);
-		userPanel.add(new JLabel("Address:"));
-		userPanel.add(address);
 		userPanel.add(new JLabel("Phone Number:"));
 		userPanel.add(phone);
 		userPanel.add(type);
+		userPanel.add(departments);
 
 		// Display the JPanel using a JOptionPane and store the confirmation result
         int confirmation = JOptionPane.showConfirmDialog(null, userPanel, "Please Enter the Users information", JOptionPane.OK_CANCEL_OPTION);
@@ -87,7 +91,7 @@ public class ManagementController {
         // check the confirmation result
         if (confirmation == JOptionPane.OK_OPTION) {
         	// if OK was selected, create a user variable u
-        	User u;
+        	User u = null;
         	
         	//check management input of user information
         	InputController inputcheck = new InputController();
@@ -100,16 +104,34 @@ public class ManagementController {
         	// check what Type of user to create 
         	switch(type.getSelectedIndex()) {
         		case 0: // if Admin was selected, create a new Admin User
-    	    		u = new Admin(name.getText(), address.getText(), phone.getText());
+        			if(departments.getSelectedIndex() != 3) {
+        				view.showError(String.format("%s is an invalid department.",(String)departments.getSelectedItem()));
+        				return;
+        			}
+    	    		u = new Admin(name.getText(), phone.getText());
     	    		break;
         		case 1: // if Doctor was selected, create a new Doctor User
-    	    		u = new Doctor(name.getText(), address.getText(), phone.getText(),null);
+        			try {
+        				u = new Doctor(name.getText(), phone.getText(),(String)departments.getSelectedItem());
+        			} catch(IllegalArgumentException e) {
+        				view.showError(e.getMessage());
+        				return;
+        			}
     	    		break;
         		case 2: // if Nurse was selected, create a new Nurse User
-    	    		u = new Nurse(name.getText(), address.getText(), phone.getText(),null);
+        			try {
+        				u = new Nurse(name.getText(), phone.getText(),(String)departments.getSelectedItem());
+        			} catch (IllegalArgumentException e) {
+        				view.showError(e.getMessage());
+        				return;
+        			}
     	    		break;
     			default: // else create a new generic User
-	    		u = new User(name.getText(), address.getText(), phone.getText());
+    				if(departments.getSelectedIndex() != 3) {
+        				view.showError(String.format("%s is an invalid department.",(String)departments.getSelectedItem()));
+        				return;
+        			}
+    				u = new User(name.getText(), phone.getText());
         	}
         	
         	// add the new user to the User Model
@@ -242,49 +264,7 @@ public class ManagementController {
 	public void logOut() {
 		// close the Management view and call the login method for the next user 
 		view.setVisible(false);
-		applicationController.save();
 		applicationController.login();
-	}
-	
-	/**
-	 * Assigns a department to the selected User.
-	 * @param selectedRow The row number of the selected User
-	 */
-	public void assignDepartment(int selectedRow) {
-		// Create an array of Strings containing the department names
-		String departments[] = {"Emergency", "Inpatient", "Outpatient"};
-		
-		// create a new JList with the departments array and set the initial selected Index to 0
-		JList<String> depList = new JList<String>(departments);
-		depList.setSelectedIndex(0); 
-		
-		// Display the JList using a JOptionPane and store the confirmation result
-		int confirmation = JOptionPane.showConfirmDialog(null, depList, "Select a department", JOptionPane.OK_CANCEL_OPTION);
-		
-		// check the confirmation result
-		if (confirmation == JOptionPane.OK_OPTION) {
-        	// if OK was selected retrieve the selected Users ID and create a Department variable
-			String userID = (String) userModel.getValueAt(selectedRow, 0);
-			Department dept;
-			
-			// check the selected value of the department list
-			switch (depList.getSelectedValue()) {
-				// if Emergency is selected set the department variable to the Emergency Instance
-				case "Emergency":
-					dept = Emergency.getInstance();
-					break;
-				// if Inpatient is selected set the department variable to the Inpatient Instance
-				case "Inpatient":
-					dept = Inpatient.getInstance();
-					break;
-				// Otherwise Outpatient must be selected so set the department variable to the Outpatient Instance
-				default:
-					dept = Outpatient.getInstance();
-			}
-			
-			// admit the user to the department
-			userModel.updateDepartment(userID, dept);
-		}
 	}
 	
 	/**
@@ -294,17 +274,39 @@ public class ManagementController {
 	public void editUser(int selectedRow) {
 		// Create a JTextField for each input
 		JTextField name = new JTextField((String) userModel.getValueAt(selectedRow, 1),10);
-		JTextField address = new JTextField((String) userModel.getValueAt(selectedRow, 3),20);
 		JTextField phone = new JTextField((String) userModel.getValueAt(selectedRow, 4),10);
+		
+		// Create two arrays of Strings containing the department names
+		String healthDepartments[] = {"Emergency", "Inpatient", "Outpatient", "Management"};
+		String managementDepartments[] = {"Management"};
+		JComboBox<String> depList;
+		
+		// create a new JList with one of the departments array
+		if(userModel.getValueAt(selectedRow, 2).equals("Management")) {
+			depList = new JComboBox<String>(managementDepartments);
+		} else {
+			depList = new JComboBox<String>(healthDepartments);
+			
+			// set the initial selected Index to the current department
+			switch ((String) userModel.getValueAt(selectedRow, 2)){
+				case "Emergency":
+					depList.setSelectedIndex(0);
+				case"Inpatient":
+					depList.setSelectedIndex(1);
+				case "Outpatient":
+					depList.setSelectedIndex(2);
+				case"Management":
+					depList.setSelectedIndex(3);
+			}
+		}
 
 		// create a new JPanel and add each of the above JTextFields along with their corresponding Labels 
 		JPanel userPanel = new JPanel();
 		userPanel.add(new JLabel("Name:"));
 		userPanel.add(name);
-		userPanel.add(new JLabel("Address:"));
-		userPanel.add(address);
 		userPanel.add(new JLabel("Phone Number:"));
 		userPanel.add(phone);
+		userPanel.add(depList);
 
 		// Display the JList using a JOptionPane and store the confirmation result
         int confirmation = JOptionPane.showConfirmDialog(null, userPanel, "Update the Users information", JOptionPane.OK_CANCEL_OPTION);
@@ -312,7 +314,7 @@ public class ManagementController {
      // check the confirmation result
         if (confirmation == JOptionPane.OK_OPTION) {
         	// if OK was selected pass the input to the userModel to update
-        	userModel.edit((String) userModel.getValueAt(0, selectedRow), name.getText(), address.getText(), phone.getText());
+        	userModel.edit((String) userModel.getValueAt(0, selectedRow), name.getText(), phone.getText(), (String) depList.getSelectedItem());
         	
         	// update the Session label
         	view.setSession(this.sessionModel);
@@ -365,5 +367,82 @@ public class ManagementController {
 		// close the HealthStaff view and start the patient record controller 
 		this.view.setVisible(false);
 		this.applicationController.record(this.sessionModel, p);
+	}
+
+	/**
+	 * Searches through all the registered patients and returns the ones that match the given criteria.
+	 * @param id The Patients ID
+	 * @param firstName The Patients First Name
+	 * @param lastName The Patients Last Name
+	 * @param department The Department the Patient is admitted to
+	 */
+	public void patientSearch(String id, String firstName, String lastName, String department) {
+		// create a new ArrayList to store the search results
+		ArrayList<Patient> foundPatients = new ArrayList<Patient>();
+		
+		// store all the patients in one ArrayList
+		ArrayList<Patient> patientsToSearch = new ArrayList<Patient>();
+		patientsToSearch.addAll(Emergency.getInstance().getPatientList());
+		patientsToSearch.addAll(Inpatient.getInstance().getPatientList());
+		patientsToSearch.addAll(Outpatient.getInstance().getPatientList());
+		
+		// check all the patients in the list
+		for(Patient patient : patientsToSearch) {
+			// check patient matches the given criteria
+			if((firstName.isEmpty() || patient.getFirstName().equals(firstName)) &&
+					(lastName.isEmpty() || patient.getLastName().equals(lastName)) &&
+					(id.isEmpty() || patient.getpatientID().equals(id)) &&
+					 (department.isEmpty() || patient.getDepartment().equals(department))) {
+				// if it does add patient to the searchedPatients list
+				foundPatients.add(patient);
+			}
+		}
+		
+		// create a new Patient Search model and update the Table model
+		PatientSearchModel patientSearchModel = new PatientSearchModel(foundPatients);
+		this.view.setTableModel(userModel, patientSearchModel);
+	}
+
+	/**
+	 * Searches through all the Users and returns the ones that match the given criteria.
+	 * @param id The Users ID
+	 * @param name The Users First Name
+	 * @param email The Users Email Address
+	 * @param department The Department the User is admitted to
+	 */
+	public void userSearch(String id, String name, String email, String department) {
+		// create a new ArrayList to store the search results
+		ArrayList<User> foundUsers = new ArrayList<User>();
+		
+		// store all the users in one ArrayList
+		ArrayList<User> usersToSearch = new ArrayList<User>();
+		usersToSearch.addAll(Emergency.getInstance().getUserList());
+		usersToSearch.addAll(Inpatient.getInstance().getUserList());
+		usersToSearch.addAll(Outpatient.getInstance().getUserList());
+		usersToSearch.addAll(Management.getInstance().getUserList());
+		
+		// check all the users in the list
+		for(User user : usersToSearch) {
+			// check user matches the given criteria
+			if((name.isEmpty() || user.getUserName().equals(name)) &&
+					(email.isEmpty() || user.getEmail().equals(email)) &&
+					(id.isEmpty() || user.getUserID().equals(id)) &&
+					 (department.isEmpty() || user.getDepartment().equals(department))) {
+				// if it does add patient to the searchedPatients list
+				foundUsers.add(user);
+			}
+		}
+		
+		// create a new User Search model and update the Table model
+		UserSearchModel userSearchModel = new UserSearchModel(foundUsers);
+		this.view.setTableModel(userSearchModel, patientModel);
+	}
+	
+	/**
+	 * Resets the Patient and User Model to the original.
+	 */
+	public void clearSearch() {
+		// retrieve the original patient and user model and set it again
+		this.view.setTableModel(userModel, patientModel);
 	}
 }

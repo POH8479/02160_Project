@@ -1,10 +1,7 @@
 package hospitalmanagementsystem;
 
-import java.util.Hashtable;
 import java.util.Objects;
-
-import hospitalmanagementsystem.departments.Department;
-import hospitalmanagementsystem.departments.Management;
+import hospitalmanagementsystem.departments.*;
 
 /**
  * 
@@ -14,18 +11,18 @@ import hospitalmanagementsystem.departments.Management;
 
 public class Patient {
 	// Static Variables
-	public static int idnum = 0;
+	private static PersistenceLayer persist = new PersistenceLayer();
 
 	//INSTANCE VARIABLES
 	String name;
 	String surname;
-	final String patientID;
+	String patientID;
 	String bday;
 	String address;
 	String phoneNo;
-	Boolean deceased;
+	String deceased;
 	String record;
-	Department dept;
+	String dept;
 	Bed bed;
 
 	//CONSTRUCTOR
@@ -33,17 +30,22 @@ public class Patient {
 		//patient info input by user
 		this.name = name;
 		this.surname = surname;
-		idnum++;
-		this.patientID = "P" + Integer.toString(idnum);;
+		int idCounter = persist.loadCounter() + 1;
+		this.patientID = "P" + Integer.toString(idCounter);;
+		persist.saveCounter(idCounter);
 		this.bday = bday;
 		this.address = address;
 		this.phoneNo = phoneNo;
-		this.deceased = false;
+		this.deceased = "false";
 		this.record = null;
 		this.dept = null;
 		this.bed = null;
+		
+		persist.save(this, this.patientID, this.dept);
 	}
 
+	public Patient() {}
+	
 	/**
 	 * Updates a patient's department to enable admitting or moving a patient to a new department
 	 * @param department
@@ -54,8 +56,16 @@ public class Patient {
 		if( department instanceof Management) {
 			throw new IllegalArgumentException("Patients can not be assigned to the Managment Department");
 		} else { //otherwise update department
-			this.dept = department;
+			if(department == null) {
+				this.dept = null;
+			} else {
+				this.dept = department.getName();
+			}
 		}
+		
+		// Save the new Patient
+		PersistenceLayer persist = new PersistenceLayer();
+		persist.save(this, this.patientID, this.dept);
 	}
   
 	/**
@@ -78,92 +88,7 @@ public class Patient {
 		}
   }
 
-	/**
-	 * Retrieves a patients medical record if it exists
-	 * @return
-	 */
-	public String getRecord() {
-		return this.record;
-	}
-
-	/**
-	 * Updates a patients medical record
-	 * @param data
-	 */
-	public void updateRecord(String data) {
-		if(!Objects.equals(this.record,null)) {
-			this.record = this.record + "\n" + data;
-		} else {
-			this.record = data;
-		}
-	}
-
-	/**
-	 * This method creates a hashtable to be able to retrieve the patient info accessible by a user
-	 * @return patientInfo hashtable
-	 */
-	public Hashtable<String, String> getPatientInfo() {
-		//create hashtable for easier organisation of patient data
-		Hashtable<String, String> patientInfo = new Hashtable<String, String>();
-		
-		//load all parameters into hashtable
-		patientInfo.put("First Name", this.name);
-		patientInfo.put("Last Name", this.surname);
-		patientInfo.put("Patient ID", this.patientID);
-		patientInfo.put("Birth Date", this.bday);
-		patientInfo.put("Address", this.address);
-		patientInfo.put("Phone Number", this.phoneNo);
-		patientInfo.put("Deceased", "false");
-		
-		if(this.dept == null) {
-			patientInfo.put("Department", "None");
-		} else {
-			patientInfo.put("Department", this.dept.getName());
-		}
-		
-		if(this.bed == null) {
-			patientInfo.put("Bed ID", "None");
-		} else {
-			patientInfo.put("Bed ID", this.bed.getBedID());
-		}
-		
-		
-		return patientInfo;
-	}
-
-	/**
-	 * This method retrieves the bed object that is currently occupied by the patient
-	 * @return bed
-	 */
-	public Bed getBed() {
-		//if null is returned, patient has not yet been admitted to a bed
-		return this.bed;
-	}
-
-	/**
-	 * This method retrieves a patients unique ID number
-	 * @return ID number
-	 */
-	public String getPatientId() {
-		return this.patientID;
-	}
-
-	/**
-	 * This method notifies the user if the patient is alive or dead
-	 * @return true if a patient is deceased and false if a patient is alive
-	 */
-	public boolean getDeceased() {
-		return this.deceased;
-	}
-
-	/**
-	 * This method retrieves the department that a patient belongs to
-	 * @return Department object if admitted or null if department has not yet been assigned
-	 */
-	public Department getDepartment() {
-		return this.dept;
-	}
-
+	// Getters
 	public String getFirstName() {
 		return this.name;
 	}
@@ -171,19 +96,40 @@ public class Patient {
 	public String getLastName() {
 		return this.surname;
 	}
-
-	public String getNumber() {
-		return this.phoneNo;
+	
+	public String getpatientID() {
+		return this.patientID;
+	}
+	
+	public String getDOB() {
+		return this.bday;
 	}
 
 	public String getAddress() {
 		return this.address;
 	}
-
-	public String getDOB() {
-		return this.bday;
+	
+	public String getPhoneNo() {
+		return this.phoneNo;
+	}
+	
+	public String getDeceased() {
+		return this.deceased;
+	}
+	
+	public String getRecord() {
+		return this.record;
+	}
+	
+	public String getDepartment() {
+		return this.dept;
+	}
+	
+	public Bed getBed() {
+		return this.bed;
 	}
 
+	// Setters
 	public void setFirstName(String firstName) {
 		this.name = firstName;
 	}
@@ -192,21 +138,44 @@ public class Patient {
 		this.surname = lastName;
 	}
 
-	public void setPhoneNo(String phone) {
-		this.phoneNo = phone;
+	public void setPatientID(String patientID) {
+		this.patientID = patientID;
 	}
-
-	public void setAddress(String newAddress) {
-		this.address = newAddress;
-	}
-
-	public void setPhone(String phone) {
-		this.phoneNo = phone;
-	}
-
+	
 	public void setDOB(String dOB) {
 		this.bday = dOB;
 		
 	}
 	
+	public void setAddress(String newAddress) {
+		this.address = newAddress;
+	}
+	
+	public void setPhoneNo(String phone) {
+		this.phoneNo = phone;
+	}
+
+	public void setDeceased(String deceased) {
+		this.deceased = deceased;
+	}
+	
+	/**
+	 * Updates a patients medical record
+	 * @param data
+	 */
+	public void setRecord(String data) {
+		if(!Objects.equals(this.record,null)) {
+			this.record = this.record + "\n" + data;
+		} else {
+			this.record = data;
+		}
+	}
+	
+	public void setDepartment(String department) {
+		this.dept = department;
+	}
+
+	public void setBed(Bed bed) {
+		this.bed = bed;
+	}
 }
