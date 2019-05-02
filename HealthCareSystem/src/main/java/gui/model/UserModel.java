@@ -151,7 +151,7 @@ public class UserModel extends AbstractTableModel {
 
 	@Override
 	public int getColumnCount() {
-		return 6; // this is fixed: product and quantity
+		return 5; // this is fixed: product and quantity
 	}
 
 	@Override
@@ -193,8 +193,6 @@ public class UserModel extends AbstractTableModel {
 			return "Email";
 		} else if (column == 4) {
 			return "Phone Number";
-		} else if (column == 5) {
-			return "User Email";
 		}
 		return null;
 	}

@@ -73,14 +73,14 @@ public class AdminTest {
 		// admit p1 to Inpatient and check both patients variable and departments list
 		ad2.dischargePatient(p1);
 		ad2.admitPatient(p1,inPa);
-		assertEquals("Inpatient",p1.getPatientInfo().get("Department"));
+		assertEquals("Inpatient",p1.getDepartment()); 
 		assertTrue(inPa.getPatientList().contains(p1));
-		assertEquals(null,p1.getPatientInfo().get("Bed"));
+		assertEquals(null,p1.getBed());
 
 		// admit p2 to Emergency and check that a bed is assigned and that both patients variable and departments list
-		assertEquals("None",p2.getPatientInfo().get("Department"));
+		assertEquals("None",p2.getDepartment());
 		ad1.admitPatient(p2,em);
-		assertEquals("Emergency",p2.getPatientInfo().get("Department"));
+		assertEquals("Emergency",p2.getDepartment());
 		assertTrue(em.getPatientList().contains(p2));
 	}
 
@@ -105,9 +105,9 @@ public class AdminTest {
 	@Test
 	public void dischargePatientTest() throws IllegalAccessException {
 		// ad2 discharges patient1 from Inpatient and check is Department is null
-		assertEquals("Outpatient",p1.getPatientInfo().get("Department"));
+		assertEquals("Outpatient",p1.getDepartment());
 		ad2.dischargePatient(p1);
-		assertEquals("None",p1.getPatientInfo().get("Department"));
+		assertEquals("None",p1.getDepartment());
 	}
 
 	/**
@@ -133,8 +133,8 @@ public class AdminTest {
 		ad1.assignBed(p1, b1);
 
 		// check that the patients info and beds info reflect this
-		assertEquals(p1.getPatientInfo().get("Patient ID"), b1.getPatient());
-		assertEquals(b1.getBedID(),p1.getPatientInfo().get("Bed ID"));
+		assertEquals(p1.getpatientID(), b1.getPatient());
+		assertEquals(b1.getBedID(),p1.getBed());
 
 		// try assign patient2 to the same bed, an IllegalArgumentException is expected
 		try {
@@ -154,7 +154,7 @@ public class AdminTest {
 		assertEquals(null,ad1.getMedicalData(p1));
 
 		// give p1 some medical data and test again
-		p1.updateRecord("This patient has lost all their teeth. I recomend a diet of liquid food.");
+		p1.setRecord("This patient has lost all their teeth. I recomend a diet of liquid food.");
 		assertEquals("This patient has lost all their teeth. I recomend a diet of liquid food.",ad1.getMedicalData(p1));
 	}
 
@@ -203,13 +203,5 @@ public class AdminTest {
 
 		User u = ad1.addUser("User", "User's Address", "Users Phone", "User");
 		assertEquals('U',u.getUserID().charAt(0));
-	}
-
-	/**
-	 * Tests the getDepartment method of the Admin Class
-	 */
-	@Test
-	public void getDepartmentTest() {
-		// TODO
 	}
 }

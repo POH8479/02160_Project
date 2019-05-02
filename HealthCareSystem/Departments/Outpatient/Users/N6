@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_101" class="java.beans.XMLDecoder">
+ <object class="hospitalmanagementsystem.users.Nurse">
+  <void property="department">
+   <string>Outpatient</string>
+  </void>
+  <void property="email">
+   <string>N6@kapjak.com</string>
+  </void>
+  <void property="number">
+   <string>53765927</string>
+  </void>
+  <void property="userID">
+   <string>N6</string>
+  </void>
+  <void property="userName">
+   <string>Jack</string>
+  </void>
+ </object>
+</java>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_101" class="java.beans.XMLDecoder">
+ <object class="hospitalmanagementsystem.Patient">
+  <void property="DOB">
+   <string>28/06/1997</string>
+  </void>
+  <void property="address">
+   <string>259 Nordvej 2800 Kongens Lyngby</string>
+  </void>
+  <void property="deceased">
+   <string>false</string>
+  </void>
+  <void property="firstName">
+   <string>Jack</string>
+  </void>
+  <void property="lastName">
+   <string>Rodman</string>
+  </void>
+  <void property="patientID">
+   <string>P31</string>
+  </void>
+  <void property="phoneNo">
+   <string>+4562870942</string>
+  </void>
+ </object>
+</java>

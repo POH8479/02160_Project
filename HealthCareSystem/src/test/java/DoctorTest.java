@@ -64,20 +64,20 @@ public class DoctorTest {
 		// admit p1 to Inpatient and check both patients variable and departments list
 		p1.updateDepartment(null);
 		d2.admitPatient(p1,inPa);
-		assertEquals("Inpatient",p1.getPatientInfo().get("Department"));
+		assertEquals("Inpatient",p1.getDepartment());
 		assertTrue(inPa.getPatientList().contains(p1));
-		assertEquals(null,p1.getPatientInfo().get("Bed"));
+		assertEquals(null,p1.getBed());
 
 		// admit to Emergency and check that a bed is assigned and that both patients variable and departments list
-		assertEquals("None",p2.getPatientInfo().get("Department"));
+		assertEquals("None",p2.getDepartment());
 		d1.admitPatient(p2,em);
-		assertEquals("Emergency",p2.getPatientInfo().get("Department"));
+		assertEquals("Emergency",p2.getDepartment());
 		assertTrue(em.getPatientList().contains(p2));
 
 		// check doctors from other departments can admit patients
 		d1.dischargePatient(p2);
 		d1.admitPatient(p2,outPa);
-		assertEquals("Outpatient",p2.getPatientInfo().get("Department"));
+		assertEquals("Outpatient",p2.getDepartment());
 
 		// try and admit patient to the management class
 		try {
@@ -111,16 +111,16 @@ public class DoctorTest {
 	@Test
 	public void dischargePatientTest() throws IllegalAccessException {
 		// Doctor2 discharges patient2 from Outpatient and check is Department is null
-		assertEquals("Inpatient",p1.getPatientInfo().get("Department"));
+		assertEquals("Inpatient",p1.getDepartment());
 		d2.dischargePatient(p1);
-		assertEquals("None",p1.getPatientInfo().get("Department"));
+		assertEquals("None",p1.getDepartment());
 
 		// check doctors from other departments can discharge Patients
 		p2.updateDepartment(outPa);
-		assertEquals("Outpatient",p2.getPatientInfo().get("Department"));
+		assertEquals("Outpatient",p2.getDepartment());
 		assertEquals("Emergency",d1.getDepartment());
 		d1.dischargePatient(p2);
-		assertEquals("None",p2.getPatientInfo().get("Department"));
+		assertEquals("None",p2.getDepartment());
 	}
 
 	/**
@@ -145,8 +145,8 @@ public class DoctorTest {
 		d1.assignBed(p1, b1);
 
 		// check that the patients info and beds info reflect this
-		assertEquals(p1.getPatientInfo().get("Patient ID"), b1.getPatient());
-		assertEquals(b1.getBedID(),p1.getPatientInfo().get("Bed ID"));
+		assertEquals(p1.getpatientID(), b1.getPatient());
+		assertEquals(b1.getBedID(),p1.getBed());
 
 		// try assign patient2 to the same bed, an IllegalArgumentException is expected
 		try {
@@ -166,7 +166,7 @@ public class DoctorTest {
 		assertEquals(null,d1.getMedicalData(p1));
 
 		// give p1 some medical data and test again
-		p1.updateRecord("This patient has lost all their teeth. I recomend a diet of liquid food.");
+		p1.setRecord("This patient has lost all their teeth. I recomend a diet of liquid food.");
 		assertEquals("This patient has lost all their teeth. I recomend a diet of liquid food.",d1.getMedicalData(p1));
 	}
 

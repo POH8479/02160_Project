@@ -34,7 +34,7 @@ public class User {
 		this.userID = "U" + Integer.toString(idCounter);
 		// assign the remaining information
 		this.name = usersName;
-		this.email = this.userID + "@kapjak.com.dk";
+		this.email = this.userID + "@kapjak.com";
 		this.phoneNumber = phone;
 		this.department = Management.getInstance().getName();
 		Management.getInstance().getUserList().add(this);
@@ -60,7 +60,7 @@ public class User {
 		
 		// assign the remaining information
 		this.name = usersName;
-		this.email = this.userID + "@kapjak.com.dk";
+		this.email = this.userID + "@kapjak.com";
 		this.phoneNumber = phone;
 		this.email = this.userID + "@kapjak.com";
 	}

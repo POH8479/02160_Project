@@ -42,7 +42,6 @@ public class LoginController {
 		String [] input = username.split("@");
 		User user = findUser(input[0]);
 		
-		//TODO causes error if doctor/nurse has unassigned department
 		
 		// check if the loginManager returns true
 		if (user != null && loginManager.checkID(user)) {
@@ -60,7 +59,7 @@ public class LoginController {
 		else if(user == null && username.equals("A1")) {
 		
       // create a new generic Admin user and add it to the user model
-			user = new Admin("Super Admin", "Super Admin's Address", "12345678");
+			user = new Admin("Super Admin", "12345678");
 			session.getUserModel().addNewUser(user);
 			
 			// set the User for the session and close the Login Window

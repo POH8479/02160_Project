@@ -33,7 +33,7 @@ public class StepDefinition {
 	@Then("^The data is saved in the system and a confirmation is displayed to the user$")
 	public void the_data_is_saved_in_the_system_and_a_confirmation_is_displayed_to_the_user() {
 	    // Check the data has been saved
-		assertEquals("John",p1.getPatientInfo().get("First Name"));
+		assertEquals("John",p1.getFirstName());
 	}
 
 	@Given("^A user and a department$")
@@ -93,7 +93,7 @@ public class StepDefinition {
 	@Then("^A new patient is created in the HMS$")
 	public void a_new_patient_is_created_in_the_HMS(){
 	    // check that information was entered correctly
-		assertEquals("Jane", p1.getPatientInfo().get("First Name"));
+		assertEquals("Jane", p1.getFirstName());
 	}
 
 	@Given("^A new user$")

@@ -24,10 +24,7 @@ public abstract class Department {
 		userList.remove(User);
 	}
 
-	public void addPatient(Patient patient) {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void addPatient(Patient patient);
 
 	public abstract void removePatient(Patient patient);
 	

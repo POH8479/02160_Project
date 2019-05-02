@@ -62,14 +62,8 @@ import hospitalmanagementsystem.users.*;
 	 */
 	@Test
 	public void saveTest(){
-		//Saving departments
-		assertEquals(true, persist.save(em));
-		assertEquals(true, persist.save(inPa));
-		assertEquals(true, persist.save(outPa));
-		assertEquals(true, persist.save(man));
-		
 		//Saving a patient
-		assertEquals(true, persist.save(p1, p1.getPatientId(), em.getName()));
+		assertEquals(true, persist.save(p1, p1.getpatientID(), em.getName()));
 		
 		//Saving users
 		assertEquals(true, persist.save(admin, admin.getUserID(), em.getName()));
@@ -84,38 +78,35 @@ import hospitalmanagementsystem.users.*;
 	@Test
 	public void loadDepartmentTest(){
 		//Testing loadDepartment by saving -> setting to null -> loading -> comparing a value.
-		persist.save(em);
 		String temp = em.getName();
 		em = null;
-		em = (Emergency) persist.loadDepartment(em);
+		persist.loadDepartment(em);
 		assertEquals(temp, em.getName());
 	}
 	
 	@Test
 	public void deleteTest(){
-		//Delete department
-		persist.save(em);
-		assertEquals(true, persist.delete(inPa));
+		assertEquals(true, persist.delete(p1.getpatientID(),p1.getDepartment()));
 		
 		//Delete patient/user/bed (returns true when deleted and false when it cannot find the file)
-		persist.save(p1, p1.getPatientId(), em.getName());
+		persist.save(p1, p1.getpatientID(), em.getName());
 		persist.save(doc, doc.getUserID(), inPa.getName());
 		persist.save(b1, b1.getBedID(), inPa.getName());
 		
-		assertEquals(true, persist.delete(p1.getPatientId(), em));
-		assertEquals(true, persist.delete(doc.getUserID(), inPa));
-		assertEquals(true, persist.delete(b1.getBedID(), inPa));
-		assertEquals(false, persist.delete(p1.getPatientId(), man));
-		assertEquals(false, persist.delete(nurse.getUserID(), inPa));
-		assertEquals(false, persist.delete(b1.getBedID(), outPa));
+		assertEquals(true, persist.delete(p1.getpatientID(), em.getName()));
+		assertEquals(true, persist.delete(doc.getUserID(), inPa.getName()));
+		assertEquals(true, persist.delete(b1.getBedID(), inPa.getName()));
+		assertEquals(false, persist.delete(p1.getpatientID(), man.getName()));
+		assertEquals(false, persist.delete(nurse.getUserID(), inPa.getName()));
+		assertEquals(false, persist.delete(b1.getBedID(), outPa.getName()));
 	}
 	 
 	 
 	@Test
 	public void loadObjs() {
-		persist.save(p2, p2.getPatientId(), man);
-		persist.save(p3, p3.getPatientId(), man);
-		persist.save(p4, p4.getPatientId(), man);
+		persist.save(p2, p2.getpatientID(), man.getName());
+		persist.save(p3, p3.getpatientID(), man.getName());
+		persist.save(p4, p4.getpatientID(), man.getName());
 		
 		
 		

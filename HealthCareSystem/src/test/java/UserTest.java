@@ -67,10 +67,10 @@ public class UserTest {
 	public void registerPatientTest() {
 		//register a patient and check that its unique ID is no longer null
 		Patient newpat = u1.registerPatient("Jack", "Rodman", "28/06/1997", "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
-		assertFalse(newpat.getPatientInfo().get("Patient ID").equals(null));
+		assertFalse(newpat.getpatientID().equals(null));
 
 		//test that new patient with same info has a different Patient ID
 		Patient failpat = u1.registerPatient("Jack", "Rodman", "28/06/1997", "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
-		assertFalse(newpat.getPatientInfo().get("Patient ID").equals(failpat.getPatientInfo().get("Patient ID")));
+		assertFalse(newpat.getpatientID().equals(failpat.getpatientID()));
 	}
 }
