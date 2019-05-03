@@ -1,98 +1,137 @@
 package hospitalmanagementsystem;
 
-import hospitalmanagementsystem.departments.*;
-
 /**
  * The bed has a unique final ID, patient and department where it belongs.
  * A bed can only lay one patient and belong to one department.
  * @author Pieter O'Hearn
  */
 public class Bed {
-	// Static Variables
-	public static int IDCounter = 0;
+	// STATIC VARIABLES
+	private static PersistenceLayer persist = new PersistenceLayer();
 
-	// Instance Variables
-	final String bedID;
-	Department department;
-	Patient patient;
+	// INSTANCE VARIABLES
+	String bedID;
+	String department;
+	String patient;
 	
-	/**
-	 * Creates a new instance of a Bed with no Patient or department
-	 * @param dep
-	 */
-	public Bed() {
-		// give the new bed a unique ID
-		IDCounter++;
-		this.bedID = "B" + Integer.toString(IDCounter);
-		
-		// assign other variables
-		this.department = null;
-		this.patient = null;
-		
-	}
-	
+	// CONSTRUCTRS
 	/**
 	 * Creates a new instance of a Bed with no Patient but a specified department
 	 * @param dep
+	 * @throws IllegalArgumentException
 	 */
-	public Bed(Department dep) {
+	public Bed(String dep) throws IllegalArgumentException {
 		// give the new bed a unique ID
-		IDCounter++;
+		int IDCounter = persist.loadCounter() + 1;
 		this.bedID = "B" + Integer.toString(IDCounter);
+		persist.saveCounter(IDCounter);
 		
 		// assign other variables
-		this.department = dep;
-		this.patient = null;
+		if(dep != null && (dep.equals("Emergency") || dep.equals("Inpatient"))) {
+			this.department = dep;
+		} else {
+			throw new IllegalArgumentException(String.format("Cannot create a bed in the %s department.",dep));
+		}
 		
+		// save the bed to file
+		persist.save(this, this.bedID, this.department);
 	}
+	
+	/**
+	 * A Blank constructor for the Persistency Class.
+	 */
+	public Bed() {}
 
+	// METHODS
 	/**
 	 * Adds a Patient to the bed
 	 * @param patient
 	 * @throws IllegalArgumentException
 	 */
-	public void addPatient(Patient patient) throws IllegalArgumentException {
+	public void updatePatient(Patient patient) throws IllegalArgumentException {
 		// check if the bed is full
 		if(this.patient != null) {
 			// if full throw IllegalArgumentException
 			throw new IllegalArgumentException(String.format("Bed %s is already occupied", this.bedID));
-		} else if(!patient.getDepartment().equals(this.department.getName())) {
+		} else if(!patient.getDepartment().equals(this.department)) {
 			// if bed is in wrong department throw IllegalArgumentException
 			throw new IllegalArgumentException(String.format("Bed %s is in a different Department to %s", this.bedID, patient.getFirstName()));
 		} else {
 			// if empty and in the same department update patient
-			this.patient = patient;
-		}
-
-	}
-
-	/**
-	 * returns the patientID of the patient that is currently occupying the bed or null if empty.
-	 * @return the patient ID
-	 */
-	public String getPatient() {
-		// check if null
-		if(this.patient == null) {
-			return null;
+			this.patient = patient.getPatientID();
 		}
 		
-		// if not null return patient ID
-		return this.patient.getpatientID();
+		// update the beds file
+		persist.save(this, this.bedID, this.department);
 	}
-
+	
 	/**
-	 * return the unique bed ID as a string
-	 * @return the bed ID
+	 * 
+	 * @param dep
+	 */
+	public void updateDepartment(String dep) {
+		// assign other variables
+		if(dep != null && (dep.equals("Emergency") || dep.equals("Inpatient"))) {
+			// remove the bed file from its department folder
+			persist.delete(this.bedID, this.department);
+
+			// set the department
+			this.department = dep;
+		} else {
+			throw new IllegalArgumentException(String.format("%s is an invalid department.",dep));
+		}
+		
+		// save the bed file to its new department folder
+		persist.save(this, this.bedID, this.department);
+	}
+	
+	// GETTER METHODS
+	/**
+	 * 
+	 * @return
 	 */
 	public String getBedID() {
 		return this.bedID;
 	}
-
-	public Object getDepartment() {
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getDepartment() {
 		return this.department;
 	}
 	
-	public void removePatient() {
-		this.patient = null;
+	/**
+	 * 
+	 * @return
+	 */
+	public String getPatient() {
+		return this.patient;
+	}
+	
+	// SETTER METHODS
+	/**
+	 * 
+	 * @param id
+	 */
+	public void setBedID(String id) {
+		this.bedID = id;
+	}
+	
+	/**
+	 * 
+	 * @param dep
+	 */
+	public void setDepartment(String dep) {
+		this.department = dep;
+	}
+	
+	/**
+	 * 
+	 * @param patientID
+	 */
+	public void setPatient(String patientID) {
+		this.patient = patientID;
 	}
 }

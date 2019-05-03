@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <java version="1.8.0_101" class="java.beans.XMLDecoder">
- <object class="hospitalmanagementsystem.users.Admin">
+ <object class="hospitalmanagementsystem.users.Nurse">
   <void property="department">
-   <string>Management</string>
+   <string>Emergency</string>
   </void>
   <void property="email">
-   <string>A1@kapjak.com</string>
+   <string>N5@kapjak.com</string>
   </void>
   <void property="number">
-   <string>12345678</string>
+   <string>56789012</string>
   </void>
   <void property="userID">
-   <string>A1</string>
+   <string>N5</string>
   </void>
   <void property="userName">
-   <string>Asger</string>
+   <string>Anna</string>
   </void>
  </object>
 </java>

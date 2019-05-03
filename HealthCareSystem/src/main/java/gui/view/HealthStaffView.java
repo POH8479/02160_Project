@@ -78,7 +78,7 @@ public class HealthStaffView extends JFrame {
 		});
 		
 		// Create a new button "Register Patient" with an Action Listener
-		JButton btnRegisterPatient = new JButton("Register Patient");
+		JButton btnRegisterPatient = new JButton("Register");
 		btnRegisterPatient.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -88,7 +88,7 @@ public class HealthStaffView extends JFrame {
 		});
 		
 		// Create a new button "Admit Patient" with an Action Listener and set Enabled to false
-		JButton btnAdmitPatient = new JButton("Admit Patient");
+		JButton btnAdmitPatient = new JButton("Admit");
 		btnAdmitPatient.setEnabled(false);
 		btnAdmitPatient.addActionListener(new ActionListener() {
 			@Override
@@ -99,7 +99,7 @@ public class HealthStaffView extends JFrame {
 		});
 		
 		// Create a new button "Discharge Patient" with an Action Listener and set Enabled to false
-		JButton btnDischargePatient = new JButton("Discharge Patient");
+		JButton btnDischargePatient = new JButton("Discharge");
 		btnDischargePatient.setEnabled(false);
 		btnDischargePatient.addActionListener(new ActionListener() {
 			@Override
@@ -200,6 +200,17 @@ public class HealthStaffView extends JFrame {
 			}
 		});
 
+		// Create a new button "Remove" with an Action Listener and set Enabled to false
+		JButton btnRemove = new JButton("Check Out");
+		btnRemove.setEnabled(false);
+		btnRemove.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// When clicked remove the selected patient
+				controller.removePatient(tblPatients.getSelectedRow());
+			}
+		});
+		
 		// TOOLBAR
 		// create a new label and set Horizontal Alignment right
 		lblSession = new JLabel();
@@ -211,6 +222,7 @@ public class HealthStaffView extends JFrame {
 		toolbar.add(btnAdmitPatient);
 		toolbar.add(btnDischargePatient);
 		toolbar.add(btnEdit);
+		toolbar.add(btnRemove);
 		toolbar.add(btnRecord);
 		toolbar.add(btnQuery);
 		toolbar.add(Box.createHorizontalGlue());
@@ -258,6 +270,7 @@ public class HealthStaffView extends JFrame {
 				btnAdmitPatient.setEnabled((tblPatients.getSelectedRow() >= 0));
 				btnEdit.setEnabled((tblPatients.getSelectedRow() >= 0));
 				btnRecord.setEnabled((tblPatients.getSelectedRow() >= 0));
+				btnRemove.setEnabled((tblPatients.getSelectedRow() >= 0));
 			}
 		});
 		

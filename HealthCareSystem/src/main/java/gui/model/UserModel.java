@@ -66,8 +66,17 @@ public class UserModel extends AbstractTableModel {
 		users.remove(toRemove);
 
 		// remove form HMS
-		admin.removeUser(toRemove);
-
+		switch(toRemove.getDepartment()) {
+			case "Emergency":
+				Emergency.getInstance().getUserList().remove(toRemove);
+			case "Outpatient":
+				Outpatient.getInstance().getUserList().remove(toRemove);
+			case "Inpatient":
+				Inpatient.getInstance().getUserList().remove(toRemove);
+			case "Management":
+				Management.getInstance().getUserList().remove(toRemove);
+		}
+		
 		// delete from persist
 		persist.delete(toRemove.getUserID(), toRemove.getDepartment());
 		
@@ -96,7 +105,7 @@ public class UserModel extends AbstractTableModel {
 	 * @param userId The user ID
 	 * @return The User
 	 */
-	private User findUser(String userId) {
+	public User findUser(String userId) {
 		// search all users in the user list
 		for(User u : users) {
 			// if the userIDs match, return u
@@ -120,29 +129,31 @@ public class UserModel extends AbstractTableModel {
 		// find the user with this userID
 		User toEdit = findUser(userId);
 		
-		// set the users information to that provided by the arguments
-		toEdit.editUser(name,phone);
+		if(toEdit != null) {
+			// set the users information to that provided by the arguments
+			toEdit.editUser(name,phone);
 
-		// if a healthStaff Worker
-		if(!(toEdit.getType().equals("Admin") || toEdit.getType().equals("User"))) {
-			// cast toEdit to HealthStaff
-			HealthStaff healthUser = (HealthStaff) toEdit;
+			// if a healthStaff Worker
+			if(!(toEdit.getType().equals("Admin") || toEdit.getType().equals("User"))) {
+				// cast toEdit to HealthStaff
+				HealthStaff healthUser = (HealthStaff) toEdit;
 
-			// and change the department
-			switch(department) {
-				case "Emergency":
-					healthUser.moveDepartment(Emergency.getInstance().getName());
-					break;
-				case "Inpatient":
-					healthUser.moveDepartment(Inpatient.getInstance().getName());
-					break;
-				case "Outpatient":
-					healthUser.moveDepartment(Outpatient.getInstance().getName());
-				}
+				// and change the department
+				switch(department) {
+					case "Emergency":
+						healthUser.moveDepartment(Emergency.getInstance().getName());
+						break;
+					case "Inpatient":
+						healthUser.moveDepartment(Inpatient.getInstance().getName());
+						break;
+					case "Outpatient":
+						healthUser.moveDepartment(Outpatient.getInstance().getName());
+					}
+			}
+
+			// notify the views that data changed
+			fireTableDataChanged();
 		}
-
-		// notify the views that data changed
-		fireTableDataChanged();
 	}
 
 	/////////////////////////////////////////

@@ -2,84 +2,60 @@ package hospitalmanagementsystem;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
-
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import hospitalmanagementsystem.departments.Department;
 import hospitalmanagementsystem.users.User;
-
 
 /**
  * @author Asger Conradsen (S151607)
  */
 public class PersistenceLayer {
-	//Defining the types of departments and objects we have
+	// STATIC VARIABLES
 	static final String[] departments = {"Emergency", "Inpatient", "Outpatient", "Management", "Temp"};
 	static final String[] subfolders = {"Users", "Patients", "Beds"};
 
-	/* *
+	// CONSTRUCTOR
+	/**
 	 * Default constructor for the PersistencyLayer that creates the
 	 * folder structure if it doesn't already exist.
 	 */
 	public PersistenceLayer() {
+		// Create a Folder called Departments
 		File folder = new File("Departments");
 		folder.mkdir();
+		
+		// inside Departments make a folder for each department
 		for (String department : departments) {
 			folder = new File("Departments" + File.separator + department);
 			folder.mkdir();
-			for (String subfolder : subfolders) {
-				folder = new File("Departments" + File.separator + department + File.separator + subfolder);
+			
+			if(department.equals("Management")) {
+				// inside the Management folder make a folder Users
+				folder = new File("Departments" + File.separator + department + File.separator + "Users");
 				folder.mkdir();
+			} else if(department.equals("Outpatient")) {
+				// inside the Outpatient folder make folders for the Users and Patients
+				folder = new File("Departments" + File.separator + department + File.separator + "Users");
+				folder.mkdir();
+				folder = new File("Departments" + File.separator + department + File.separator + "Patients");
+				folder.mkdir();
+			} else {
+				// inside each department folder make folders for the Users, Beds and Patients
+				for (String subfolder : subfolders) {
+					folder = new File("Departments" + File.separator + department + File.separator + subfolder);
+					folder.mkdir();
+				}
 			}
 		}
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public ArrayList<Object> loadTemps(char type) {
-		
-		// Creates directory path for the department
-		String dir = "Departments" + File.separator + "Temp";
-		ArrayList<Object> objects = new ArrayList<Object>();
-
-		switch (type) {
-			case 'U':
-				dir = dir + File.separator + "Users";
-				break;
-			case 'P':
-				dir = dir + File.separator + "Patients";
-				break;
-			case 'B':
-				dir = dir + File.separator + "Beds";
-				break;
-			default:
-				return null;
-		}
-		
-		XMLDecoder d = null;
-		File[] files = new File(dir).listFiles();
-
-		for(File file : files) {
-			// Writes department object to the file specified by the directory
-			try{
-				d = new XMLDecoder(
-		                new BufferedInputStream(
-		                    new FileInputStream(dir + File.separator + file.getName())));
-			} catch(FileNotFoundException fileNotFound) {
-				System.out.println(fileNotFound.getMessage());
-			}
-			objects.add(d.readObject());
-		}
-		return objects;
-	}
-
+	// METHODS
 	/**
 	 * 
 	 * @param department
@@ -141,9 +117,17 @@ public class PersistenceLayer {
 	 * based on which "type" is passed to the method.
 	 */
 	private ArrayList<Object> loadObjs(Department department, String type){
+		// create an ArrayList and set type to LowerCase
 		ArrayList<Object> objs = new ArrayList<Object>();
 		type = type.toLowerCase();
 		
+		// if not a valid load then return the empty list
+		if((department.getName().equals("Management") && (type.equals("patients") || type.equals("beds")))
+				|| (department.getName().equals("Outpatient") && type.equals("beds"))) {
+			return objs;
+		}
+		
+		// set the file directory string
 		String dir = "Departments" + File.separator + department.getName();
 		switch (type) {
 			case "users":
@@ -163,8 +147,9 @@ public class PersistenceLayer {
 		XMLDecoder d = null;
 		File[] files = new File(dir).listFiles();
 
+		// go through each file and try and load them
 		for(File file : files) {
-			if(file.isFile()/* && Character.toUpperCase(file.getName().charAt(0)) == charType*/) {
+			if(file.isFile()) {
 				try{
 					d = new XMLDecoder(
 		                new BufferedInputStream(
@@ -172,8 +157,8 @@ public class PersistenceLayer {
 				} catch(FileNotFoundException fileNotFound) {
 					System.out.println(fileNotFound.getMessage());
 				}
-				Object obj = new Object();
-				obj = d.readObject();
+				// read the object and add to the list
+				Object obj = d.readObject();
 				objs.add(obj);
 			}
 		}
@@ -181,6 +166,46 @@ public class PersistenceLayer {
 		return objs;
 	}
 	
+	/**
+	 * Loads the Temp
+	 * @return
+	 */
+	public ArrayList<Object> loadTemps(char type) {
+		
+		// Creates directory path for the department
+		String dir = "Departments" + File.separator + "Temp";
+		ArrayList<Object> objects = new ArrayList<Object>();
+
+		switch (type) {
+			case 'U':
+				dir = dir + File.separator + "Users";
+				break;
+			case 'P':
+				dir = dir + File.separator + "Patients";
+				break;
+			case 'B':
+				dir = dir + File.separator + "Beds";
+				break;
+			default:
+				return null;
+		}
+		
+		XMLDecoder d = null;
+		File[] files = new File(dir).listFiles();
+
+		for(File file : files) {
+			// Writes department object to the file specified by the directory
+			try{
+				d = new XMLDecoder(
+		                new BufferedInputStream(
+		                    new FileInputStream(dir + File.separator + file.getName())));
+			} catch(FileNotFoundException fileNotFound) {
+				System.out.println(fileNotFound.getMessage());
+			}
+			objects.add(d.readObject());
+		}
+		return objects;
+	}
 
 	/**
 	 * 
@@ -292,6 +317,9 @@ public class PersistenceLayer {
 	 * @return
 	 */
 	public Boolean delete(String ID, String department) {
+		// if department is null set to "Temp"
+		department = (department==null) ? "Temp":department;
+		
 		// Creates the directory for the object to be stored
 		String dir = "Departments" + File.separator + department;
 		char type = ID.charAt(0);

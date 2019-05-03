@@ -62,9 +62,9 @@ public class PatientTest {
 		p6.updateDepartment(outPa);
 
 		// Create Beds
-		b1 = new Bed(em);
-		b2 = new Bed(em);
-		b3 = new Bed(em);
+		b1 = new Bed(em.getName());
+		b2 = new Bed(em.getName());
+		b3 = new Bed(em.getName());
 
 		// create Users
 		admin = new Admin("Steve Jobs", "+180249625");
@@ -123,12 +123,12 @@ public class PatientTest {
 	public void updateBedTest() throws IllegalArgumentException, IllegalAccessException {
 		// test assigning a patient to an empty bed in the same department
 		p1.updateDepartment(em);
-		p1.updateBed(b1);
+		p1.setBed(b1.getBedID());
 		assertEquals(b1.getBedID(),p1.getBed());
 
 		// test assigning a patient to an empty bed in another department
 		try {
-			p2.updateBed(b2); // p2 is in inPa
+			p2.setBed(b2.getBedID()); // p2 is in inPa
 			fail("Expected an IllegalArgumentException to be thrown");
 		} catch (IllegalArgumentException expected) {
 			assertEquals(String.format("Bed %s is in a different department to Jack", b2.getBedID()),expected.getMessage());
@@ -188,7 +188,7 @@ public class PatientTest {
 		Patient newPatient = new Patient("name", "surname", "01/01/2000", "address", "phoneNo");
 
 		// check variables
-		assertFalse(Objects.equals(newPatient.getpatientID(),null));
+		assertFalse(Objects.equals(newPatient.getPatientID(),null));
 		assertTrue(Objects.equals(newPatient.getRecord(),null));
 		assertTrue(newPatient.getDepartment().equals("None"));
 		assertEquals("false",newPatient.getDeceased());

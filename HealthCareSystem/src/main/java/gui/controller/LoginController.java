@@ -56,7 +56,7 @@ public class LoginController {
 			session.setUser(findUser(input[0]));
 			view.setVisible(false);
 		} // if the username is "A1" but no user is found
-		else if(user == null && username.equals("A1")) {
+		else if(user == null && username.equals("A1@kapjak.com")) {
 		
       // create a new generic Admin user and add it to the user model
 			user = new Admin("Super Admin", "12345678");

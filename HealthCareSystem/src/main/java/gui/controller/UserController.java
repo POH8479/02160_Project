@@ -12,6 +12,7 @@ import gui.model.Session;
 import gui.view.UserView;
 import hospitalmanagementsystem.Patient;
 import hospitalmanagementsystem.departments.*;
+import hospitalmanagementsystem.users.Admin;
 import hospitalmanagementsystem.users.HealthStaff;
 
 /**
@@ -111,6 +112,19 @@ public class UserController {
 			// if so get the patients id and call the dischargePatient method form the patient model
 			String patientID = (String) patientModel.getValueAt(selectedRow, 0);
 			patientModel.dischargePatient(patientID,(HealthStaff) sessionModel.getUser());
+		}
+	}
+	
+	/**
+	 * Removes a patient from the HMS
+	 * @param selectedRow The row number of the selected Patient
+	 */
+	public void removePatient(int selectedRow) {
+		// check a valid row has been selected
+		if (selectedRow >= 0) {
+			// Find the Patient Id of the selected patient and call the removePatient method from the Patient Model
+			String patientID = (String) patientModel.getValueAt(selectedRow, 0);
+			patientModel.removePatient(patientID,(Admin) sessionModel.getUser());
 		}
 	}
 	
@@ -242,7 +256,7 @@ public class UserController {
 			// check patient matches the given criteria
 			if((firstName.isEmpty() || patient.getFirstName().equals(firstName)) &&
 					(lastName.isEmpty() || patient.getLastName().equals(lastName)) &&
-					(id.isEmpty() || patient.getpatientID().equals(id)) &&
+					(id.isEmpty() || patient.getPatientID().equals(id)) &&
 					 (department.isEmpty() || patient.getDepartment().equals(department))) {
 				// if it does add patient to the searchedPatients list
 				foundPatients.add(patient);

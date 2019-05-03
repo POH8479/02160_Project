@@ -5,7 +5,6 @@ import java.time.LocalTime;
 import gui.model.Session;
 import gui.view.RecordView;
 import hospitalmanagementsystem.Patient;
-import hospitalmanagementsystem.users.HealthStaff;
 
 /**
  * The Controller for the User view of the HMS GUI.
@@ -73,7 +72,7 @@ public class RecordController {
 		String recordUpdate = "\n" + this.sessionModel.getUser().getUserID() + "  " + this.sessionModel.getUser().getUserName() + "\n" + LocalDate.now().toString() +"    " + LocalTime.now() + "\n" + text;
 
 		// save the record to the HMS
-		((HealthStaff) sessionModel.getUser()).editMedicalData(this.patient, recordUpdate);
+		this.patient.setRecord(this.patient.getRecord() + recordUpdate);
 
 		// close the record view
 		this.view.setVisible(false);
@@ -91,6 +90,6 @@ public class RecordController {
 	 * @return the patients patient ID
 	 */
 	public String getPatientId() {
-		return this.patient.getpatientID();
+		return this.patient.getPatientID();
 	}
 }

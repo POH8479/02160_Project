@@ -51,7 +51,7 @@ import hospitalmanagementsystem.users.*;
 		nurse = new Nurse("John Doe", "+4512345678", "Emergency");
 		user = new User("James Gosling", "+141558396");
 		
-		b1 = new Bed(em);
+		b1 = new Bed(em.getName());
 	}
 	 
 
@@ -63,7 +63,7 @@ import hospitalmanagementsystem.users.*;
 	@Test
 	public void saveTest(){
 		//Saving a patient
-		assertEquals(true, persist.save(p1, p1.getpatientID(), em.getName()));
+		assertEquals(true, persist.save(p1, p1.getPatientID(), em.getName()));
 		
 		//Saving users
 		assertEquals(true, persist.save(admin, admin.getUserID(), em.getName()));
@@ -86,17 +86,17 @@ import hospitalmanagementsystem.users.*;
 	
 	@Test
 	public void deleteTest(){
-		assertEquals(true, persist.delete(p1.getpatientID(),p1.getDepartment()));
+		assertEquals(true, persist.delete(p1.getPatientID(),p1.getDepartment()));
 		
 		//Delete patient/user/bed (returns true when deleted and false when it cannot find the file)
-		persist.save(p1, p1.getpatientID(), em.getName());
+		persist.save(p1, p1.getPatientID(), em.getName());
 		persist.save(doc, doc.getUserID(), inPa.getName());
 		persist.save(b1, b1.getBedID(), inPa.getName());
 		
-		assertEquals(true, persist.delete(p1.getpatientID(), em.getName()));
+		assertEquals(true, persist.delete(p1.getPatientID(), em.getName()));
 		assertEquals(true, persist.delete(doc.getUserID(), inPa.getName()));
 		assertEquals(true, persist.delete(b1.getBedID(), inPa.getName()));
-		assertEquals(false, persist.delete(p1.getpatientID(), man.getName()));
+		assertEquals(false, persist.delete(p1.getPatientID(), man.getName()));
 		assertEquals(false, persist.delete(nurse.getUserID(), inPa.getName()));
 		assertEquals(false, persist.delete(b1.getBedID(), outPa.getName()));
 	}
@@ -104,9 +104,9 @@ import hospitalmanagementsystem.users.*;
 	 
 	@Test
 	public void loadObjs() {
-		persist.save(p2, p2.getpatientID(), man.getName());
-		persist.save(p3, p3.getpatientID(), man.getName());
-		persist.save(p4, p4.getpatientID(), man.getName());
+		persist.save(p2, p2.getPatientID(), man.getName());
+		persist.save(p3, p3.getPatientID(), man.getName());
+		persist.save(p4, p4.getPatientID(), man.getName());
 		
 		
 		

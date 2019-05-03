@@ -3,6 +3,8 @@ package gui.model;
 import java.util.ArrayList;
 import java.util.Objects;
 import javax.swing.table.AbstractTableModel;
+
+import hospitalmanagementsystem.Bed;
 import hospitalmanagementsystem.Patient;
 import hospitalmanagementsystem.PersistenceLayer;
 import hospitalmanagementsystem.departments.*;
@@ -62,8 +64,8 @@ public class PatientModel extends AbstractTableModel {
 
 		// try and discharge patient from their department
 		try {
-			user.dischargePatient(toDischarge);
-		} catch (IllegalAccessException e) {
+			toDischarge.updateDepartment(null);;
+		} catch (IllegalArgumentException e) {
 			// User does not have access to perform this
 			e.printStackTrace();
 		}
@@ -83,7 +85,7 @@ public class PatientModel extends AbstractTableModel {
 	public void admitPatient(String patientID, HealthStaff user, Department dept) throws IllegalAccessException, IllegalArgumentException {
 		// find the patient and admit them to the department
 		Patient toAdmit = findPatient(patientID);
-		user.admitPatient(toAdmit, dept);
+		toAdmit.updateDepartment(dept);
 	}
 
 	/**
@@ -95,7 +97,7 @@ public class PatientModel extends AbstractTableModel {
 		// search through each patient in the List
 		for(Patient p : patients) {
 			// if a match is found return that patient
-			if(p.getpatientID().equals(patientId)) {
+			if(p.getPatientID().equals(patientId)) {
 				return p;
 			}
 		}
@@ -147,7 +149,7 @@ public class PatientModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		if (columnIndex == 0) {
-			return patients.get(rowIndex).getpatientID();
+			return patients.get(rowIndex).getPatientID();
 		} else if (columnIndex == 1) {
 			return patients.get(rowIndex).getFirstName();
 		} else if (columnIndex == 2) {
@@ -169,7 +171,7 @@ public class PatientModel extends AbstractTableModel {
 			if(Objects.equals(null,patients.get(rowIndex).getBed())) {
 				return "-";
 			}
-			return patients.get(rowIndex).getBed().getBedID();
+			return patients.get(rowIndex).getBed();
 		}
 		return null;
 	}
@@ -196,5 +198,57 @@ public class PatientModel extends AbstractTableModel {
 			return "Bed";
 		}
 		return null;
+	}
+
+	/**
+	 * Remove a Patient from the HMS.
+	 * @param patientID The Patient ID of the Patient
+	 * @param admin The Admin Removing them
+	 */
+	public void removePatient(String patientID, Admin admin) {
+		// Find the patient with this patientID
+		Patient toRemove = findPatient(patientID);
+		
+		// remove from list
+		patients.remove(toRemove);
+		
+		// remove form HMS
+		switch((toRemove.getDepartment()==null) ? "":toRemove.getDepartment()) {
+			case "Emergency":
+				Emergency.getInstance().removePatient(toRemove);
+				if(toRemove.getBed() != null) {
+					for(Bed bed : Emergency.getInstance().getBedList()) {
+						if(bed.getBedID().equals(toRemove.getBed())) {
+							bed.setPatient(null);
+							toRemove.setBed(null);
+							break;
+						}
+					}
+				}
+				toRemove.setDepartment(null);
+				break;
+			case "Outpatient":
+				Inpatient.getInstance().removePatient(toRemove);
+				toRemove.setDepartment(null);
+				break;
+			case "Inpatient":
+				Inpatient.getInstance().removePatient(toRemove);
+				if(toRemove.getBed() != null) {
+					for(Bed bed : Inpatient.getInstance().getBedList()) {
+						if(bed.getBedID().equals(toRemove.getBed())) {
+							bed.setPatient(null);
+							toRemove.setBed(null);
+							break;
+						}
+					}
+				}
+				toRemove.setDepartment(null);
+		}
+
+		// delete from persist
+		persist.delete(toRemove.getPatientID(), toRemove.getDepartment());
+		
+		// notify the views that data changed
+		fireTableDataChanged();
 	}
 }
