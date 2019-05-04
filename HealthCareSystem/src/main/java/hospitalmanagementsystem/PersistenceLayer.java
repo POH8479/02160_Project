@@ -61,26 +61,6 @@ public class PersistenceLayer {
 	 * @param department
 	 */
 	public void loadDepartment(Department department) {
-		String dir = "Departments" + File.separator + department.getName()
-		+ File.separator + department.getName();
-
-		File departmentFile = new File(dir);
-
-		//Loads department
-		if(departmentFile.isFile()) {
-			XMLDecoder d = null;
-			try {
-				d = new XMLDecoder(
-		                new BufferedInputStream(
-		                    new FileInputStream(dir)));
-			}catch(FileNotFoundException fileNotFound) {
-				System.out.println(fileNotFound.getMessage());
-			}
-
-			department = (Department) d.readObject();
-		}
-
-
 		//Loads users in the department
 		ArrayList<Object> loadedUsers = loadObjs(department, "users");
 		if(!loadedUsers.isEmpty()) {

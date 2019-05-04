@@ -5,6 +5,8 @@ import org.junit.Test;
 import hospitalmanagementsystem.*;
 import hospitalmanagementsystem.departments.*;
 import hospitalmanagementsystem.users.*;
+
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -19,6 +21,7 @@ public class PatientTest {
 	static Patient p4;
 	static Patient p5;
 	static Patient p6;
+	static Patient p7;
 
 	// Departments
 	static Emergency em;
@@ -36,6 +39,7 @@ public class PatientTest {
 	static Bed b1;
 	static Bed b2;
 	static Bed b3;
+	static Bed b4;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws IllegalAccessException {
@@ -65,7 +69,8 @@ public class PatientTest {
 		b1 = new Bed(em.getName());
 		b2 = new Bed(em.getName());
 		b3 = new Bed(em.getName());
-
+		b4 = new Bed(inPa.getName());
+		
 		// create Users
 		admin = new Admin("Steve Jobs", "+180249625");
 		doc = new Doctor("Dr. Smith", "+4545252525", "Emergency");
@@ -113,6 +118,18 @@ public class PatientTest {
 		// update the department and check it has changed
 		p1.updateDepartment(outPa);
 		assertEquals(p1.getDepartment(), "Outpatient");
+		
+		// tests updateDepartment when the patient has a bed
+		p1.setBed(b1.getBedID());
+		b1.setPatient(p1.getPatientID());
+		ArrayList<Bed> beds = new ArrayList<Bed>();
+		beds.add(b1);
+		em.setBedList(beds);
+		p1.updateDepartment(em);
+		assertEquals(p1.getDepartment(), "Emergency");
+		
+		p1.updateDepartment(inPa);
+		assertEquals(p1.getDepartment(), "Inpatient");
 	}
 
 	/**

@@ -3,3 +3,6 @@
 - Write Clean comments for all files
 - Pass all tests/ rewrite them
 - Check criteria for what else needs to be done write
+- check if Jacks field checker is used when updating the patient info
+
+- Final update of UML Diagram and CRC cards
