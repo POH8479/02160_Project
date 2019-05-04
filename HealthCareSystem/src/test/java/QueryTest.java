@@ -14,7 +14,7 @@ class QueryTest {
 		//Define patients and departments
 		static Query query;
 		public static void Queries(){
-		query = Query.getInstance();	
+		query = new Query();	
 		}
 		
 		
@@ -66,26 +66,26 @@ class QueryTest {
 		}
 	@Test
 	void depMostPatientsTest() {
-		assertEquals("Emergency",Query.depMostPatients());
+		assertEquals("Emergency",query.depMostPatients());
 	}
 	@Test
 	void depLeastPatientsTest() {
-		assertEquals("Outpatient",Query.depMostPatients());
+		assertEquals("Outpatient",query.depMostPatients());
 	}
 	@Test
 	void depMostUsersTest() {
-		assertEquals("Outpatient",Query.depMostUsers());
+		assertEquals("Outpatient",query.depMostUsers());
 	}
 	@Test
 	void depLeastUsersTest() {
-		assertEquals("Emergency",Query.depMostUsers());
+		assertEquals("Emergency",query.depMostUsers());
 	}
 	@Test
 	void totPatientsTest() {
-		assertEquals(6,Query.totPatients());
+		assertEquals(6,query.totPatients());
 	}
 	@Test
 	void totUsersTest(){
-		assertEquals(8,Query.totUsers());
+		assertEquals(8,query.totUsers());
 	}
 }

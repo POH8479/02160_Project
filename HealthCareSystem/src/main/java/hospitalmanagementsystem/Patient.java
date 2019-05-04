@@ -1,19 +1,16 @@
 package hospitalmanagementsystem;
 
-import java.util.Objects;
-import hospitalmanagementsystem.departments.*;
+import hospitalmanagementsystem.departments.Department;
 
 /**
  * 
  * @author Jack Rodman
- *
  */
-
 public class Patient {
-	// Static Variables
-	public static int idnum = 0;
+	// STATIC VARIABLES
+	private static PersistenceLayer persist = new PersistenceLayer();
 
-	//INSTANCE VARIABLES
+	// INSTANCE VARIABLES
 	String name;
 	String surname;
 	String patientID;
@@ -23,15 +20,16 @@ public class Patient {
 	String deceased;
 	String record;
 	String dept;
-	Bed bed;
+	String bed;
 
-	//CONSTRUCTOR
+	// CONSTRUCTORS
 	public Patient(String name, String surname, String bday, String address, String phoneNo) {
 		//patient info input by user
 		this.name = name;
 		this.surname = surname;
-		idnum++;
-		this.patientID = "P" + Integer.toString(idnum);;
+		int idCounter = persist.loadCounter() + 1;
+		this.patientID = "P" + Integer.toString(idCounter);;
+		persist.saveCounter(idCounter);
 		this.bday = bday;
 		this.address = address;
 		this.phoneNo = phoneNo;
@@ -39,10 +37,16 @@ public class Patient {
 		this.record = null;
 		this.dept = null;
 		this.bed = null;
+		
+		persist.save(this, this.patientID, this.dept);
 	}
 
+	/**
+	 * A Blank COnstructor for the Persistence Layer
+	 */
 	public Patient() {}
 	
+	// METHODS
 	/**
 	 * Updates a patient's department to enable admitting or moving a patient to a new department
 	 * @param department
@@ -50,108 +54,167 @@ public class Patient {
 	 */
 	public void updateDepartment(Department department) throws IllegalArgumentException {
 		// check if department is Management
-		if( department instanceof Management) {
+		if(department.getName().equals("Management")) {
 			throw new IllegalArgumentException("Patients can not be assigned to the Managment Department");
-		} else { //otherwise update department
-			if(department == null) {
-				this.dept = null;
-			} else {
-				this.dept = department.getName();
+		} else { 
+			// Delete from current department
+			persist.delete(this.patientID, this.dept);
+			
+			// check if the patient is in a bed
+			if(this.bed != null && (this.dept.equals("Emergency") || this.dept.equals("Inpatient"))) {
+				// if they are remove the patient from the bed
+				for(Bed bed : department.getBedList()) {
+					if(bed.getBedID().equals(this.bed)) {
+						bed.setPatient(null);
+						this.bed = null;
+						break;
+					}
+				}
 			}
+			
+			// update the department
+			this.dept = (department==null) ? null:department.getName();
+			
+			// Save the new Patient
+			persist.save(this, this.patientID, this.dept);
 		}
-		
-		// Save the new Patient
-		PersistenceLayer persist = new PersistenceLayer();
-		persist.save(this, this.patientID, this.dept);
 	}
-  
-	/**
-	 * Updates a patient's assigned bed in case the patient is admitted or moved.
-	 * @param newbed
-	 * @throws IllegalArgumentException
-	 */
-	public void updateBed(Bed newbed) throws IllegalArgumentException {
-		//check if bed is empty
-		if(newbed.getPatient() != null) {
-			throw new IllegalArgumentException(String.format("Bed %s is already occupied", newbed.getBedID()));
-		}
-		//check if bed is not in same department as patient
-		else if(!Objects.equals(newbed.getDepartment(),this.dept)) {
-			throw new IllegalArgumentException(String.format("Bed %s is in a different department to %s", newbed.getBedID(), this.name));
-		}
-		//otherwise update bed
-		else {
-			this.bed = newbed;
-		}
-  }
 
-	// Getters
+	// GETTER METHODS
+	/**
+	 * 
+	 * @return
+	 */
 	public String getFirstName() {
 		return this.name;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getLastName() {
 		return this.surname;
 	}
 	
-	public String getpatientID() {
+	/**
+	 * 
+	 * @return
+	 */
+	public String getPatientID() {
 		return this.patientID;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getDOB() {
 		return this.bday;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getAddress() {
 		return this.address;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getPhoneNo() {
 		return this.phoneNo;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getDeceased() {
 		return this.deceased;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getRecord() {
 		return this.record;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getDepartment() {
 		return this.dept;
 	}
 	
-	public Bed getBed() {
+	/**
+	 * 
+	 * @return
+	 */
+	public String getBed() {
 		return this.bed;
 	}
 
-	// Setters
+	// SETTER METHODS
+	/**
+	 * 
+	 * @param firstName
+	 */
 	public void setFirstName(String firstName) {
 		this.name = firstName;
 	}
 
+	/**
+	 * 
+	 * @param lastName
+	 */
 	public void setLastName(String lastName) {
 		this.surname = lastName;
 	}
 
+	/**
+	 * 
+	 * @param patientID
+	 */
 	public void setPatientID(String patientID) {
 		this.patientID = patientID;
 	}
 	
+	/**
+	 * 
+	 * @param dOB
+	 */
 	public void setDOB(String dOB) {
 		this.bday = dOB;
 		
 	}
 	
+	/**
+	 * 
+	 * @param newAddress
+	 */
 	public void setAddress(String newAddress) {
 		this.address = newAddress;
 	}
 	
+	/**
+	 * 
+	 * @param phone
+	 */
 	public void setPhoneNo(String phone) {
 		this.phoneNo = phone;
 	}
 
+	/**
+	 * 
+	 * @param deceased
+	 */
 	public void setDeceased(String deceased) {
 		this.deceased = deceased;
 	}
@@ -161,18 +224,26 @@ public class Patient {
 	 * @param data
 	 */
 	public void setRecord(String data) {
-		if(!Objects.equals(this.record,null)) {
+		if(this.record != null) {
 			this.record = this.record + "\n" + data;
 		} else {
 			this.record = data;
 		}
 	}
 	
+	/**
+	 * 
+	 * @param department
+	 */
 	public void setDepartment(String department) {
 		this.dept = department;
 	}
 
-	public void setBed(Bed bed) {
-		this.bed = bed;
+	/**
+	 * 
+	 * @param bedID
+	 */
+	public void setBed(String bedID) {
+		this.bed = bedID;
 	}
 }

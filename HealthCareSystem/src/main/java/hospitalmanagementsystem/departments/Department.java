@@ -1,57 +1,92 @@
 package hospitalmanagementsystem.departments;
 
 import java.util.ArrayList;
-
 import hospitalmanagementsystem.Bed;
 import hospitalmanagementsystem.Patient;
 import hospitalmanagementsystem.users.*;
 
-/**
- * 
- * @author Kun
- *
- */
+public interface Department {
 
-public abstract class Department {
-	String name;
-	ArrayList<Bed> bedList;
-	ArrayList<User> userList;
-	ArrayList<Patient> patientList;
+	/**
+	 * 
+	 * @param User
+	 */
+	public void addUser(User User);
 
-	public abstract void addUser(User User);
+	/**
+	 * 
+	 * @param User
+	 */
+	public void removeUser(User User);
 
-	public void removeUser(User User) {
-		userList.remove(User);
-	}
+	/**
+	 * 
+	 * @param patient
+	 */
+	public void addPatient(Patient patient);
 
-	public void addPatient(Patient patient) {
-		// TODO Auto-generated method stub
-		
-	}
+	/**
+	 * 
+	 * @param patient
+	 */
+	public void removePatient(Patient patient);
+	
+	/**
+	 * 
+	 * @param bed
+	 */
+	public void addBed(Bed bed);
 
-	public abstract void removePatient(Patient patient);
-	
-
-	//Getters
-	public abstract String getName();
-	
-	public abstract ArrayList<Bed> getBedList();
-	
-	public abstract ArrayList<Patient> getPatientList();
-	
-	public abstract ArrayList<User> getUserList();
-	
-	//Setters
-	public abstract void setName(String Name);
-	
-	public abstract void setBedList(ArrayList<Bed> beds);
-	
-	public abstract void setPatientList(ArrayList<Patient> patients);
-	
-	public abstract void setUserList(ArrayList<User> users);
-	
+	/**
+	 * 
+	 * @param bed
+	 */
+	public void removeBed(Bed bed);
 	
 
+	// GETTER METHODS
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getName();
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<Bed> getBedList();
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<Patient> getPatientList();
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<User> getUserList();
+	
+	// SETTER METHODS
+	
+	/**
+	 * 
+	 * @param beds
+	 */
+	public void setBedList(ArrayList<Bed> beds);
+	
+	/**
+	 * 
+	 * @param patients
+	 */
+	public void setPatientList(ArrayList<Patient> patients);
+	
+	/**
+	 * 
+	 * @param users
+	 */
+	public void setUserList(ArrayList<User> users);
 }

@@ -47,7 +47,7 @@ public class UserTest {
 		man = Management.getInstance();
 
 		// create the Bed
-		b1 = new Bed(em);
+		b1 = new Bed(em.getName());
 	}
 
 
@@ -58,19 +58,5 @@ public class UserTest {
 	public void getUserInfoTest() {
 		//check that appended string returned matches user info
 		assertEquals("John Doe",u1.getUserName());
-	}
-
-	/**
-	 * Testing registerPatient method in User class
-	 */
-	@Test
-	public void registerPatientTest() {
-		//register a patient and check that its unique ID is no longer null
-		Patient newpat = u1.registerPatient("Jack", "Rodman", "28/06/1997", "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
-		assertFalse(newpat.getPatientInfo().get("Patient ID").equals(null));
-
-		//test that new patient with same info has a different Patient ID
-		Patient failpat = u1.registerPatient("Jack", "Rodman", "28/06/1997", "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
-		assertFalse(newpat.getPatientInfo().get("Patient ID").equals(failpat.getPatientInfo().get("Patient ID")));
 	}
 }

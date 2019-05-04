@@ -62,9 +62,9 @@ public class PatientTest {
 		p6.updateDepartment(outPa);
 
 		// Create Beds
-		b1 = new Bed(em);
-		b2 = new Bed(em);
-		b3 = new Bed(em);
+		b1 = new Bed(em.getName());
+		b2 = new Bed(em.getName());
+		b3 = new Bed(em.getName());
 
 		// create Users
 		admin = new Admin("Steve Jobs", "+180249625");
@@ -78,12 +78,12 @@ public class PatientTest {
 	 */
 	@Test
 	public void getPatientInfoTest() {
-		assertEquals("Pieter", p1.getPatientInfo().get("First Name"));
-		assertEquals("O'Hearn", p1.getPatientInfo().get("Last Name"));
-		assertEquals("12/01/1990", p1.getPatientInfo().get("Birth Date"));
-		assertEquals("259 Nordvej 2800 Kongens Lyngby", p1.getPatientInfo().get("Address"));
-		assertEquals("Emergency", p1.getPatientInfo().get("Department"));
-		assertEquals("false", p1.getPatientInfo().get("Deceased"));
+		assertEquals("Pieter", p1.getFirstName());
+		assertEquals("O'Hearn", p1.getLastName());
+		assertEquals("12/01/1990", p1.getDOB());
+		assertEquals("259 Nordvej 2800 Kongens Lyngby", p1.getAddress());
+		assertEquals("Emergency", p1.getDepartment());
+		assertEquals("false", p1.getDeceased());
 	}
 
 	/**
@@ -108,11 +108,11 @@ public class PatientTest {
 	@Test
 	public void updateDepartmentTest() throws IllegalAccessException {
 		// check the original Department is Emergency
-		assertEquals(p1.getPatientInfo().get("Department"), "Emergency");
+		assertEquals(p1.getDepartment(), "Emergency");
 
 		// update the department and check it has changed
 		p1.updateDepartment(outPa);
-		assertEquals(p1.getPatientInfo().get("Department"), "Outpatient");
+		assertEquals(p1.getDepartment(), "Outpatient");
 	}
 
 	/**
@@ -123,12 +123,12 @@ public class PatientTest {
 	public void updateBedTest() throws IllegalArgumentException, IllegalAccessException {
 		// test assigning a patient to an empty bed in the same department
 		p1.updateDepartment(em);
-		p1.updateBed(b1);
-		assertEquals(b1.getBedID(),p1.getPatientInfo().get("Bed ID"));
+		p1.setBed(b1.getBedID());
+		assertEquals(b1.getBedID(),p1.getBed());
 
 		// test assigning a patient to an empty bed in another department
 		try {
-			p2.updateBed(b2); // p2 is in inPa
+			p2.setBed(b2.getBedID()); // p2 is in inPa
 			fail("Expected an IllegalArgumentException to be thrown");
 		} catch (IllegalArgumentException expected) {
 			assertEquals(String.format("Bed %s is in a different department to Jack", b2.getBedID()),expected.getMessage());
@@ -143,8 +143,8 @@ public class PatientTest {
 		// Give the patients a record
 		String r1 = "The patient has a fracture on their right index finger, I recomend strapping the fingre and some good whiskey to reduce the pain.";
 		String r2 = "The patient has severe lacerations on their right leg.";
-		p1.updateRecord(r1);
-		p2.updateRecord(r2);
+		p1.setRecord(r1);
+		p2.setRecord(r2);
 
 		// check the records match
 		assertEquals(r1,p1.getRecord());
@@ -165,15 +165,15 @@ public class PatientTest {
 		String uR6 = "The patient has severe lacerations on their right leg.\nI have cleaned the wound and have told the patient to keep it covered and clean.";
 
 		// update and test
-		p5.updateRecord(r5);
-		p6.updateRecord(r6);
+		p5.setRecord(r5);
+		p6.setRecord(r6);
 
 		assertEquals(r5, p5.getRecord());
 		assertEquals(r6, p6.getRecord());
 
 		// update again and test the new message has been appended to a new line
-		p5.updateRecord("I have assigned them to Dr. Smith who has better experience with this.");
-		p6.updateRecord("I have cleaned the wound and have told the patient to keep it covered and clean.");
+		p5.setRecord("I have assigned them to Dr. Smith who has better experience with this.");
+		p6.setRecord("I have cleaned the wound and have told the patient to keep it covered and clean.");
 
 		assertEquals(uR5,p5.getRecord());
 		assertEquals(uR6,p6.getRecord());
@@ -188,9 +188,9 @@ public class PatientTest {
 		Patient newPatient = new Patient("name", "surname", "01/01/2000", "address", "phoneNo");
 
 		// check variables
-		assertFalse(Objects.equals(newPatient.getPatientInfo().get("Patient ID"),null));
+		assertFalse(Objects.equals(newPatient.getPatientID(),null));
 		assertTrue(Objects.equals(newPatient.getRecord(),null));
-		assertTrue(newPatient.getPatientInfo().get("Department").equals("None"));
-		assertEquals("false",newPatient.getPatientInfo().get("Deceased"));
+		assertTrue(newPatient.getDepartment().equals("None"));
+		assertEquals("false",newPatient.getDeceased());
 	}
 }

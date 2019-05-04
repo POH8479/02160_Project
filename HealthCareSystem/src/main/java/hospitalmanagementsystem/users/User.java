@@ -1,6 +1,5 @@
 package hospitalmanagementsystem.users;
 
-import hospitalmanagementsystem.Patient;
 import hospitalmanagementsystem.PersistenceLayer;
 import hospitalmanagementsystem.departments.Management;
 
@@ -12,16 +11,17 @@ import hospitalmanagementsystem.departments.Management;
  * @author Pieter O'Hearn
  */
 public class User {
-	// Static Variables
-	public static int idCounter = 0;
+	// STATIC VARIABLES
+	private static PersistenceLayer persist = new PersistenceLayer();
 
-	// Instance Variables
+	// INSTANCE VARIABLES
 	protected String name;
 	protected String userID;
 	protected String email;
 	protected String phoneNumber;
 	private String department;
 
+	// CONSTRUCTORS
 	/**
 	 * Creates a new User of the Hospital Management System
 	 * @param usersName
@@ -29,26 +29,25 @@ public class User {
 	 */
 	public User(String usersName,  String phone){
 		// assign the User with a unique ID
-		idCounter++;
+		int idCounter = persist.loadCounter() + 1;
 		this.userID = "U" + Integer.toString(idCounter);
+		
 		// assign the remaining information
 		this.name = usersName;
-//		this.email = email; TODO
+		this.email = this.userID + "@kapjak.com";
 		this.phoneNumber = phone;
 		this.department = Management.getInstance().getName();
-		Management.getInstance().getUserList().add(this);
-		
+		Management.getInstance().addUser(this);
+
 		// Save the new User
-		PersistenceLayer persist = new PersistenceLayer();
-		boolean saved = persist.save(this, this.userID, this.department);
-		if(!saved) {System.out.println("User Not Saved111");}
+		persist.save(this, this.userID, this.department);
+		persist.saveCounter(idCounter);
 	}
-	
-	public User() {
-		// assign the User with a unique ID
-		idCounter++;
-		this.userID = "U" + Integer.toString(idCounter);
-	}
+
+	/**
+	 * An Empty Constructor for the Persistence Layer
+	 */
+	public User() {}
 
 	/**
 	 * Creates a new non generic type ofUser to the Hospital Management System
@@ -58,70 +57,119 @@ public class User {
 	 */
 	public User(String usersName, String phone, String classString) {
 		// assign the User with a unique ID
-		idCounter++;
+		int idCounter = persist.loadCounter() + 1;
 		this.userID = classString + Integer.toString(idCounter);
+		persist.saveCounter(idCounter);
+		
 		// assign the remaining information
 		this.name = usersName;
-//		this.email = email; TODO
+		this.email = this.userID + "@kapjak.com";
 		this.phoneNumber = phone;
+		this.email = this.userID + "@kapjak.com";
 	}
 
+	// METHODS
 	/**
-	 * This method registers a new Patient into the hospital management system
-	 * and returns that Patient.
-	 *
-	 * @return The Patient Object that has been registered to the HMS
+	 * Edits the Users information(Name and phone number).
+	 * @param newName The new name of the User
+	 * @param newPhone The new phone number of the User
 	 */
-	public Patient registerPatient(String name, String surname, String bday, String address, String phoneNo) {
-		// create a new Patient
-		Patient newPatient = new Patient(name, surname, bday, address, phoneNo);
-
-		// return the Patient
-		return newPatient;
+	public void editUser(String newName, String newPhone) {
+		// set the users
+		this.setUserName(newName);
+		this.setNumber(newPhone);
+		
+		// Save the updated User
+		persist.delete(this.userID, this.getDepartment());
+		persist.save(this, this.userID, this.getDepartment());
 	}
-	
+
+	// GETTER METHODS
+	/**
+	 * Returns the User Class, "User" in this case.
+	 * @return String "User"
+	 */
 	public String getType() {
 		return "User";
 	}
-
-	// Gets
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getUserName() {
 		return this.name;
 	}
-	
+
+	/**
+	 * 
+	 * @return
+	 */
 	public String getUserID() {
 		return this.userID;
 	}
-	
+
+	/**
+	 * 
+	 * @return
+	 */
 	public String getEmail() {
 		return this.email;
 	}
-	
+
+	/**
+	 * 
+	 * @return
+	 */
 	public String getNumber() {
 		return this.phoneNumber;
 	}
-	
+
+	/**
+	 * 
+	 * @return
+	 */
 	public String getDepartment() {
 		return this.department;
 	}
 
-	// Sets
+	// SETTER METHODS
+	/**
+	 * 
+	 * @param newName
+	 */
 	public void setUserName(String newName) {
 		this.name = newName;
 	}
-	
+
+	/**
+	 * 
+	 * @param newID
+	 */
 	public void setUserID(String newID) {
 		this.userID = newID;
 	}
-	
+
+	/**
+	 * 
+	 * @param newEmail
+	 */
 	public void setEmail(String newEmail) {
 		this.email = newEmail;
 	}
-	
+
+	/**
+	 * 
+	 * @param newPhone
+	 */
 	public void setNumber(String newPhone) {
 		this.phoneNumber = newPhone;
 	}
 
+	/**
+	 * 
+	 * @param newDepartment
+	 */
 	public void setDepartment(String newDepartment) {
 		this.department = newDepartment;
 	}

@@ -1,15 +1,25 @@
 package gui.controller;
 
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+
 import gui.model.*;
 import gui.view.ManagementView;
+import hospitalmanagementsystem.Bed;
 import hospitalmanagementsystem.Patient;
+import hospitalmanagementsystem.PersistenceLayer;
 import hospitalmanagementsystem.departments.*;
 import hospitalmanagementsystem.users.*;
 
@@ -19,6 +29,9 @@ import hospitalmanagementsystem.users.*;
  *
  */
 public class ManagementController {
+	// Static Variables
+	private static PersistenceLayer persist = new PersistenceLayer();
+	
 	// Instance variables
 	private UserModel userModel;
 	private PatientModel patientModel;
@@ -93,6 +106,14 @@ public class ManagementController {
         	// if OK was selected, create a user variable u
         	User u = null;
         	
+        	//check management input of user information
+        	InputController inputcheck = new InputController();
+        	String error = inputcheck.checkUserInput(name.getText(), phone.getText());
+        	if (error != null) {
+        		view.showError(error);
+        		return;
+        	}
+        	
         	// check what Type of user to create 
         	switch(type.getSelectedIndex()) {
         		case 0: // if Admin was selected, create a new Admin User
@@ -145,6 +166,19 @@ public class ManagementController {
 	}
 	
 	/**
+	 * Removes a patient from the HMS
+	 * @param selectedRow The row number of the selected Patient
+	 */
+	public void removePatient(int selectedRow) {
+		// check a valid row has been selected
+		if (selectedRow >= 0) {
+			// Find the Patient Id of the selected patient and call the removePatient method from the Patient Model
+			String patientID = (String) patientModel.getValueAt(selectedRow, 0);
+			patientModel.removePatient(patientID,(Admin) sessionModel.getUser());
+		}
+	}
+	
+	/**
 	 * Adds a new Patient to the HMS. An Option pane is opened where the new Patients information can be inputed.
 	 */
 	public void addPatient() {
@@ -173,6 +207,15 @@ public class ManagementController {
 
         // check the confirmation result
         if (confirmation == JOptionPane.OK_OPTION) {
+        	
+        	//check management input of patient information
+        	InputController inputcheck = new InputController();
+        	String error = inputcheck.checkPatientInput(firstName.getText(), lastName.getText(), bDay.getText(), address.getText(), phoneNo.getText());
+        	if (error != null) {
+        		view.showError(error);
+        		return;
+        	}
+        	
         	// if OK was selected, create a new patient with the provided information and add to the patient Model
         	Patient p = new Patient(firstName.getText(), lastName.getText(), bDay.getText(), address.getText(), phoneNo.getText());
         	patientModel.addNewPatient(p);
@@ -332,7 +375,7 @@ public class ManagementController {
 		// Display the JList using a JOptionPane and store the confirmation result
         int confirmation = JOptionPane.showConfirmDialog(null, patientPanel, "Update the Users information", JOptionPane.OK_CANCEL_OPTION);
 
-     // check the confirmation result
+        // check the confirmation result
         if (confirmation == JOptionPane.OK_OPTION) {
         	// if OK was selected pass the input to the patientModel to update
         	patientModel.edit((String) patientModel.getValueAt(0, selectedRow), firstName.getText(), lastName.getText(), dOB.getText(), address.getText(), phoneNo.getText());
@@ -374,7 +417,7 @@ public class ManagementController {
 			// check patient matches the given criteria
 			if((firstName.isEmpty() || patient.getFirstName().equals(firstName)) &&
 					(lastName.isEmpty() || patient.getLastName().equals(lastName)) &&
-					(id.isEmpty() || patient.getpatientID().equals(id)) &&
+					(id.isEmpty() || patient.getPatientID().equals(id)) &&
 					 (department.isEmpty() || patient.getDepartment().equals(department))) {
 				// if it does add patient to the searchedPatients list
 				foundPatients.add(patient);
@@ -427,5 +470,144 @@ public class ManagementController {
 	public void clearSearch() {
 		// retrieve the original patient and user model and set it again
 		this.view.setTableModel(userModel, patientModel);
+	}
+
+	/**
+	 * 
+	 * @param selectedRow
+	 */
+	public void assignBed(int selectedRow) {
+		// find the user
+		Patient toBed = patientModel.findPatient((String) patientModel.getValueAt(selectedRow, 0));
+		
+		// create a new bed in the users department
+		Department dept;
+		
+		// find the patients department
+		switch((toBed.getDepartment()==null) ? "":toBed.getDepartment()) {
+			case "Emergency":
+				dept = Emergency.getInstance();
+				break;
+			case "Inpatient":
+				dept = Inpatient.getInstance();
+				break;
+			default:
+				this.view.showError(String.format("The %s is Department has no beds.",(toBed.getDepartment()==null) ? "No Department":toBed.getDepartment()));
+				return;
+		}
+		
+		// try set assign the user to this new bed
+		try {
+			// find the first free bed
+			for(Bed bed : dept.getBedList()) {
+				// check if free
+				if(bed.getPatient() == null) {
+					// assign the patient to the bed
+					bed.updatePatient(toBed);
+					toBed.setBed(bed.getBedID());
+					
+					// notify the views that data changed and break
+					patientModel.fireTableDataChanged();
+					break;
+				}
+			}
+			
+			// if no free bed show error
+			if(toBed.getBed() == null) {
+				this.view.showError(String.format("No Free Beds in the %s department",dept.getName()));
+			}
+		} catch(IllegalArgumentException e) {
+			this.view.showError(e.getMessage());
+		}
+		
+		// save the patient
+		persist.save(toBed,toBed.getPatientID(), toBed.getDepartment());
+	}
+
+	/**
+	 * Shows a pop-up with the list of beds where the Admin can add, remove and move beds within departments
+	 */
+	public void editBeds() {
+		// create a new JPanel
+		JPanel bedPanel = new JPanel();
+		
+		// create a JList to show the beds
+		DefaultListModel<String> listModel = new DefaultListModel<String>();
+		for(int i = 0 ; i < Emergency.getInstance().getBedList().size() ; i++) {
+			listModel.addElement((Emergency.getInstance().getBedList().get(i).getBedID()));
+		}
+		JList<String> bedList = new JList<String>(listModel);
+		bedList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		bedList.setSelectedIndex(0);
+//		bedList.setPreferredSize(new Dimension(50, 100));
+		
+		// create a JCombaBox to show the departments
+		String departments[] = {"Emergency", "Inpatient"};
+		JComboBox<String> depList = new JComboBox<String>(departments);
+		depList.setSelectedIndex(0);
+		depList.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// update the depBeds list
+				DefaultListModel<String> listModel = new DefaultListModel<String>();
+				if(depList.getSelectedIndex() == 0) {
+					for(int i = 0 ; i < Emergency.getInstance().getBedList().size() ; i++) {
+						listModel.addElement(Emergency.getInstance().getBedList().get(i).getBedID());
+					}
+				} else if(depList.getSelectedIndex() == 1) {
+					for(int i = 0 ; i < Inpatient.getInstance().getBedList().size() ; i++) {
+						listModel.addElement(Inpatient.getInstance().getBedList().get(i).getBedID());
+					}
+				}
+				bedList.setModel(listModel);
+			}
+		});
+		
+		// 
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setPreferredSize(new Dimension(50, 100));
+		scrollPane.setViewportView(bedList);
+		bedPanel.add(scrollPane);
+		bedPanel.add(depList);
+		
+		// 
+		String[] options = {"Add", "Remove", "Cancel"};
+		
+		// Display the JList using a JOptionPane and store the confirmation result
+        int confirmation = JOptionPane.showOptionDialog(null, bedPanel, "Edit the Beds", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, null);
+
+        // check the confirmation result
+        if (confirmation == JOptionPane.YES_OPTION) {
+        	// if Add was selected create a new bed
+        	Bed newBed = new Bed((String) depList.getSelectedItem());
+        	
+        	// update the beds department bed list
+        	switch((String) depList.getSelectedItem()) {
+	        	case "Emergency":
+	        		Emergency.getInstance().addBed(newBed);
+	        		break;
+	        	case "Inpatient":
+	        		Inpatient.getInstance().addBed(newBed);
+        	}
+        } else if (confirmation == JOptionPane.NO_OPTION) {
+        	// if Remove was selected
+        	switch((String) depList.getSelectedItem()) {
+	        	case "Emergency":
+	        		for(Bed bed : Emergency.getInstance().getBedList()) {
+	        			if(bed.getBedID().equals(bedList.getSelectedValue())) {
+	        				Emergency.getInstance().removeBed(bed);
+	        				break;
+	        			}
+	        		}
+	        		break;
+	        	case "Inpatient":
+	        		for(Bed bed : Emergency.getInstance().getBedList()) {
+	        			if(bed.getBedID().equals(bedList.getSelectedValue())) {
+	        				Emergency.getInstance().removeBed(bed);
+	        				break;
+	        			}
+	        		}
+        	}
+        }
 	}
 }

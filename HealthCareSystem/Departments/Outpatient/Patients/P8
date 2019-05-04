@@ -2,38 +2,28 @@
 <java version="1.8.0_101" class="java.beans.XMLDecoder">
  <object class="hospitalmanagementsystem.Patient">
   <void property="DOB">
-   <string>a</string>
+   <string>24/08/1984</string>
   </void>
   <void property="address">
-   <string>a</string>
+   <string>Lyngby, Denmark</string>
   </void>
   <void property="deceased">
    <string>false</string>
   </void>
   <void property="department">
-   <string>Emergency</string>
+   <string>Outpatient</string>
   </void>
   <void property="firstName">
-   <string>Jack</string>
+   <string>Andrea</string>
   </void>
   <void property="lastName">
-   <string>a</string>
+   <string>Burattin</string>
   </void>
   <void property="patientID">
-   <string>P1</string>
+   <string>P8</string>
   </void>
   <void property="phoneNo">
-   <string>a</string>
-  </void>
-  <void property="record">
-   <string>
-A1  Super Admin
-2019-05-02    09:20:30.818
-the
-
-A1  Super Admin
-2019-05-02    09:20:51.887
-And again</string>
+   <string>89012345</string>
   </void>
  </object>
 </java>

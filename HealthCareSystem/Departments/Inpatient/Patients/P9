@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_101" class="java.beans.XMLDecoder">
+ <object class="hospitalmanagementsystem.Patient">
+  <void property="DOB">
+   <string>11/03/1989</string>
+  </void>
+  <void property="address">
+   <string>København, Denmark</string>
+  </void>
+  <void property="bed">
+   <string>B16</string>
+  </void>
+  <void property="deceased">
+   <string>false</string>
+  </void>
+  <void property="department">
+   <string>Inpatient</string>
+  </void>
+  <void property="firstName">
+   <string>Kati</string>
+  </void>
+  <void property="lastName">
+   <string>Kuusinen</string>
+  </void>
+  <void property="patientID">
+   <string>P9</string>
+  </void>
+  <void property="phoneNo">
+   <string>90123456</string>
+  </void>
+ </object>
+</java>

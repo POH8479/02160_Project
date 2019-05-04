@@ -76,7 +76,7 @@ public class UserView extends JFrame {
 		});
 		
 		// Create a new button "Register Patient" with an Action Listener and set Enabled to false
-		JButton btnRegisterPatient = new JButton("Register Patient");
+		JButton btnRegisterPatient = new JButton("Register");
 		btnRegisterPatient.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -165,6 +165,17 @@ public class UserView extends JFrame {
 			}
 		});
 		
+		// Create a new button "Remove" with an Action Listener and set Enabled to false
+		JButton btnRemove = new JButton("Check Out");
+		btnRemove.setEnabled(false);
+		btnRemove.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// When clicked remove the selected patient
+				controller.removePatient(tblPatients.getSelectedRow());
+			}
+		});
+		
 		// TOOLBAR
 		// create a new label and set Horizontal Alignment right
 		lblSession = new JLabel();
@@ -174,6 +185,7 @@ public class UserView extends JFrame {
 		JToolBar toolbar = new JToolBar();
 		toolbar.add(btnRegisterPatient);
 		toolbar.add(btnEdit);
+		toolbar.add(btnRemove);
 		toolbar.add(btnQuery);
 		toolbar.add(Box.createHorizontalGlue());
 		toolbar.add(lblSession);
@@ -217,6 +229,7 @@ public class UserView extends JFrame {
 			public void valueChanged(ListSelectionEvent e) {
 				// When a row is selected enable the following buttons
 				btnEdit.setEnabled((tblPatients.getSelectedRow() >= 0));
+				btnRemove.setEnabled((tblPatients.getSelectedRow() >= 0));
 			}
 		});
 		

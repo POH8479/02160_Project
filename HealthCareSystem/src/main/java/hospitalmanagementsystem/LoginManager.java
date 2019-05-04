@@ -8,8 +8,13 @@ import hospitalmanagementsystem.users.User;
  * @author Asger Conradsen
  */
 public class LoginManager {
-	ArrayList<User> users;
+	// INSTANCE VARIABLES
+	private ArrayList<User> users;
 	
+	// CONSTRUCTOR
+	/**
+	 * 
+	 */
 	public LoginManager() {
 		Emergency emergency = Emergency.getInstance();
 		Inpatient inpatient = Inpatient.getInstance();
@@ -23,6 +28,12 @@ public class LoginManager {
 		users.addAll(outpatient.getUserList());
 	}
 	
+	// METHODS
+	/**
+	 * 
+	 * @param userCheck
+	 * @return
+	 */
 	public boolean checkID(User userCheck) {
 		for (User user : users) {
 			if(userCheck.equals(user)) {

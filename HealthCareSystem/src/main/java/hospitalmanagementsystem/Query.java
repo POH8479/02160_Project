@@ -8,29 +8,32 @@ import hospitalmanagementsystem.departments.*;
 /**
  * 
  * @author Karoline
- *
  */
 public class Query {
-	// Instance variables
+	// INSTANCE VARIABLES
 	private int inSize;
 	private int outSize;
 	private int emSize;
+	private int manSize;
 	private List<Integer> patientSizes;
 	private int  maxPatients;
 	private int minPatients;
 	private int inUsers;
 	private int outUsers;
 	private int emUsers;
+	private int manUsers;
 	private List<Integer> userSizes;
 	private int  maxUsers;
 	private int minUsers;
 	private List<String> departments;
 
+	
 	public Query() {
 		//get number of patients currently in each department
 		inSize = Inpatient.getInstance().getPatientList().size();
 		outSize = Outpatient.getInstance().getPatientList().size();
 		emSize = Emergency.getInstance().getPatientList().size();
+		manSize = Management.getInstance().getPatientList().size();
 		
 		//get max and min number of patients
 		patientSizes = Arrays.asList(inSize,outSize,emSize);
@@ -41,6 +44,7 @@ public class Query {
 		inUsers = Inpatient.getInstance().getUserList().size();
 		outUsers = Outpatient.getInstance().getUserList().size();
 		emUsers = Emergency.getInstance().getUserList().size();
+		manUsers = Management.getInstance().getUserList().size();
 		
 		//get max and min number of users
 		userSizes = Arrays.asList(inSize,outSize,emSize);
@@ -84,11 +88,11 @@ public class Query {
 	
 	public int totPatients() {
 		//get total number of patients in entire hospital
-		return inSize+emSize+outSize;
+		return inSize+emSize+outSize+manSize;
 	}
 	
 	public int totUsers() {
 		//total number of users in entire hospital
-		return inUsers+outUsers+emUsers;
+		return inUsers+outUsers+emUsers+manUsers;
 	}
 }

@@ -25,10 +25,8 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableModel;
-
 import gui.controller.*;
 import gui.model.Session;
-import hospitalmanagementsystem.Patient;
 import hospitalmanagementsystem.Query;
 
 /**
@@ -106,19 +104,25 @@ public class ManagementView extends JFrame {
 			}
 		});
 		
-		// Create a new button "Remove User" with an Action Listener and set Enabled to false
-		JButton btnRemoveUser = new JButton("Remove User");
-		btnRemoveUser.setEnabled(false);
-		btnRemoveUser.addActionListener(new ActionListener() {
+		// Create a new button "Remove" with an Action Listener and set Enabled to false
+		JButton btnRemove = new JButton("Remove");
+		btnRemove.setEnabled(false);
+		btnRemove.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// When clicked remove the selected User
-				controller.removeUser(tblUsers.getSelectedRow());
+				// When clicked check if in User of Patient pane
+				if(tabbedPane.getSelectedIndex() == 0) {
+					controller.removeUser(tblUsers.getSelectedRow());
+				} else if(tabbedPane.getSelectedIndex() == 1) {
+					controller.removePatient(tblPatients.getSelectedRow());
+				}
+				
+				
 			}
 		});
 		
 		// Create a new button "Register Patient" with an Action Listener and set Enabled to false
-		JButton btnRegisterPatient = new JButton("Register Patient");
+		JButton btnRegisterPatient = new JButton("Register");
 		btnRegisterPatient.setEnabled(false);
 		btnRegisterPatient.addActionListener(new ActionListener() {
 			@Override
@@ -129,7 +133,7 @@ public class ManagementView extends JFrame {
 		});
 		
 		// Create a new button "Admit Patient" with an Action Listener and set Enabled to false
-		JButton btnAdmitPatient = new JButton("Admit Patient");
+		JButton btnAdmitPatient = new JButton("Admit");
 		btnAdmitPatient.setEnabled(false);
 		btnAdmitPatient.addActionListener(new ActionListener() {
 			@Override
@@ -140,7 +144,7 @@ public class ManagementView extends JFrame {
 		});
 		
 		// Create a new button "Discharge Patient" with an Action Listener and set Enabled to false
-		JButton btnDischargePatient = new JButton("Discharge Patient");
+		JButton btnDischargePatient = new JButton("Discharge");
 		btnDischargePatient.setEnabled(false);
 		btnDischargePatient.addActionListener(new ActionListener() {
 			@Override
@@ -179,6 +183,28 @@ public class ManagementView extends JFrame {
 				// When clicked reset to the original patient model
 				controller.clearSearch();
 				btnClear.setEnabled(false);
+			}
+		});
+		
+		// Create a new button "Assign Bed" with an Action Listener and set Enabled to false
+		JButton btnAssignBed = new JButton("Assign Bed");
+		btnAssignBed.setEnabled(false);
+		btnAssignBed.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// When clicked assign a new bed to the patient
+				controller.assignBed(tblPatients.getSelectedRow());
+			}
+		});
+		
+		// Create a new button "Edit Beds" with an Action Listener and set Enabled to false
+		JButton btnEditBeds = new JButton("Edit Beds");
+		btnEditBeds.setEnabled(false);
+		btnEditBeds.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// When clicked edit the hospital beds
+				controller.editBeds();
 			}
 		});
 		
@@ -253,12 +279,14 @@ public class ManagementView extends JFrame {
 		// create a new JToolBar and add all buttons and the above label
 		JToolBar toolbar = new JToolBar();
 		toolbar.add(btnAddUser);
-		toolbar.add(btnRemoveUser);
+		toolbar.add(btnRemove);
 		toolbar.add(btnRegisterPatient);
 		toolbar.add(btnAdmitPatient);
 		toolbar.add(btnDischargePatient);
+		toolbar.add(btnAssignBed);
 		toolbar.add(btnEdit);
 		toolbar.add(btnRecord);
+		toolbar.add(btnEditBeds);
 		toolbar.add(btnQuery);
 		toolbar.add(Box.createHorizontalGlue());
 		toolbar.add(lblSession);
@@ -301,7 +329,7 @@ public class ManagementView extends JFrame {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				// When a row is selected enable the following buttons
-				btnRemoveUser.setEnabled((tblUsers.getSelectedRow() >= 0));
+				btnRemove.setEnabled((tabbedPane.getSelectedIndex() == 0 && tblUsers.getSelectedRow() >= 0));
 				btnEdit.setEnabled((tabbedPane.getSelectedIndex() == 0 && tblUsers.getSelectedRow() >= 0));
 			}
 		});
@@ -316,10 +344,12 @@ public class ManagementView extends JFrame {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				// When a row is selected enable the following buttons
+				btnRemove.setEnabled((tabbedPane.getSelectedIndex() == 1 && tblPatients.getSelectedRow() >= 0));
 				btnDischargePatient.setEnabled((tblPatients.getSelectedRow() >= 0));
 				btnAdmitPatient.setEnabled((tblPatients.getSelectedRow() >= 0));
 				btnEdit.setEnabled((tabbedPane.getSelectedIndex() == 1 && tblPatients.getSelectedRow() >= 0));
 				btnRecord.setEnabled((tblPatients.getSelectedRow() >= 0));
+				btnAssignBed.setEnabled((tblPatients.getSelectedRow() >= 0));
 			}
 		});
 		
@@ -335,29 +365,24 @@ public class ManagementView extends JFrame {
 		// add a Change Listener to the tabbedPane
 		tabbedPane.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent changeEvent) {
+				// enable the following buttons if..
+				btnAddUser.setEnabled((tabbedPane.getSelectedIndex() == 0));
+				btnRegisterPatient.setEnabled((tabbedPane.getSelectedIndex() == 1));
+				btnAdmitPatient.setEnabled((tabbedPane.getSelectedIndex() == 1 && tblPatients.getSelectedRow() >= 0));
+				btnDischargePatient.setEnabled((tabbedPane.getSelectedIndex() == 1 && tblPatients.getSelectedRow() >= 0));
+				btnRecord.setEnabled((tabbedPane.getSelectedIndex() == 1 && tblPatients.getSelectedRow() >= 0));
+				btnRemove.setEnabled(((tabbedPane.getSelectedIndex() == 0 && tblUsers.getSelectedRow() >= 0) || (tabbedPane.getSelectedIndex() == 1 && tblPatients.getSelectedRow() >= 0)));
+				btnEdit.setEnabled(((tabbedPane.getSelectedIndex() == 0 && tblUsers.getSelectedRow() >= 0) || (tabbedPane.getSelectedIndex() == 1 && tblPatients.getSelectedRow() >= 0)));
+				btnAssignBed.setEnabled((tabbedPane.getSelectedIndex() == 1 && tblPatients.getSelectedRow() >= 0));
+				btnEditBeds.setEnabled((tabbedPane.getSelectedIndex() == 1));
+				
 				// if the Users tab is selected
-				if(tabbedPane.getSelectedIndex() == 0) {
-					// enable the AddUser button
-					btnAddUser.setEnabled(true);
-					
-					// and disable the following buttons
-					btnRegisterPatient.setEnabled(false);
-					btnAdmitPatient.setEnabled(false);
-					btnDischargePatient.setEnabled(false);
-					btnRecord.setEnabled(false);
-					
+				if(tabbedPane.getSelectedIndex() == 0) {					
 					// change the following labels
 					lblSearchName.setText("Name:");
 					lblThirdSearch.setText("Email:");
 				} // if the Patients tab is selected  
 				else if(tabbedPane.getSelectedIndex() == 1) {
-					// enable the Register Patient button
-					btnRegisterPatient.setEnabled(true);
-					
-					// and disable the following buttons
-					btnAddUser.setEnabled(false);
-					btnRemoveUser.setEnabled(false);
-					
 					// change the following labels
 					lblSearchName.setText("First Name:");
 					lblThirdSearch.setText("Last Name:");

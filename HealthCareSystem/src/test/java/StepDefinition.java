@@ -33,7 +33,7 @@ public class StepDefinition {
 	@Then("^The data is saved in the system and a confirmation is displayed to the user$")
 	public void the_data_is_saved_in_the_system_and_a_confirmation_is_displayed_to_the_user() {
 	    // Check the data has been saved
-		assertEquals("John",p1.getPatientInfo().get("First Name"));
+		assertEquals("John",p1.getFirstName());
 	}
 
 	@Given("^A user and a department$")
@@ -87,13 +87,13 @@ public class StepDefinition {
 	@When("^The User registers a patient with their non medical data$")
 	public void the_User_registers_a_patient_with_their_non_medical_data(){
 	    // register patient data
-		u1.registerPatient("Jane", "Doe", "01/01/2000", "456 North St Anytown, Denmark", "+45234556789");
+		p1 = new Patient("Jane", "Doe", "01/01/2000", "456 North St Anytown, Denmark", "+45234556789");
 	}
 
 	@Then("^A new patient is created in the HMS$")
 	public void a_new_patient_is_created_in_the_HMS(){
 	    // check that information was entered correctly
-		assertEquals("Jane", p1.getPatientInfo().get("First Name"));
+		assertEquals("Jane", p1.getFirstName());
 	}
 
 	@Given("^A new user$")
@@ -111,7 +111,7 @@ public class StepDefinition {
 	@When("^The Admin creates a new User$")
 	public void the_Admin_creates_a_new_User() throws Throwable {
 	    // create a new user
-		a1.addUser("John Doe", "123 Main St Anytown, Denmark", "+4512345678","Doctor");
+		u1 = new User("John Doe", "+4512345678","Doctor");
 	}
 
 	@Then("^A new user is created in the HMS$")
@@ -130,7 +130,7 @@ public class StepDefinition {
 	@Then("^A nurse edits the patients data$")
 	public void a_nurse_edits_the_patients_data() throws Throwable {
 	    // Edit patient data
-		n1.editMedicalData(p1, "Jane");
+		p1.setRecord(p1.getRecord() + "Jane");
 	}
 
 	@Then("^The new information is saved to the HMS$")
