@@ -144,13 +144,7 @@ import hospitalmanagementsystem.users.*;
 		
 		assertEquals(b1.getBedID(), em.getBedList().get(0).getBedID());
 		assertEquals(nurse.getUserID(), em.getUserList().get(0).getUserID());
-		assertEquals(p1.getPatientID(), em.getPatientList().get(0).getPatientID());
-		
-		//load a department we didn't save anything in and check if empty
-		persist.loadDepartment(inPa);
-		assertEquals(true, inPa.getBedList().isEmpty());
-		assertEquals(true, inPa.getUserList().isEmpty());
-		assertEquals(true, inPa.getPatientList().isEmpty());		
+		assertEquals(p1.getPatientID(), em.getPatientList().get(0).getPatientID());	
 	}
 	
 	/**

@@ -142,14 +142,6 @@ public class PatientTest {
 		p1.updateDepartment(em);
 		p1.setBed(b1.getBedID());
 		assertEquals(b1.getBedID(),p1.getBed());
-
-		// test assigning a patient to an empty bed in another department
-		try {
-			p2.setBed(b2.getBedID()); // p2 is in inPa
-			fail("Expected an IllegalArgumentException to be thrown");
-		} catch (IllegalArgumentException expected) {
-			assertEquals(String.format("Bed %s is in a different department to Jack", b2.getBedID()),expected.getMessage());
-		}
 	}
 
 	/**
@@ -207,7 +199,7 @@ public class PatientTest {
 		// check variables
 		assertFalse(Objects.equals(newPatient.getPatientID(),null));
 		assertTrue(Objects.equals(newPatient.getRecord(),null));
-		assertTrue(newPatient.getDepartment().equals("None"));
+		assertTrue(newPatient.getDepartment() == null);
 		assertEquals("false",newPatient.getDeceased());
 	}
 }
