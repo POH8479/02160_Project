@@ -1,115 +1,332 @@
-import static org.junit.Assert.*;
-import org.junit.BeforeClass;
-import org.junit.Test;
+package hospitalmanagementsystem;
 
-import hospitalmanagementsystem.*;
-import hospitalmanagementsystem.departments.*;
-import hospitalmanagementsystem.users.*;
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import hospitalmanagementsystem.departments.Department;
+import hospitalmanagementsystem.users.User;
 
 /**
- *
- * @author Asger Conradsen
+ * @author Asger Conradsen (S151607)
  */
- 
- public class PersistenceLayerTest{
-	 
-	static PersistenceLayer persist;
-	
-	static Emergency em;
-	static Inpatient inPa;
-	static Outpatient outPa;
-	static Management man;
-	 
-	static Admin admin;
-	static Doctor doc;
-	static Nurse nurse;
-	static User user;
-	
-	static Bed b1;
-	
-	static Patient p1;
-	static Patient p2;
-	static Patient p3;
-	static Patient p4;
-	
-	@BeforeClass
-	public static void setUpBeforeClass() throws IllegalAccessException {
-		
-		persist = new PersistenceLayer();
+public class PersistenceLayer {
+	// STATIC VARIABLES
+	static final String[] departments = {"Emergency", "Inpatient", "Outpatient", "Management", "Temp"};
+	static final String[] subfolders = {"Users", "Patients", "Beds"};
 
-		em = Emergency.getInstance();
-		inPa = Inpatient.getInstance();
-		outPa = Outpatient.getInstance();
-		man = Management.getInstance();
-		
-		p1 = new Patient("Asger", "Conradsen", "04/10/1995", "487 downtown 2800 Kongens Lyngby", "+4585476964");
-		p1.updateDepartment(em);
-		
-		admin = new Admin("Steve Jobs","+180249625");
-
-		doc = new Doctor("Dr. Smith", "+4545252525", "Emergency");
-		nurse = new Nurse("John Doe", "+4512345678", "Emergency");
-		user = new User("James Gosling", "+141558396");
-		
-		b1 = new Bed(em.getName());
-	}
-	 
-
-	
-	 /**
-	 * Tests the save method of PersistenceLayer.
-	 * Note that save is overloaded and returns a bool (true when succesfully saved) so that is what we check for.
+	// CONSTRUCTOR
+	/**
+	 * Default constructor for the PersistencyLayer that creates the
+	 * folder structure if it doesn't already exist.
 	 */
-	@Test
-	public void saveTest(){
-		//Saving a patient
-		assertEquals(true, persist.save(p1, p1.getPatientID(), em.getName()));
+	public PersistenceLayer() {
+		// Create a Folder called Departments
+		File folder = new File("Departments");
+		folder.mkdir();
 		
-		//Saving users
-		assertEquals(true, persist.save(admin, admin.getUserID(), em.getName()));
-		assertEquals(true, persist.save(doc, doc.getUserID(), inPa.getName()));
-		assertEquals(true, persist.save(nurse, nurse.getUserID(), outPa.getName()));
-		assertEquals(true, persist.save(user, user.getUserID(), man.getName()));
+		// inside Departments make a folder for each department
+		for (String department : departments) {
+			folder = new File("Departments" + File.separator + department);
+			folder.mkdir();
+			
+			if(department.equals("Management")) {
+				// inside the Management folder make a folder Users
+				folder = new File("Departments" + File.separator + department + File.separator + "Users");
+				folder.mkdir();
+			} else if(department.equals("Outpatient")) {
+				// inside the Outpatient folder make folders for the Users and Patients
+				folder = new File("Departments" + File.separator + department + File.separator + "Users");
+				folder.mkdir();
+				folder = new File("Departments" + File.separator + department + File.separator + "Patients");
+				folder.mkdir();
+			} else {
+				// inside each department folder make folders for the Users, Beds and Patients
+				for (String subfolder : subfolders) {
+					folder = new File("Departments" + File.separator + department + File.separator + subfolder);
+					folder.mkdir();
+				}
+			}
+		}
+	}
+
+	// METHODS
+	/**
+	 * 
+	 * @param department
+	 */
+	public void loadDepartment(Department department) {
+		//Loads users in the department
+		ArrayList<Object> loadedUsers = loadObjs(department, "users");
+		if(!loadedUsers.isEmpty()) {
+			ArrayList<User> users = new ArrayList<User>();
+			for(Object o : loadedUsers) {
+				users.add((User) o);
+			}
+			department.setUserList(users);
+		}
+
+		//Loads patients in the department
+		ArrayList<Object> loadedPatients = loadObjs(department, "patients");
+		if(!loadedPatients.isEmpty()) {
+			ArrayList<Patient> patients = new ArrayList<Patient>();
+			for(Object o : loadedPatients) {
+				patients.add((Patient) o);
+			}
+			department.setPatientList(patients);
+		}
+
+		//Loads beds in the department
+		ArrayList<Object> loadedBeds = loadObjs(department, "beds");
+		if(!loadedBeds.isEmpty()) {
+			ArrayList<Bed> beds = new ArrayList<Bed>();
+			for(Object o : loadedBeds) {
+				beds.add((Bed) o);
+			}
+			department.setBedList(beds);
+		}
+	}
+
+	/**
+	 * Returns an ArrayList of either users, patients or beds in the given departmen
+	 * based on which "type" is passed to the method.
+	 */
+	private ArrayList<Object> loadObjs(Department department, String type){
+		// create an ArrayList and set type to LowerCase
+		ArrayList<Object> objs = new ArrayList<Object>();
+		type = type.toLowerCase();
 		
-		//Saving a bed
-		assertEquals(true, persist.save(b1, b1.getBedID(), inPa.getName()));
+		// if not a valid load then return the empty list
+		if((department.getName().equals("Management") && (type.equals("patients") || type.equals("beds")))
+				|| (department.getName().equals("Outpatient") && type.equals("beds"))) {
+			return objs;
+		}
+		
+		// set the file directory string
+		String dir = "Departments" + File.separator + department.getName();
+		switch (type) {
+			case "users":
+				dir = dir + File.separator + "Users";
+				break;
+			case "patients":
+				dir = dir + File.separator + "Patients";
+				break;
+			case "beds":
+				dir = dir + File.separator + "Beds";
+				break;
+			default:
+				return objs;
+		}
+
+		// Gets a list of files in the directory and checks if they are valid
+		XMLDecoder d = null;
+		File[] files = new File(dir).listFiles();
+
+		// go through each file and try and load them
+		for(File file : files) {
+			if(file.isFile()) {
+				try{
+					d = new XMLDecoder(
+		                new BufferedInputStream(
+		                    new FileInputStream(dir + File.separator + file.getName())));
+				} catch(FileNotFoundException fileNotFound) {
+					System.out.println(fileNotFound.getMessage());
+				}
+				// read the object and add to the list
+				Object obj = d.readObject();
+				objs.add(obj);
+			}
+		}
+
+		return objs;
 	}
 	
-	@Test
-	public void loadDepartmentTest(){
-		//Testing loadDepartment by saving -> setting to null -> loading -> comparing a value.
-		String temp = em.getName();
-		em = null;
-		persist.loadDepartment(em);
-		assertEquals(temp, em.getName());
+	/**
+	 * Loads the Temp
+	 * @return
+	 */
+	public ArrayList<Object> loadTemps(char type) {
+		
+		// Creates directory path for the department
+		String dir = "Departments" + File.separator + "Temp";
+		ArrayList<Object> objects = new ArrayList<Object>();
+
+		switch (type) {
+			case 'U':
+				dir = dir + File.separator + "Users";
+				break;
+			case 'P':
+				dir = dir + File.separator + "Patients";
+				break;
+			case 'B':
+				dir = dir + File.separator + "Beds";
+				break;
+			default:
+				return null;
+		}
+		
+		XMLDecoder d = null;
+		File[] files = new File(dir).listFiles();
+
+		for(File file : files) {
+			// Writes department object to the file specified by the directory
+			try{
+				d = new XMLDecoder(
+		                new BufferedInputStream(
+		                    new FileInputStream(dir + File.separator + file.getName())));
+			} catch(FileNotFoundException fileNotFound) {
+				System.out.println(fileNotFound.getMessage());
+			}
+			objects.add(d.readObject());
+		}
+		return objects;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public int loadCounter() {
+		// Gets a list of files in the directory and checks if they are valid
+		XMLDecoder d = null;
+		String dir = "Departments" + File.separator + "Temp";
+		File[] files = new File(dir).listFiles();
+
+		Object obj = new Object();
+		
+		for(File file : files) {
+			if(file.getName().equals("Counter")) {
+				try{
+					d = new XMLDecoder(
+		                new BufferedInputStream(
+		                    new FileInputStream(dir + File.separator + file.getName())));
+				} catch(FileNotFoundException fileNotFound) {
+					System.out.println(fileNotFound.getMessage());
+				}
+				obj = d.readObject();
+				d.close();
+				return (int) obj;
+			}
+		}
+		// else return 0
+		return 0;
+	}
+
+	/**
+	 * Saves an object in a specified department to the appropriate folder. Same return as before.
+	 * @param obj
+	 * @param ID
+	 * @param department
+	 * @return
+	 */
+	public boolean save(Object obj, String ID, String department) {
+		// if department is null change to Temp
+		department = department==null?"Temp":department;
+		
+		// Creates the directory for the object to be stored
+		String dir = "Departments" + File.separator + department;
+		char type = ID.charAt(0);
+
+		// if type is another type of user set type to 'U'
+		if(type == 'A' || type == 'N' || type == 'D') {
+			type = 'U';
+		}
+
+		switch (type) {
+			case 'U':
+				dir = dir + File.separator + "Users";
+				break;
+			case 'P':
+				dir = dir + File.separator + "Patients";
+				break;
+			case 'B':
+				dir = dir + File.separator + "Beds";
+				break;
+			default:
+				return false;
+		}
+		dir = dir + File.separator + ID;
+
+		// Writes object to the file specified by the directory
+		XMLEncoder e = null;
+		try{
+			e = new XMLEncoder(
+                new BufferedOutputStream(
+                    new FileOutputStream(dir)));
+		} catch(FileNotFoundException fileNotFound) {
+			return false;
+		}
+		e.writeObject(obj);
+		e.close();
+		return true;
 	}
 	
-	@Test
-	public void deleteTest(){
-		assertEquals(true, persist.delete(p1.getPatientID(),p1.getDepartment()));
+	/**
+	 * 
+	 * @param counter
+	 * @return
+	 */
+	public Boolean saveCounter(int counter) {
+		// Creates directory path for the department
+		String dir = "Departments" + File.separator + "Temp";
+
+		// Writes department object to the file specified by the directory
+		XMLEncoder e = null;
+		try{
+			e = new XMLEncoder(
+                new BufferedOutputStream(
+                    new FileOutputStream(dir + File.separator + "Counter")));
+		} catch(FileNotFoundException fileNotFound) {
+			return false;
+		}
 		
-		//Delete patient/user/bed (returns true when deleted and false when it cannot find the file)
-		persist.save(p1, p1.getPatientID(), em.getName());
-		persist.save(doc, doc.getUserID(), inPa.getName());
-		persist.save(b1, b1.getBedID(), inPa.getName());
-		
-		assertEquals(true, persist.delete(p1.getPatientID(), em.getName()));
-		assertEquals(true, persist.delete(doc.getUserID(), inPa.getName()));
-		assertEquals(true, persist.delete(b1.getBedID(), inPa.getName()));
-		assertEquals(false, persist.delete(p1.getPatientID(), man.getName()));
-		assertEquals(false, persist.delete(nurse.getUserID(), inPa.getName()));
-		assertEquals(false, persist.delete(b1.getBedID(), outPa.getName()));
+		e.writeObject(counter);
+		e.close();
+		return true;
 	}
-	 
-	 
-	@Test
-	public void loadObjs() {
-		persist.save(p2, p2.getPatientID(), man.getName());
-		persist.save(p3, p3.getPatientID(), man.getName());
-		persist.save(p4, p4.getPatientID(), man.getName());
+
+	/**
+	 * 
+	 * @param ID
+	 * @param department
+	 * @return
+	 */
+	public Boolean delete(String ID, String department) {
+		// if department is null set to "Temp"
+		department = (department==null) ? "Temp":department;
 		
+		// Creates the directory for the object to be stored
+		String dir = "Departments" + File.separator + department;
+		char type = ID.charAt(0);
 		
+		// if type is another type of user set type to 'U'
+		if(type == 'A' || type == 'N' || type == 'D') {
+			type = 'U';
+		}
 		
+		switch (type) {
+			case 'U':
+				dir = dir + File.separator + "Users";
+				break;
+			case 'P':
+				dir = dir + File.separator + "Patients";
+				break;
+			case 'B':
+				dir = dir + File.separator + "Beds";
+				break;
+			default:
+				return false;
+		}
+		dir = dir + File.separator + ID;
+
+		//Attempts to delete the file
+		File delFile = new File(dir);
+		if(delFile.delete()) return true;
+		else return false;
 	}
-	 
- }
+}
