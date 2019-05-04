@@ -10,9 +10,9 @@ public class Bed {
 	private static PersistenceLayer persist = new PersistenceLayer();
 
 	// INSTANCE VARIABLES
-	String bedID;
-	String department;
-	String patient;
+	private String bedID;
+	private String department;
+	private String patient;
 	
 	// CONSTRUCTRS
 	/**
@@ -53,12 +53,12 @@ public class Bed {
 		if(this.patient != null) {
 			// if full throw IllegalArgumentException
 			throw new IllegalArgumentException(String.format("Bed %s is already occupied", this.bedID));
-		} else if(!patient.getDepartment().equals(this.department)) {
-			// if bed is in wrong department throw IllegalArgumentException
-			throw new IllegalArgumentException(String.format("Bed %s is in a different Department to %s", this.bedID, patient.getFirstName()));
-		} else {
+		} else if(patient.getDepartment().equals(this.department)) {
 			// if empty and in the same department update patient
 			this.patient = patient.getPatientID();
+		} else {
+			// if bed is in wrong department throw IllegalArgumentException
+			throw new IllegalArgumentException(String.format("Bed %s is in a different Department to %s", this.bedID, patient.getFirstName()));
 		}
 		
 		// update the beds file

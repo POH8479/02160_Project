@@ -7,8 +7,5 @@
   <void property="department">
    <string>Emergency</string>
   </void>
-  <void property="patient">
-   <string>P7</string>
-  </void>
  </object>
 </java>

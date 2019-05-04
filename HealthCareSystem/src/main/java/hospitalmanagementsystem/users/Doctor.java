@@ -40,7 +40,6 @@ public class Doctor extends User implements HealthStaff{
 		    break;
 		  case "null":
 			  this.department = null;
-			  System.out.println("null department");
 		    break;
 		  default:
 		    throw new IllegalArgumentException(String.format("%s is an invalid department.",department));

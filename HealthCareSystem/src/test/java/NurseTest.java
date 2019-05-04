@@ -1,31 +1,16 @@
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import hospitalmanagementsystem.*;
-import hospitalmanagementsystem.users.*;
-import hospitalmanagementsystem.departments.*;
+import hospitalmanagementsystem.users.Nurse;
 
 /**
  * Testing the Nurse Class
  * @author Pieter O'Hearn
  */
 public class NurseTest {
-	// User
+	// Users
 	static Nurse n1;
 	static Nurse n2;
-
-	// Patients
-	static Patient p1;
-	static Patient p2;
-
-	// Departments
-	static Emergency em;
-	static Inpatient inPa;
-	static Outpatient outPa;
-	static Management man;
-
-	// Beds
-	static Bed b1;
 
 	/**
 	 * Set up the necessary resources for the Nurse Test file
@@ -35,36 +20,49 @@ public class NurseTest {
 		// create a Nurses
 		n1 = new Nurse("John Doe", "+4512345678", "Emergency");
 		n2 = new Nurse("Jane nurse", "+4912345678", "Inpatient");
-
-		// create the Patients
-		p1 = new Patient("Pieter", "O\'Hearn", "12/01/1990", "259 Nordvej 2800 Kongens Lyngby", "+4562473948");
-		p2 = new Patient("Jack", "Rodman", "28/06/1997", "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
-
-		// create the Departments
-		em = Emergency.getInstance();
-		inPa = Inpatient.getInstance();
-		outPa = Outpatient.getInstance();
-		man = Management.getInstance();
-
-		// create the Bed
-		b1 = new Bed(em.getName());
 	}
-
+	
 	/**
-	 * Tests the Constructor method of the Doctor Class
+	 * Tests the getType method in the Nurse class.
 	 */
 	@Test
-	public void ConstructorTest() {
-		// create a nurse in Outpatient and check it works
-		Nurse n3 = new Nurse("John Doe", "+4512345678", "Outpatient");
-		assertEquals(outPa, n3.getDepartment());
-
-		// create a doctor with an invalid department and expect an exception
-		try {
-			n3 = new Nurse("John Doe", "+4512345678", "Blahh");
-			fail("Expected an IllegalArgumentException");
-		} catch(IllegalArgumentException e) {
-			assertEquals("Blahh is an invalid department.", e.getMessage());
-		}
+	public void getTypeTest() { 
+		// ensure that getType returns "Nurse"
+		assertEquals("Nurse", n1.getType());
+	}
+	
+	/**
+	 * Tests the moveDepartment method of the Doctor class.
+	 */
+	@Test
+	public void moveDepartmentTest() {
+		// Move the Nurse n2 to the Emergency Department
+		n2.moveDepartment("Emergency");
+		
+		// test that the department has been changed
+		assertEquals("Emergency", n2.getDepartment());
+	}
+	
+	/**
+	 * Tests the Nurse Constructor.
+	 */
+	@Test
+	public void constructorTest() {
+		// create a new nurse in the "Outpatient class" and without a department
+		Nurse n3 = new Nurse("Nurse Three", "12345678", "Outpatient");
+		Nurse n4 = new Nurse("Nurse Four", "12345678", null);
+		
+		// check they where created correctly
+		assertEquals("Outpatient", n3.getDepartment());
+		assertEquals(null, n4.getDepartment());
+	}
+	
+	/**
+	 * Tests an invalid constructor.
+	 */
+	@Test(expected = IllegalArgumentException.class) 
+	public void illegalConstructorTest() {
+		// create a Nurse with an invalid department
+		n2 = new Nurse("Name", "12345678", "Department");
 	}
 }

@@ -1,31 +1,16 @@
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import hospitalmanagementsystem.*;
-import hospitalmanagementsystem.departments.*;
-import hospitalmanagementsystem.users.*;
+import hospitalmanagementsystem.users.User;
 
 /**
  * Tests for User Class
  * @author Jack Rodman
  */
 public class UserTest {
-	// User
+	// Users
 	static User u1;
 	static User u2;
-
-	// Patients
-	static Patient p1;
-	static Patient p2;
-
-	// Departments
-	static Emergency em;
-	static Inpatient inPa;
-	static Outpatient outPa;
-	static Management man;
-
-	// Beds
-	static Bed b1;
 
 	/**
 	 * Initialise User variables to use in testing
@@ -33,30 +18,54 @@ public class UserTest {
 	@BeforeClass
 	public static void setUpBeforeClass() {
 		// create users
-		u1 = new User("John Doe", "123 Main St Anytown, Denmark", "+4512345678");
-		u2 = new User("User Ulysses", "123 Main St Medicaltown, Germany", "+4912345678");
-
-		// create the Patients
-		p1 = new Patient("Pieter", "O\'Hearn", "12/01/1990", "259 Nordvej 2800 Kongens Lyngby", "+4562473948");
-		p2 = new Patient("Jack", "Rodman", "28/06/1997", "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
-
-		// create the Departments
-		em = Emergency.getInstance();
-		inPa = Inpatient.getInstance();
-		outPa = Outpatient.getInstance();
-		man = Management.getInstance();
-
-		// create the Bed
-		b1 = new Bed(em.getName());
+		u1 = new User("John Doe", "12345678");
+		u2 = new User("User Ulysses", "12345678");
 	}
 
-
 	/**
-	 * Tests getUserInfo method in User class
+	 * Test the editUser() method in the User class.
 	 */
 	@Test
-	public void getUserInfoTest() {
-		//check that appended string returned matches user info
-		assertEquals("John Doe",u1.getUserName());
+	public void editUserTest() { 
+		// edit the User
+		u1.editUser("Sam Evens", "23456789");
+		
+		// check that the users info has changed
+		assertEquals("Sam Evens", u1.getUserName());
+		assertEquals("23456789", u1.getNumber());
+	}
+	
+	/**
+	 * Tests the getType method in the User class.
+	 */
+	@Test
+	public void getTypeTest() { 
+		// ensure that getType returns "User"
+		User u3 = new User();
+		assertEquals("User", u3.getType());
+	}
+	
+	/**
+	 * Tests the Get UserID Method of the User class.
+	 */
+	@Test
+	public void getUserIDTest() {
+		// create a User and check it creates a valid UserID
+		User u4 = new User("Test User", "12345678");
+		assertTrue(u4.getUserID().charAt(0) == 'U');
+		
+		// check that it is not Equal to any others created
+		assertNotEquals(u1.getUserID(),u4.getUserID());
+		assertNotEquals(u2.getUserID(),u4.getUserID());
+	}
+	
+	/**
+	 * Tests the constructor for other Users.
+	 */
+	@Test
+	public void constructorTest() {
+		// create a new User with an 'A' User ID
+		User aType = new User("Admin", "12345678", "A");
+		assertTrue(aType.getUserID().charAt(0) == 'A');
 	}
 }
