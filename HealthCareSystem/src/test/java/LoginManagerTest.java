@@ -49,7 +49,7 @@ import hospitalmanagementsystem.users.*;
 	  */
 	 @Test
 	 public void testConstructor() {
-		 LoginManager loginManager = new LoginManager();
+		 new LoginManager();
 	 }
 	 
 	 /**
