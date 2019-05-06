@@ -1,98 +1,223 @@
 package hospitalmanagementsystem;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.ArrayList;
 import hospitalmanagementsystem.departments.*;
 
-/**
- * 
- * @author Karoline
- */
 public class Query {
 	// INSTANCE VARIABLES
 	private int inSize;
 	private int outSize;
 	private int emSize;
 	private int manSize;
-	private List<Integer> patientSizes;
-	private int  maxPatients;
-	private int minPatients;
-	private int inUsers;
-	private int outUsers;
-	private int emUsers;
-	private int manUsers;
-	private List<Integer> userSizes;
-	private int  maxUsers;
-	private int minUsers;
-	private List<String> departments;
-
+	private String[] departments;
+	private int[] sizes;
+	private String returnValue;
+	private int i;
+	private int max;
+	private int min;
 	
-	public Query() {
-		//get number of patients currently in each department
+	/**
+	 * 
+	 * @return returnValue : a string with the department(s) which have the most patients
+	 */
+	public String depMostPatients() {
+		//Gets amount of patients in each department (excluding management as it has none)
 		inSize = Inpatient.getInstance().getPatientList().size();
 		outSize = Outpatient.getInstance().getPatientList().size();
 		emSize = Emergency.getInstance().getPatientList().size();
-		manSize = Management.getInstance().getPatientList().size();
+		departments = new String[] {"Inpatient", "OutPatient", "Emergency"};
+		sizes = new int[] {inSize, outSize, emSize};
+		max = Integer.MIN_VALUE;
 		
-		//get max and min number of patients
-		patientSizes = Arrays.asList(inSize,outSize,emSize);
-		maxPatients= Collections.max(patientSizes);
-		minPatients = Collections.min(patientSizes);
+		//Goes through each department and compares against the prev. max
+		i = 0;
+		ArrayList<Integer> maxIndices = new ArrayList<Integer>(); 
+		for(int depSize : sizes) {
+			//if greater than prev. max: clear list and add this new value
+			if(depSize > max) {
+				maxIndices.clear();
+				maxIndices.add(i);
+				max = depSize;
+				i++;
+			}
+			//if equal just add to the list
+			else if(depSize == max) {
+				maxIndices.add(i);
+				i++;
+			}
+			else {
+				i++;
+			}	
+		}
 		
-		//get number of users currently in each department
-		inUsers = Inpatient.getInstance().getUserList().size();
-		outUsers = Outpatient.getInstance().getUserList().size();
-		emUsers = Emergency.getInstance().getUserList().size();
-		manUsers = Management.getInstance().getUserList().size();
-		
-		//get max and min number of users
-		userSizes = Arrays.asList(inSize,outSize,emSize);
-		maxUsers = Collections.max(userSizes);
-		minUsers = Collections.min(userSizes);
-		
-		//Save department names as Strings
-		departments = Arrays.asList("Inpatient","Outpatient","Emergency","Management");
+		//create a String to return containing the found department(s)
+		returnValue = "";
+		for(int maxIndex : maxIndices) {
+			returnValue += departments[maxIndex] + ", ";
+		}
+		returnValue = returnValue.substring(0, returnValue.length()-2);
+		return returnValue;
 	}
 	
-	public String depMostPatients() {
-		//department with most admitted patients
-		
-		int i = patientSizes.indexOf(maxPatients);
-		
-		return departments.get(i);
-	}
-	
+	/**
+	 * 
+	 * @return returnValue : a string with the department(s) which have the least patients
+	 */
 	public String depLeastPatients() {
-		//least patients 
-		
-		int i = patientSizes.indexOf(minPatients);
-		
-		return departments.get(i);
+		//Gets amount of patients in each department (excluding management as it has none)
+		inSize = Inpatient.getInstance().getPatientList().size();
+		outSize = Outpatient.getInstance().getPatientList().size();
+		emSize = Emergency.getInstance().getPatientList().size();
+		departments = new String[] {"Inpatient", "Outpatient", "Emergency"};
+		sizes = new int[] {inSize, outSize, emSize};
+		min = Integer.MAX_VALUE;
+				
+		//Goes through each department and compares against the prev. min
+		i = 0;
+		ArrayList<Integer> minIndices = new ArrayList<Integer>(); 
+		for(int depSize : sizes) {
+			//if less than prev. min: clear list and add this
+			if(depSize < min) {
+				minIndices.clear();
+				minIndices.add(i);
+				min = depSize;
+				i++;
+			}
+			//if equal just add to the list
+			else if(depSize == min) {
+				minIndices.add(i);
+				i++;
+			}
+			else {
+				i++;
+			}	
+		}
+				
+		//create a String to return containing the found department(s)
+		returnValue = "";
+		for(int minIndex : minIndices) {
+			returnValue += departments[minIndex] + ", ";
+		}
+		returnValue = returnValue.substring(0, returnValue.length()-2);
+		return returnValue;
 	}
 	
+	/**
+	 * 
+	 * @return returnValue : a string with the department(s) which have the most users
+	 */
 	public String depMostUsers() {
-		//department with most admitted patients
-		
-		int i = userSizes.indexOf(maxUsers);
-		
-		return departments.get(i);
+		//Gets amount of users in each department
+		inSize = Inpatient.getInstance().getUserList().size();
+		outSize = Outpatient.getInstance().getUserList().size();
+		emSize = Emergency.getInstance().getUserList().size();
+		manSize = Management.getInstance().getUserList().size();		
+		departments = new String[] {"Inpatient", "Outpatient", "Emergency", "Management"};
+		sizes = new int[] {inSize, outSize, emSize, manSize};
+		max = Integer.MIN_VALUE;
+						
+		//Goes through each department and compares against the prev. max
+		i = 0;
+		ArrayList<Integer> maxIndices = new ArrayList<Integer>(); 
+		for(int depSize : sizes) {
+			//if greater than prev. max: clear list and add this new value
+			if(depSize > max) {
+				maxIndices.clear();
+				maxIndices.add(i);
+				max = depSize;
+				i++;
+			}
+			//if equal just add to the list
+			else if(depSize == max) {
+				maxIndices.add(i);
+				i++;
+			}
+			else {
+				i++;
+			}	
+		}
+				
+		//create a String to return containing the found department(s)
+		returnValue = "";
+		for(int maxIndex : maxIndices) {
+			returnValue += departments[maxIndex] + ", ";
+		}
+		returnValue = returnValue.substring(0, returnValue.length()-2);
+		return returnValue;
 	}
 	
+	/**
+	 * 
+	 * @return returnValue : a string with the department(s) which have the least users
+	 */
 	public String depLeastUsers() {
-		//least patients 
-		int i = userSizes.indexOf(minUsers);
+		//Gets amount of users in each department
+		inSize = Inpatient.getInstance().getUserList().size();
+		outSize = Outpatient.getInstance().getUserList().size();
+		emSize = Emergency.getInstance().getUserList().size();
+		manSize = Management.getInstance().getUserList().size();		
+		departments = new String[] {"Inpatient", "Outpatient", "Emergency", "Management"};
+		sizes = new int[] {inSize, outSize, emSize, manSize};
+		min = Integer.MAX_VALUE;
 		
-		return departments.get(i);
+		//Goes through each department and compares against the prev. min
+		i = 0;
+		ArrayList<Integer> minIndices = new ArrayList<Integer>(); 
+		for(int depSize : sizes) {
+			//if less than prev. min: clear list and add this
+			if(depSize < min) {
+				minIndices.clear();
+				minIndices.add(i);
+				min = depSize;
+				i++;
+			}
+			//if equal just add to the list
+			else if(depSize == min) {
+				minIndices.add(i);
+				i++;
+			}
+			else {
+				i++;
+			}	
+		}
+						
+		//create a String to return containing the found department(s)
+		returnValue = "";
+		for(int minIndex : minIndices) {
+			returnValue += departments[minIndex] + ", ";
+		}
+		returnValue = returnValue.substring(0, returnValue.length()-2);
+		return returnValue;
 	}
 	
+	/**
+	 * @return total number of patients in the system
+	 */
 	public int totPatients() {
-		//get total number of patients in entire hospital
-		return inSize+emSize+outSize+manSize;
+		inSize = Inpatient.getInstance().getPatientList().size();
+		outSize = Outpatient.getInstance().getPatientList().size();
+		emSize = Emergency.getInstance().getPatientList().size();
+		return inSize + outSize + emSize;
 	}
 	
+	/**
+	 * 
+	 * @return total number of users in the system
+	 */
 	public int totUsers() {
-		//total number of users in entire hospital
-		return inUsers+outUsers+emUsers+manUsers;
+		inSize = Inpatient.getInstance().getUserList().size();
+		outSize = Outpatient.getInstance().getUserList().size();
+		emSize = Emergency.getInstance().getUserList().size();
+		manSize = Management.getInstance().getUserList().size();
+		return inSize + outSize + emSize + manSize;
+	}
+	
+	public String bedStatus() {
+		inSize = Inpatient.getInstance().getBedList().size();
+		emSize = Emergency.getInstance().getBedList().size();
+		
+		returnValue = "Inpatient: " + inSize +
+					  "\nEmergency: " + emSize;
+		return returnValue;
 	}
 }
