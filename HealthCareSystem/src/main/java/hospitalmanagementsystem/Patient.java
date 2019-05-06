@@ -54,7 +54,7 @@ public class Patient {
 	 */
 	public void updateDepartment(Department department) throws IllegalArgumentException {
 		// check if department is Management
-		if(department.getName().equals("Management")) {
+		if(!(department == null) && department.getName().equals("Management")) {
 			throw new IllegalArgumentException("Patients can not be assigned to the Managment Department");
 		} else { 
 			// Delete from current department
