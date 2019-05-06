@@ -458,7 +458,6 @@ public class ManagementController {
 				foundUsers.add(user);
 			}
 		}
-		
 		// create a new User Search model and update the Table model
 		UserSearchModel userSearchModel = new UserSearchModel(foundUsers);
 		this.view.setTableModel(userSearchModel, patientModel);

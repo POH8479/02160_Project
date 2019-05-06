@@ -42,7 +42,6 @@ public class LoginController {
 		String [] input = username.split("@");
 		User user = findUser(input[0]);
 		
-		
 		// check if the loginManager returns true
 		if (user != null && loginManager.checkID(user)) {
 			
@@ -57,8 +56,7 @@ public class LoginController {
 			view.setVisible(false);
 		} // if the username is "A1" but no user is found
 		else if(user == null && username.equals("A1@kapjak.com")) {
-		
-      // create a new generic Admin user and add it to the user model
+			// create a new generic Admin user and add it to the user model
 			user = new Admin("Super Admin", "12345678");
 			session.getUserModel().addNewUser(user);
 			
@@ -106,7 +104,8 @@ public class LoginController {
 	 */
 	private User findUser(String userID) {
 		// retrieve the User list from all the departments and store in userList
-		ArrayList<User> userList = Emergency.getInstance().getUserList();
+		ArrayList<User> userList = new ArrayList<User>();
+		userList.addAll(Emergency.getInstance().getUserList());
 		userList.addAll(Inpatient.getInstance().getUserList());
 		userList.addAll(Outpatient.getInstance().getUserList());
 		userList.addAll(Management.getInstance().getUserList());

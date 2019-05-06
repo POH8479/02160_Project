@@ -17,6 +17,7 @@ public class StepDefinition {
 	Emergency d1;
 	Admin a1;
 	Nurse n1;
+	String result;
   
 	@Given("^Any user of the program and a patient that has not been admitted$")
 	public void any_user_of_the_program_and_a_patient_that_has_not_been_admitted() {
@@ -33,7 +34,7 @@ public class StepDefinition {
 	@Then("^The data is saved in the system and a confirmation is displayed to the user$")
 	public void the_data_is_saved_in_the_system_and_a_confirmation_is_displayed_to_the_user() {
 	    // Check the data has been saved
-		assertEquals("John",p1.getFirstName());
+		assertEquals("Jane",p1.getFirstName());
 	}
 
 	@Given("^A user and a department$")
@@ -45,14 +46,16 @@ public class StepDefinition {
 
 	@When("^I choose a statistic to see$")
 	public void i_choose_a_statistic_to_see(){
-	    // Return a statistic 
-		Query.depLeastPatients();
+	    // Return a statistic
+		Query q = new Query();
+		q.depMostUsers();
 	}
 
 	@Then("^The correct result is returned$")
 	public void the_correct_result_is_returned(){
 	    // check to see if result is correct
-		assertEquals(d1,Query.depLeastPatients());
+		Query q = new Query();
+		assertEquals("Outpatient, Emergency",q.depMostUsers());
 	}
 
 	@Given("^A department$")
@@ -64,13 +67,14 @@ public class StepDefinition {
 	@When("^I request the number of available beds$")
 	public void i_request_the_number_of_available_beds(){
 	    //return number of available beds
-		
+		Query query = new Query();
+		result = query.bedStatus();
 	}
 
 	@Then("^an integer is returned with the number of free beds$")
 	public void an_integer_is_returned_with_the_number_of_free_beds(){
 	    //check the data returned
-		//assertEquals(10,d1.capacity);
+		assertEquals("Inpatient: 0\nEmergency: 0",result);
 	}
 
 	@Given("^A new patient$")
@@ -131,37 +135,37 @@ public class StepDefinition {
 	@Then("^A nurse edits the patients data$")
 	public void a_nurse_edits_the_patients_data() throws Throwable {
 	    // Edit patient data
-		p1.setRecord(p1.getRecord() + "Jane");
+		p1.setFirstName("Edit");
 	}
 
 	@Then("^The new information is saved to the HMS$")
 	public void the_new_information_is_saved_to_the_HMS() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	    // Check the users name was changed
+	    assertEquals("Edit",p1.getFirstName());
 	}
 
 	@Given("^A user that has registerd a new patient$")
 	public void a_user_that_has_registerd_a_new_patient() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	    // create a new Patient
+	    p1 = new Patient("Jane", "Doe", "01/01/2000", "456 North St Anytown, Denmark", "+45234556789");
 	}
 
 	@When("^I close the system$")
 	public void i_close_the_system() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	    throw new PendingException(); // TODO
 	}
 
 	@When("^reopen the system$")
 	public void reopen_the_system() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	    throw new PendingException(); // TODO
 	}
 
 	@Then("^The User and Patient are still saved$")
 	public void the_User_and_Patient_are_still_saved() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	    throw new PendingException(); // TODO
 	}
 
 	@Given("^Two different departments$")

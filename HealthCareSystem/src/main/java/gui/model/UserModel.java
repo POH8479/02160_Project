@@ -69,10 +69,13 @@ public class UserModel extends AbstractTableModel {
 		switch(toRemove.getDepartment()) {
 			case "Emergency":
 				Emergency.getInstance().getUserList().remove(toRemove);
+				break;
 			case "Outpatient":
 				Outpatient.getInstance().getUserList().remove(toRemove);
+				break;
 			case "Inpatient":
 				Inpatient.getInstance().getUserList().remove(toRemove);
+				break;
 			case "Management":
 				Management.getInstance().getUserList().remove(toRemove);
 		}
