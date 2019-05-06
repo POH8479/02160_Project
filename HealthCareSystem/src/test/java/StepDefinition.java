@@ -1,16 +1,11 @@
 import static org.junit.Assert.*;
 
-
-
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import hospitalmanagementsystem.*;
-
-
 import hospitalmanagementsystem.departments.Emergency;
-
 import hospitalmanagementsystem.users.*;
 
 public class StepDefinition {
@@ -20,7 +15,6 @@ public class StepDefinition {
 	Patient p1;
 
 	Emergency d1;
-	Inpatient d2;
 	Admin a1;
 	Nurse n1;
   
@@ -39,25 +33,26 @@ public class StepDefinition {
 	@Then("^The data is saved in the system and a confirmation is displayed to the user$")
 	public void the_data_is_saved_in_the_system_and_a_confirmation_is_displayed_to_the_user() {
 	    // Check the data has been saved
-		assertEquals("John",p1.getPatientInfo().get("First Name"));
+		assertEquals("John",p1.getFirstName());
 	}
 
 	@Given("^A user and a department$")
-	public void a_user_and_a_department() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void a_user_and_a_department(){
+	    // Create a user and a department
+		u1 = new User("John Doe", "123 Main St Anytown, Denmark", "+4512345678");
+		d1=Emergency.getInstance();
 	}
 
 	@When("^I choose a statistic to see$")
-	public void i_choose_a_statistic_to_see() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void i_choose_a_statistic_to_see(){
+	    // Return a statistic 
+		Query.depLeastPatients();
 	}
 
 	@Then("^The correct result is returned$")
-	public void the_correct_result_is_returned() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void the_correct_result_is_returned(){
+	    // check to see if result is correct
+		assertEquals(d1,Query.depLeastPatients());
 	}
 
 	@Given("^A department$")
@@ -82,7 +77,6 @@ public class StepDefinition {
 	public void a_new_patient() {
 	    // create a new patient
 		p1=new Patient("Jane", "Doe", "01/01/2000", "456 North St Anytown, Denmark", "+45234556789");	
-
 	}
 
 	@Given("^a User$")
@@ -94,13 +88,13 @@ public class StepDefinition {
 	@When("^The User registers a patient with their non medical data$")
 	public void the_User_registers_a_patient_with_their_non_medical_data(){
 	    // register patient data
-		u1.registerPatient("Jane", "Doe", "01/01/2000", "456 North St Anytown, Denmark", "+45234556789");
+		p1 = new Patient("Jane", "Doe", "01/01/2000", "456 North St Anytown, Denmark", "+45234556789");
 	}
 
 	@Then("^A new patient is created in the HMS$")
 	public void a_new_patient_is_created_in_the_HMS(){
 	    // check that information was entered correctly
-		assertEquals("Jane", p1.getPatientInfo().get("First Name"));
+		assertEquals("Jane", p1.getFirstName());
 	}
 
 	@Given("^A new user$")
@@ -118,7 +112,7 @@ public class StepDefinition {
 	@When("^The Admin creates a new User$")
 	public void the_Admin_creates_a_new_User() throws Throwable {
 	    // create a new user
-		a1.addUser("John Doe", "123 Main St Anytown, Denmark", "+4512345678","Doctor");
+		u1 = new User("John Doe", "+4512345678","Doctor");
 	}
 
 	@Then("^A new user is created in the HMS$")
@@ -137,7 +131,7 @@ public class StepDefinition {
 	@Then("^A nurse edits the patients data$")
 	public void a_nurse_edits_the_patients_data() throws Throwable {
 	    // Edit patient data
-		n1.editMedicalData(p1, "Jane");
+		p1.setRecord(p1.getRecord() + "Jane");
 	}
 
 	@Then("^The new information is saved to the HMS$")
@@ -171,17 +165,15 @@ public class StepDefinition {
 	}
 
 	@Given("^Two different departments$")
-	public void two_different_departments(){
-	    // create two new departments
-		d1=Emergency.getInstance();
-		d2=Inpatient.getInstance();
+	public void two_different_departments() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
 	}
 
 	@When("^I search for the department with the most patients$")
-	public void i_search_for_the_department_with_the_most_patients(){
-	    //return department with most patients
-		Query.depMostPatients();
-		
+	public void i_search_for_the_department_with_the_most_patients() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new PendingException();
 	}
 
 	@Then("^I will be shown the correct department$")
