@@ -29,6 +29,8 @@ public class QueryTest{
 	static User u2;
 	static User u3;
 	
+	static Bed b1;
+	
 	/**
 	 * Initializes objects with values used for testing
 	 * @throws IllegalAccessException
@@ -49,6 +51,7 @@ public class QueryTest{
 		u2 = new User();
 		u3 = new User();
 		
+		b1 = new Bed();
 		
 	}
 	
@@ -130,5 +133,16 @@ public class QueryTest{
 		users.add(u1);
 		inPa.setUserList(users);
 		assertEquals(1, testQuery.totUsers());
+	}
+	
+	@Test
+	public void bedStatusTest() {
+		ArrayList<Bed> beds = new ArrayList<Bed>();
+		beds.add(b1);
+		inPa.setBedList(beds);
+		
+		assertEquals("Inpatient: " + 1 +
+					  "\nEmergency: " + 0, 
+					  testQuery.bedStatus());
 	}
 }

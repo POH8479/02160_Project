@@ -69,7 +69,7 @@ public class PatientModel extends AbstractTableModel {
 			// User does not have access to perform this
 			e.printStackTrace();
 		}
-
+		
 		// notify the views that data changed
 		fireTableDataChanged();
 	}

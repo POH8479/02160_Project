@@ -211,4 +211,13 @@ public class Query {
 		manSize = Management.getInstance().getUserList().size();
 		return inSize + outSize + emSize + manSize;
 	}
+	
+	public String bedStatus() {
+		inSize = Inpatient.getInstance().getBedList().size();
+		emSize = Emergency.getInstance().getBedList().size();
+		
+		returnValue = "Inpatient: " + inSize +
+					  "\nEmergency: " + emSize;
+		return returnValue;
+	}
 }
