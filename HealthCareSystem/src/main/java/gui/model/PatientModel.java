@@ -69,7 +69,7 @@ public class PatientModel extends AbstractTableModel {
 			// User does not have access to perform this
 			e.printStackTrace();
 		}
-
+		
 		// notify the views that data changed
 		fireTableDataChanged();
 	}
@@ -86,6 +86,9 @@ public class PatientModel extends AbstractTableModel {
 		// find the patient and admit them to the department
 		Patient toAdmit = findPatient(patientID);
 		toAdmit.updateDepartment(dept);
+		ArrayList<Patient> patients = dept.getPatientList();
+		patients.add(toAdmit);
+		dept.setPatientList(patients);
 	}
 
 	/**

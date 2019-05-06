@@ -37,21 +37,22 @@ public class StepDefinition {
 	}
 
 	@Given("^A user and a department$")
-	public void a_user_and_a_department() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void a_user_and_a_department(){
+	    // Create a user and a department
+		u1 = new User("John Doe", "123 Main St Anytown, Denmark", "+4512345678");
+		d1=Emergency.getInstance();
 	}
 
 	@When("^I choose a statistic to see$")
-	public void i_choose_a_statistic_to_see() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void i_choose_a_statistic_to_see(){
+	    // Return a statistic 
+		Query.depLeastPatients();
 	}
 
 	@Then("^The correct result is returned$")
-	public void the_correct_result_is_returned() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void the_correct_result_is_returned(){
+	    // check to see if result is correct
+		assertEquals(d1,Query.depLeastPatients());
 	}
 
 	@Given("^A department$")

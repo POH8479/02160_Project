@@ -1,91 +1,148 @@
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import hospitalmanagementsystem.Patient;
-import hospitalmanagementsystem.Query;
-import hospitalmanagementsystem.departments.Emergency;
-import hospitalmanagementsystem.departments.Inpatient;
-import hospitalmanagementsystem.departments.Management;
-import hospitalmanagementsystem.departments.Outpatient;
-import hospitalmanagementsystem.users.User;
 
-class QueryTest {
+import hospitalmanagementsystem.*;
+import hospitalmanagementsystem.departments.*;
+import hospitalmanagementsystem.users.*;
+
+/**
+*
+* @author Asger Conradsen
+*/
+public class QueryTest{
+	static Query testQuery;
 	
-
-		//Define patients and departments
-		static Query query;
-		public static void Queries(){
-		query = new Query();	
-		}
+	static Emergency em;
+	static Inpatient inPa;
+	static Outpatient outPa;
+	static Management man;
+	
+	static Patient p1;
+	static Patient p2;
+	
+	static User u1;
+	static User u2;
+	static User u3;
+	
+	static Bed b1;
+	
+	/**
+	 * Initializes objects with values used for testing
+	 * @throws IllegalAccessException
+	 */
+	@BeforeClass
+	public static void setUpBeforeClass() throws IllegalAccessException {	
+		testQuery = new Query();
 		
-		
-		static Patient p1;
-		static Patient p2;
-		static Patient p3;
-		static Patient p4;
-		static Patient p5;
-		static Patient p6;
-
-
-		static User u1;
-		static User u2;
-		static User u3;
-		static User u4;
-		static User u5;
-		static User u6;
-		static User u7;
-		static User u8;
-		
-		static Management man;
-		static Inpatient in;
-		static Outpatient out;
-		static Emergency em;
-		public static void Departments(){
 		em = Emergency.getInstance();
-		in = Inpatient.getInstance();
-		out = Outpatient.getInstance();
+		inPa = Inpatient.getInstance();
+		outPa = Outpatient.getInstance();
 		man = Management.getInstance();
-		}
-		public static void AddPatients(){
-		em.addPatient(p1);
-		em.addPatient(p2);
-		in.addPatient(p3);
-		out.addPatient(p4);
-		em.addPatient(p5);
-		in.addPatient(p6);
-		}
 		
-		public static void AddUsers() {
-			em.addUser(u1);
-			man.addUser(u2);
-			man.addUser(u3);
-			out.addUser(u4);
-			out.addUser(u5);
-			out.addUser(u6);
-			in.addUser(u7);
-			in.addUser(u8);
-		}
-	@Test
-	void depMostPatientsTest() {
-		assertEquals("Emergency",query.depMostPatients());
+		p1 = new Patient();
+		p2 = new Patient();
+		
+		u1 = new User();
+		u2 = new User();
+		u3 = new User();
+		
+		b1 = new Bed();
+		
 	}
-	@Test
-	void depLeastPatientsTest() {
-		assertEquals("Outpatient",query.depMostPatients());
+	
+	/**
+	 * Clean user- and patientlists before each test
+	 */
+	@Before
+	public void clean() {
+		em.setPatientList(new ArrayList<Patient>());
+		inPa.setPatientList(new ArrayList<Patient>());
+		outPa.setPatientList(new ArrayList<Patient>());
+		
+		em.setUserList(new ArrayList<User>());
+		inPa.setUserList(new ArrayList<User>());
+		outPa.setUserList(new ArrayList<User>());
+		man.setUserList(new ArrayList<User>());
 	}
+	
 	@Test
-	void depMostUsersTest() {
-		assertEquals("Outpatient",query.depMostUsers());
+	public void depMostPatientsTest() {
+		//Case where emergency has the most patients
+		ArrayList<Patient> patients = new ArrayList<Patient>();
+		patients.add(p1);
+		em.setPatientList(patients);
+		assertEquals("Emergency", testQuery.depMostPatients());
+		
+		//Case where emergency and inPatient has equal amount
+		patients.clear();
+		patients.add(p2);
+		inPa.setPatientList(patients);
+		assertEquals("Inpatient, Emergency", testQuery.depMostPatients());
 	}
+	
 	@Test
-	void depLeastUsersTest() {
-		assertEquals("Emergency",query.depMostUsers());
+	public void depLeastPatientsTest() {
+		//Case where inpatient and outpatient has same amount
+		ArrayList<Patient> patients = new ArrayList<Patient>();
+		patients.add(p1);
+		em.setPatientList(patients);
+		assertEquals("Inpatient, Outpatient", testQuery.depLeastPatients());
+		
+		//case where outpatient has the least
+		patients = new ArrayList<Patient>();
+		patients.add(p2);
+		inPa.setPatientList(patients);
+		assertEquals("Outpatient", testQuery.depLeastPatients());
 	}
+	
 	@Test
-	void totPatientsTest() {
-		assertEquals(6,query.totPatients());
+	public void depMostUsersTest() {
+		//case where emergency has the most users
+		ArrayList<User> users = new ArrayList<User>();
+		users.add(u1);
+		em.setUserList(users);
+		assertEquals("Emergency", testQuery.depMostUsers());
 	}
+	
 	@Test
-	void totUsersTest(){
-		assertEquals(8,query.totUsers());
+	public void depLeastUsersTest() {
+		//case where only emergency has users
+		ArrayList<User> users = new ArrayList<User>();
+		users.add(u1);
+		em.setUserList(users);
+		assertEquals("Inpatient, Outpatient, Management", 
+				testQuery.depLeastUsers());
+	}
+	
+	@Test
+	public void totPatientsTest() {
+		ArrayList<Patient> patients = new ArrayList<Patient>();
+		patients.add(p1);
+		inPa.setPatientList(patients);
+		assertEquals(1, testQuery.totPatients());
+	}
+	
+	@Test
+	public void totUsersTest() {
+		ArrayList<User> users = new ArrayList<User>();
+		users.add(u1);
+		inPa.setUserList(users);
+		assertEquals(1, testQuery.totUsers());
+	}
+	
+	@Test
+	public void bedStatusTest() {
+		ArrayList<Bed> beds = new ArrayList<Bed>();
+		beds.add(b1);
+		inPa.setBedList(beds);
+		
+		assertEquals("Inpatient: " + 1 +
+					  "\nEmergency: " + 0, 
+					  testQuery.bedStatus());
 	}
 }
