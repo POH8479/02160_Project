@@ -1,6 +1,8 @@
 package hospitalmanagementsystem;
 
 import hospitalmanagementsystem.departments.Department;
+import hospitalmanagementsystem.departments.Emergency;
+import hospitalmanagementsystem.departments.Inpatient;
 
 /**
  * The Patient Class represents a Patient in the Hospital.
@@ -63,7 +65,7 @@ public class Patient {
 			// check if the patient is in a bed
 			if(this.bed != null && (this.dept.equals("Emergency") || this.dept.equals("Inpatient"))) {
 				// if they are remove the patient from the bed
-				for(Bed bed : department.getBedList()) {
+				for(Bed bed : (this.dept.equals("Emergency")) ? Emergency.getInstance().getBedList():Inpatient.getInstance().getBedList()) {
 					if(bed.getBedID().equals(this.bed)) {
 						bed.setPatient(null);
 						this.bed = null;

@@ -1,5 +1,8 @@
 package hospitalmanagementsystem;
 
+import hospitalmanagementsystem.departments.Emergency;
+import hospitalmanagementsystem.departments.Inpatient;
+
 /**
  * The bed has a unique final ID, patient and department where it belongs.
  * A bed can only lay one patient and belong to one department.
@@ -29,6 +32,11 @@ public class Bed {
 		// assign other variables
 		if(dep != null && (dep.equals("Emergency") || dep.equals("Inpatient"))) {
 			this.department = dep;
+			if(dep.equals("Emergency")) {
+				Emergency.getInstance().addBed(this);
+			} else {
+				Inpatient.getInstance().addBed(this);
+			}
 		} else {
 			throw new IllegalArgumentException(String.format("Cannot create a bed in the %s department.",dep));
 		}
@@ -77,7 +85,17 @@ public class Bed {
 			persist.delete(this.bedID, this.department);
 
 			// set the department
+			if(this.department.equals("Emergency")) {
+				Emergency.getInstance().removeBed(this);
+			} else {
+				Inpatient.getInstance().removeBed(this);
+			}
 			this.department = dep;
+			if(dep.equals("Emergency")) {
+				Emergency.getInstance().removeBed(this);
+			} else {
+				Inpatient.getInstance().removeBed(this);
+			}
 		} else {
 			throw new IllegalArgumentException(String.format("%s is an invalid department.",dep));
 		}
