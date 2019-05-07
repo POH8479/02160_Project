@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy package &apos;application.utils&apos; to &apos;HealthCareSystem/src/main/java&apos;&#x0A;- Original project: &apos;inventory-manager&apos;&#x0A;- Destination element: &apos;HealthCareSystem/src/main/java&apos;&#x0A;- Original element: &apos;inventory-manager/src/application.utils&apos;" description="Copy package" destination="=HealthCareSystem/src\/main\/java" element1="/src&lt;application.utils" flags="589830" fragments="1" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyPackages" stamp="1556195444982" version="1.0"/>
+</session>

@@ -1,0 +1,28 @@
+package gui.view;
+
+import gui.controller.AdvancedQueryController;
+import gui.model.PatientModel;
+import gui.model.Session;
+
+public class AdvancedQueryView {
+
+	public AdvancedQueryView(AdvancedQueryController advancedQueryController) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public void setVisible(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setTableModel(PatientModel patientModel) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setSession(Session sessionModel) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

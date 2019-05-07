@@ -20,7 +20,7 @@
 Feature: create a staff account
 
   @tag1
-  Scenario Outline: data 
+  Scenario: data 
     Given A User
     When I update the users Address
     Then The Users profile reflects this change

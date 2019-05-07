@@ -1,0 +1,114 @@
+package hospitalmanagementsystem;
+
+/**
+ * The bed has a unique final ID, patient and department where it belongs.
+ * A bed can only lay one patient and belong to one department.
+ * @author Pieter O'Hearn
+ */
+public class Bed {
+	// Static Variables
+	private static PersistenceLayer persist = new PersistenceLayer();
+
+	// Instance Variables
+	String bedID;
+	String department;
+	Patient patient;
+	
+	public Bed() {}
+	
+	/**
+	 * Creates a new instance of a Bed with no Patient but a specified department
+	 * @param dep
+	 * @throws IllegalArgumentException
+	 */
+	public Bed(String dep) throws IllegalArgumentException {
+		// give the new bed a unique ID
+		int IDCounter = persist.loadCounter() + 1;
+		this.bedID = "B" + Integer.toString(IDCounter);
+		persist.saveCounter(IDCounter);
+		
+		// assign other variables
+		if(dep != null && (dep.equals("Emergency") || dep.equals("Inpatient"))) {
+			this.department = dep;
+		} else {
+			throw new IllegalArgumentException(String.format("Cannot create a bed in the %s department.",dep));
+		}
+		
+		// save the bed to file
+		persist.save(this, this.bedID, this.department);
+	}
+
+	/**
+	 * Adds a Patient to the bed
+	 * @param patient
+	 * @throws IllegalArgumentException
+	 */
+	public void updatePatient(Patient patient) throws IllegalArgumentException {
+		// check if the bed is full
+		if(this.patient != null) {
+			// if full throw IllegalArgumentException
+			throw new IllegalArgumentException(String.format("Bed %s is already occupied", this.bedID));
+		} else if(!patient.getDepartment().equals(this.department)) {
+			// if bed is in wrong department throw IllegalArgumentException
+			throw new IllegalArgumentException(String.format("Bed %s is in a different Department to %s", this.bedID, patient.getFirstName()));
+		} else {
+			// if empty and in the same department update patient
+			this.patient = patient;
+		}
+		
+		// update the beds file
+		persist.save(this, this.bedID, this.department);
+	}
+
+	/**
+	 * returns the patientID of the patient that is currently occupying the bed or null if empty.
+	 * @return the patient ID
+	 */
+	public String getPatient() {
+		// check if null
+		if(this.patient == null) {
+			return null;
+		}
+		
+		// if not null return patient ID
+		return this.patient.getpatientID();
+	}
+	
+	public void updateDepartment(String dep) {
+		// assign other variables
+		if(dep != null && (dep.equals("Emergency") || dep.equals("Inpatient"))) {
+			// remove the bed file from its department folder
+			persist.delete(this.bedID, this.department);
+
+			// set the department
+			this.department = dep;
+		} else {
+			throw new IllegalArgumentException(String.format("%s is an invalid department.",dep));
+		}
+		
+		// save the bed file to its new department folder
+		persist.save(this, this.bedID, this.department);
+	}
+	
+	// Getters
+	public String getBedID() {
+		return this.bedID;
+	}
+	
+	public String getDepartment() {
+		return this.department;
+	}
+	
+	// Setters
+	public void setBedID(String id) {
+		this.bedID = id;
+	}
+	
+	public void setDepartment(String dep) {
+		this.department = dep;
+	}
+	
+	public void setPatient() {
+		
+	}
+}

@@ -1,0 +1,54 @@
+import static org.junit.Assert.assertEquals;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import hospitalmanagementsystem.*;
+import hospitalmanagementsystem.departments.*;
+import hospitalmanagementsystem.users.*;
+
+/**
+ * Tests for Admin Class
+ * @author Jack Rodman
+ */
+public class AdminTest {
+	// Users
+	static Admin ad1;
+	static Admin ad2;
+
+	/**
+	 * Initialise User variables to use in testing
+	 */
+	@BeforeClass
+	public static void setUpBeforeClass() {
+		// create Administrators
+		ad1 = new Admin("John Doe", "+4512345678");
+		ad2 = new Admin("Andy Admin", "+4912345678");
+	}
+
+	/**
+	 * Test the editUser() method in the User class.
+	 */
+	@Test
+	public void editUserTest() { 
+		// initially check that u1 has a phone number and name
+		assertEquals("John Doe", u1.getUserName());
+		assertEquals("12345678", u1.getNumber());
+		
+		// edit the User
+		u1.editUser("Sam Evens", "23456789");
+		
+		// check that the users info has changed
+		assertEquals("Sam Evens", u1.getUserName());
+		assertEquals("23456789", u1.getNumber());
+	}
+	
+	/**
+	 * Tests the getType method in the User class.
+	 */
+	@Test
+	public void getTypeTest() { 
+		// ensure that getType returns "User"
+		assertEquals("User", u2.getType());
+	}
+}

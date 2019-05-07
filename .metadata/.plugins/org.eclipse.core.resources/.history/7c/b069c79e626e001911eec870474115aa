@@ -1,0 +1,46 @@
+import static org.junit.Assert.*;
+
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+import hospitalmanagementsystem.*;
+import hospitalmanagementsystem.departments.*;
+import hospitalmanagementsystem.users.*;
+
+/**
+ * Testing the Doctor Class
+ * @author Pieter O'Hearn
+ */
+public class DoctorTest {
+	// Users
+	static Doctor d1;
+	static Doctor d2;
+
+	/**
+	 * Initialise User variables to use in testing
+	 */
+	@BeforeClass
+	public static void setUpBeforeClass() {
+		// create Doctors
+		d1 = new Doctor("John Doe", "+4512345678", "Emergency");
+		d2 = new Doctor("Jane Doctor", "+4912345678", "Inpatient");
+	}
+	
+	/**
+	 * Tests the getType method in the Admin class.
+	 */
+	@Test
+	public void getTypeTest() { 
+		// ensure that getType returns "User"
+		assertEquals("Admin", ad1.getType());
+	}
+	
+	/**
+	 * Tests the moveDepartment method of the Admin class.
+	 */
+	@Test(expected = UnsupportedOperationException.class)
+	public void moveDepartmentTest() {
+		// An Admin cannot move departments so UnsupportedOperationException should be thrown
+		ad2.moveDepartment("Emergency");
+	}
+}

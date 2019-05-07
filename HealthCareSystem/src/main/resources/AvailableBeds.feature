@@ -27,7 +27,7 @@ Feature: check for available beds
     Then an integer is returned with the number of free beds
 
   @tag2
-  Scenario Outline: Request list of beds 
+  Scenario: Request list of beds 
     Given a department
     When I request the list of beds in that department
     Then A List of Bed objects is returned

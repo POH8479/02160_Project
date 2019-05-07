@@ -1,0 +1,77 @@
+package hospitalmanagementsystem.departments;
+
+import java.util.ArrayList;
+
+import hospitalmanagementsystem.Bed;
+import hospitalmanagementsystem.Patient;
+import hospitalmanagementsystem.users.*;
+
+public class Management implements Department {
+	// static variable single_instance of type Emergency 
+    private static Management single_instance = null; 
+    
+    // Instance variables
+    private ArrayList<User> userList;
+    
+	private Management() {
+		userList = new ArrayList<User>();
+	}
+	
+    // static method to create instance of Management class 
+    public static Management getInstance() { 
+        if (single_instance == null) {
+            single_instance = new Management();
+        }
+  
+        return single_instance; 
+    }
+    
+	public void addPatient(Patient patient) {
+		// TODO Cannot
+	}
+	
+	public void removePatient(Patient patient) {
+		// TODO Cannot
+	
+	}
+	
+	public void addUser(User user) {
+		userList.add(user);
+	}
+	
+	public void removeUser(User user) {
+		userList.remove(user);
+	}
+	
+	//Getters		
+	public String getName() {
+			return "Management";
+		}
+		
+	public ArrayList<Bed> getBedList(){
+		// TODO Cannot
+		return null;
+	}
+		
+	public ArrayList<Patient> getPatientList() {
+		// TODO Cannot
+		return null;
+	}
+	
+	public ArrayList<User> getUserList() {
+		return this.userList;
+	}
+		
+	//Setters
+	public void setBedList(ArrayList<Bed> beds) {
+		// TODO Cannot
+	}
+		
+	public void setPatientList(ArrayList<Patient> patients) {
+		// TODO Cannot
+	}
+		
+	public void setUserList(ArrayList<User> users) {
+		this.userList = users;
+	}
+}

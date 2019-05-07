@@ -26,25 +26,25 @@ Feature: User Management
     Then An Exception is thrown
 
   @tag2
-  Scenario Outline: Nurse requesting other departments patient records
+  Scenario: Nurse requesting other departments patient records
     Given A nurse and a patient from another department
     When The nurse requests the patient medical data
     Then An Exception is thrown
  
   @tag3
-  Scenario Outline: Admin requesting patient records
+  Scenario: Admin requesting patient records
     Given An admin and a patient from another department
     When The admin requests the patient medical data
     Then No Exception is thrown
 
   @tag4
-  Scenario Outline: Nurse reading User data
+  Scenario: Nurse reading User data
     Given A nurse and a User
     When The nurse requests the Users data
     Then An Exception is thrown
  
   @tag3
-  Scenario Outline: Admin reading User data
+  Scenario: Admin reading User data
     Given An admin and a User
     When The admin requests the Users data
     Then No Exception is thrown

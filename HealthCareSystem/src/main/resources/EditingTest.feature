@@ -26,7 +26,7 @@ Feature: editting profile(s)
     And The new information is saved to the HMS
 
   @tag2
-  Scenario Outline: verify the changes
+  Scenario: verify the changes
     Given I have changed a Patients profile
     When I request their information
     Then The patients information has succesfully changed

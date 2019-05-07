@@ -1,0 +1,15 @@
+import java.util.ArrayList;
+
+import org.junit.runner.RunWith;
+import cucumber.api.CucumberOptions;
+import cucumber.api.java.Before;
+import cucumber.api.junit.Cucumber;
+import hospitalmanagementsystem.Patient;
+import hospitalmanagementsystem.departments.*;
+import hospitalmanagementsystem.users.User;
+
+@RunWith(Cucumber.class)
+@CucumberOptions(
+		features = "src/main/resources")
+public class CucumberTest {
+}

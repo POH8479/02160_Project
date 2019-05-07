@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="java" project="HealthCareSystem" tests="131" started="115" failures="0" errors="0" ignored="0">
+  <testsuite name="InpatientTest" time="0.002">
+    <testcase name="removeUserTest" classname="InpatientTest" time="0.001"/>
+    <testcase name="removePatientTest" classname="InpatientTest" time="0.0"/>
+    <testcase name="addUserTest" classname="InpatientTest" time="0.0"/>
+    <testcase name="setUserListTest" classname="InpatientTest" time="0.0"/>
+    <testcase name="getNameTest" classname="InpatientTest" time="0.001"/>
+    <testcase name="setBedListTest" classname="InpatientTest" time="0.0"/>
+    <testcase name="removeBedTest" classname="InpatientTest" time="0.0"/>
+    <testcase name="addPatientTest" classname="InpatientTest" time="0.0"/>
+    <testcase name="addBedTest" classname="InpatientTest" time="0.0"/>
+    <testcase name="setPatientListTest" classname="InpatientTest" time="0.0"/>
+  </testsuite>
+  <testsuite name="BedTest" time="0.017">
+    <testcase name="updateDepartmentTest" classname="BedTest" time="0.0"/>
+    <testcase name="setPatientTest" classname="BedTest" time="0.0"/>
+    <testcase name="updateInvalidDepartmentTest" classname="BedTest" time="0.0"/>
+    <testcase name="updatePatientTest" classname="BedTest" time="0.0"/>
+    <testcase name="updatePatientWrongDepartmentTest" classname="BedTest" time="0.0"/>
+    <testcase name="updatePatientOccupiedTest" classname="BedTest" time="0.0"/>
+    <testcase name="illegalConstructorTest" classname="BedTest" time="0.017"/>
+  </testsuite>
+  <testsuite name="EmergencyTest" time="0.078">
+    <testcase name="removeUserTest" classname="EmergencyTest" time="0.001"/>
+    <testcase name="removePatientTest" classname="EmergencyTest" time="0.0"/>
+    <testcase name="addUserTest" classname="EmergencyTest" time="0.001"/>
+    <testcase name="setUserListTest" classname="EmergencyTest" time="0.009"/>
+    <testcase name="getNameTest" classname="EmergencyTest" time="0.0"/>
+    <testcase name="setBedListTest" classname="EmergencyTest" time="0.015"/>
+    <testcase name="removeBedTest" classname="EmergencyTest" time="0.009"/>
+    <testcase name="addPatientTest" classname="EmergencyTest" time="0.006"/>
+    <testcase name="addBedTest" classname="EmergencyTest" time="0.0"/>
+    <testcase name="setPatientListTest" classname="EmergencyTest" time="0.035"/>
+  </testsuite>
+  <testsuite name="OutpatientTest" time="0.081">
+    <testcase name="removeUserTest" classname="OutpatientTest" time="0.0"/>
+    <testcase name="removePatientTest" classname="OutpatientTest" time="0.001"/>
+    <testcase name="addUserTest" classname="OutpatientTest" time="0.0"/>
+    <testcase name="setUserListTest" classname="OutpatientTest" time="0.007"/>
+    <testcase name="getNameTest" classname="OutpatientTest" time="0.001"/>
+    <testcase name="setBedListTest" classname="OutpatientTest" time="0.001"/>
+    <testcase name="removeBedTest" classname="OutpatientTest" time="0.0"/>
+    <testcase name="addPatientTest" classname="OutpatientTest" time="0.001"/>
+    <testcase name="addBedTest" classname="OutpatientTest" time="0.01"/>
+    <testcase name="setPatientListTest" classname="OutpatientTest" time="0.019"/>
+    <testcase name="getBedListTest" classname="OutpatientTest" time="0.041"/>
+  </testsuite>
+  <testsuite name="LoginManagerTest" time="0.024">
+    <testcase name="checkIDTest" classname="LoginManagerTest" time="0.008"/>
+    <testcase name="testConstructor" classname="LoginManagerTest" time="0.015"/>
+  </testsuite>
+  <testsuite name="UserTest" time="0.027">
+    <testcase name="editUserTest" classname="UserTest" time="0.003"/>
+    <testcase name="constructorTest" classname="UserTest" time="0.004"/>
+    <testcase name="getUserIDTest" classname="UserTest" time="0.007"/>
+    <testcase name="getTypeTest" classname="UserTest" time="0.013"/>
+  </testsuite>
+  <testsuite name="DoctorTest" time="0.037">
+    <testcase name="constructorTest" classname="DoctorTest" time="0.012"/>
+    <testcase name="moveDepartmentTest" classname="DoctorTest" time="0.003"/>
+    <testcase name="getTypeTest" classname="DoctorTest" time="0.0"/>
+    <testcase name="illegalConstructorTest" classname="DoctorTest" time="0.022"/>
+  </testsuite>
+  <testsuite name="NurseTest" time="0.053">
+    <testcase name="constructorTest" classname="NurseTest" time="0.022"/>
+    <testcase name="moveDepartmentTest" classname="NurseTest" time="0.004"/>
+    <testcase name="getTypeTest" classname="NurseTest" time="0.0"/>
+    <testcase name="illegalConstructorTest" classname="NurseTest" time="0.027"/>
+  </testsuite>
+  <testsuite name="ManagementTest" time="0.045">
+    <testcase name="removeUserTest" classname="ManagementTest" time="0.0"/>
+    <testcase name="removePatientTest" classname="ManagementTest" time="0.0"/>
+    <testcase name="addUserTest" classname="ManagementTest" time="0.0"/>
+    <testcase name="setUserListTest" classname="ManagementTest" time="0.006"/>
+    <testcase name="getNameTest" classname="ManagementTest" time="0.0"/>
+    <testcase name="setBedListTest" classname="ManagementTest" time="0.0"/>
+    <testcase name="removeBedTest" classname="ManagementTest" time="0.0"/>
+    <testcase name="getPatientListTest" classname="ManagementTest" time="0.001"/>
+    <testcase name="addPatientTest" classname="ManagementTest" time="0.0"/>
+    <testcase name="addBedTest" classname="ManagementTest" time="0.005"/>
+    <testcase name="setPatientListTest" classname="ManagementTest" time="0.001"/>
+    <testcase name="getBedListTest" classname="ManagementTest" time="0.032"/>
+  </testsuite>
+  <testsuite name="PersistenceLayerTest" time="0.066">
+    <testcase name="saveTest" classname="PersistenceLayerTest" time="0.02"/>
+    <testcase name="loadTempsTest" classname="PersistenceLayerTest" time="0.011"/>
+    <testcase name="saveCounterTest" classname="PersistenceLayerTest" time="0.003"/>
+    <testcase name="loadCounterTest" classname="PersistenceLayerTest" time="0.003"/>
+    <testcase name="loadDepartmentTest" classname="PersistenceLayerTest" time="0.01"/>
+    <testcase name="deleteTest" classname="PersistenceLayerTest" time="0.019"/>
+  </testsuite>
+  <testsuite name="CucumberTest" incomplete="true">
+    <testsuite name="Feature: Patient Admission" incomplete="true">
+      <testsuite name="Scenario: Registration of a new patient" time="0.005">
+        <testcase name="Given Any user of the program and a patient that has not been admitted" classname="Scenario: Registration of a new patient" time="0.004"/>
+        <testcase name="When They enter a new patient's non-medical data" classname="Scenario: Registration of a new patient" time="0.0"/>
+        <testcase name="Then The data is saved in the system and a confirmation is displayed to the user" classname="Scenario: Registration of a new patient" time="0.001"/>
+      </testsuite>
+      <testcase name="Scenario Outline: Bed allocation" classname="Scenario Outline: Bed allocation" incomplete="true"/>
+      <testcase name="Scenario Outline: Calling on a patient " classname="Outpatient clinic" incomplete="true"/>
+      <testcase name="Scenario Outline: Discharging patients" classname="Scenario Outline: Discharging patients" incomplete="true"/>
+      <testcase name="Scenario Outline: Moving a patient to a new department" classname="Scenario Outline: Moving a patient to a new department" incomplete="true"/>
+      <testcase name="Scenario Outline: Moving a patient within a department" classname="Scenario Outline: Moving a patient within a department" incomplete="true"/>
+    </testsuite>
+    <testsuite name="Feature: Advanced Query Mechanism" time="0.001">
+      <testsuite name="Scenario: View statistics" time="0.001">
+        <testcase name="Given A user and a department" classname="Scenario: View statistics" time="0.0"/>
+        <testcase name="When I choose a statistic to see" classname="Scenario: View statistics" time="0.0"/>
+        <testcase name="Then The correct result is returned" classname="Scenario: View statistics" time="0.001"/>
+      </testsuite>
+    </testsuite>
+    <testsuite name="Feature: check for available beds" incomplete="true">
+      <testsuite name="Scenario: Number of free beds" time="0.0">
+        <testcase name="Given A department" classname="Scenario: Number of free beds" time="0.0"/>
+        <testcase name="When I request the number of available beds" classname="Scenario: Number of free beds" time="0.0"/>
+        <testcase name="Then an integer is returned with the number of free beds" classname="Scenario: Number of free beds" time="0.0"/>
+      </testsuite>
+      <testcase name="Scenario Outline: Request list of beds" classname="Scenario Outline: Request list of beds" incomplete="true"/>
+    </testsuite>
+    <testsuite name="Feature: create a profile" incomplete="true">
+      <testsuite name="Scenario: Creating a new patient profile" time="0.007">
+        <testcase name="Given A new patient" classname="Scenario: Creating a new patient profile" time="0.003"/>
+        <testcase name="And a User" classname="Scenario: Creating a new patient profile" time="0.003"/>
+        <testcase name="When The User registers a patient with their non medical data" classname="Scenario: Creating a new patient profile" time="0.0"/>
+        <testcase name="Then A new patient is created in the HMS" classname="Scenario: Creating a new patient profile" time="0.001"/>
+      </testsuite>
+      <testcase name="Scenario Outline: verify patients profile data" classname="Scenario Outline: verify patients profile data" incomplete="true"/>
+      <testsuite name="Scenario: Creating a new user profile" time="0.008">
+        <testcase name="Given A new user" classname="Scenario: Creating a new user profile" time="0.004"/>
+        <testcase name="And An Admin" classname="Scenario: Creating a new user profile" time="0.004"/>
+        <testcase name="When The Admin creates a new User" classname="Scenario: Creating a new user profile" time="0.0"/>
+        <testcase name="Then A new user is created in the HMS" classname="Scenario: Creating a new user profile" time="0.0"/>
+      </testsuite>
+      <testcase name="Scenario Outline: verify user profile data" classname="Scenario Outline: verify user profile data" incomplete="true"/>
+    </testsuite>
+    <testsuite name="Feature: editting profile(s)" incomplete="true">
+      <testsuite name="Scenario: edit a profile profile" time="0.001">
+        <testcase name="Given A nurse and a patient" classname="Scenario: edit a profile profile" time="0.0"/>
+        <testcase name="Then A nurse edits the patients data" classname="Scenario: edit a profile profile" time="0.001"/>
+        <testcase name="And The new information is saved to the HMS" classname="Scenario: edit a profile profile" time="0.0"/>
+      </testsuite>
+      <testcase name="Scenario Outline: verify the changes" classname="Scenario Outline: verify the changes" incomplete="true"/>
+    </testsuite>
+    <testsuite name="Feature: Persistency Layer" incomplete="true">
+      <testcase name="Scenario Outline: Moving patients" classname="Scenario Outline: Moving patients" incomplete="true"/>
+    </testsuite>
+    <testsuite name="Feature: Query test" time="0.001">
+      <testsuite name="Scenario: search for the department with the most patients" time="0.001">
+        <testcase name="Given Two different departments" classname="Scenario: search for the department with the most patients" time="0.0"/>
+        <testcase name="When I search for the department with the most patients" classname="Scenario: search for the department with the most patients" time="0.0"/>
+        <testcase name="Then I will be shown the correct department" classname="Scenario: search for the department with the most patients" time="0.0"/>
+      </testsuite>
+    </testsuite>
+    <testsuite name="Feature: create a staff account" incomplete="true">
+      <testcase name="Scenario Outline: data" classname="Scenario Outline: data" incomplete="true"/>
+    </testsuite>
+    <testsuite name="Feature: User Interface" incomplete="true">
+      <testsuite name="Scenario: Log in" time="0.001">
+        <testcase name="Given A user and a patient" classname="Scenario: Log in" time="0.0"/>
+        <testcase name="When I log in" classname="Scenario: Log in" time="0.0"/>
+        <testcase name="Then I am able to view the patients data" classname="Scenario: Log in" time="0.001"/>
+      </testsuite>
+      <testcase name="Scenario Outline: User Interface" classname="Scenario Outline: User Interface" incomplete="true"/>
+    </testsuite>
+    <testsuite name="Feature: User Management" incomplete="true">
+      <testsuite name="Scenario: A User" time="0.077">
+        <testcase name="Given A User and a patient" classname="Scenario: A User" time="0.001"/>
+        <testcase name="When the user trys to access a patients medical record" classname="Scenario: A User" time="0.0"/>
+        <testcase name="Then An Exception is thrown" classname="Scenario: A User" time="0.076"/>
+      </testsuite>
+      <testcase name="Scenario Outline: Nurse requesting other departments patient records" classname="Scenario Outline: Nurse requesting other departments patient records" incomplete="true"/>
+      <testcase name="Scenario Outline: Admin requesting patient records" classname="Scenario Outline: Admin requesting patient records" incomplete="true"/>
+      <testcase name="Scenario Outline: Nurse reading User data" classname="Scenario Outline: Nurse reading User data" incomplete="true"/>
+      <testcase name="Scenario Outline: Admin reading User data" classname="Scenario Outline: Admin reading User data" incomplete="true"/>
+    </testsuite>
+  </testsuite>
+  <testsuite name="PatientTest" time="0.034">
+    <testcase name="updateDepartmentTest" classname="PatientTest" time="0.008"/>
+    <testcase name="updateBedTest" classname="PatientTest" time="0.009"/>
+    <testcase name="updateRecordTest" classname="PatientTest" time="0.0"/>
+    <testcase name="getPatientInfoTest" classname="PatientTest" time="0.0"/>
+    <testcase name="updateDepartmentToManagementTest" classname="PatientTest" time="0.001"/>
+    <testcase name="getRecordTest" classname="PatientTest" time="0.0"/>
+    <testcase name="testConstructor" classname="PatientTest" time="0.016"/>
+  </testsuite>
+  <testsuite name="AdminTest" time="0.001">
+    <testcase name="moveDepartmentTest" classname="AdminTest" time="0.001"/>
+    <testcase name="getTypeTest" classname="AdminTest" time="0.0"/>
+  </testsuite>
+  <testsuite name="QueryTest" time="0.002">
+    <testcase name="totPatientsTest" classname="QueryTest" time="0.0"/>
+    <testcase name="depMostUsersTest" classname="QueryTest" time="0.0"/>
+    <testcase name="depLeastPatientsTest" classname="QueryTest" time="0.001"/>
+    <testcase name="depLeastUsersTest" classname="QueryTest" time="0.0"/>
+    <testcase name="bedStatusTest" classname="QueryTest" time="0.0"/>
+    <testcase name="totUsersTest" classname="QueryTest" time="0.001"/>
+    <testcase name="depMostPatientsTest" classname="QueryTest" time="0.0"/>
+  </testsuite>
+</testrun>

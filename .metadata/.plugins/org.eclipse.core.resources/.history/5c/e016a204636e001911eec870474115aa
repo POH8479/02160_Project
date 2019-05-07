@@ -1,0 +1,46 @@
+import static org.junit.Assert.*;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import hospitalmanagementsystem.*;
+import hospitalmanagementsystem.users.*;
+import hospitalmanagementsystem.departments.*;
+
+/**
+ * Testing the Nurse Class
+ * @author Pieter O'Hearn
+ */
+public class NurseTest {
+	// User
+	static Nurse n1;
+	static Nurse n2;
+
+	/**
+	 * Set up the necessary resources for the Nurse Test file
+	 */
+	@BeforeClass
+	public static void setUpBeforeClass() {
+		// create a Nurses
+		n1 = new Nurse("John Doe", "+4512345678", "Emergency");
+		n2 = new Nurse("Jane nurse", "+4912345678", "Inpatient");
+	}
+	
+	/**
+	 * Tests the getType method in the Doctor class.
+	 */
+	@Test
+	public void getTypeTest() { 
+		// ensure that getType returns "User"
+		assertEquals("Doctor", d1.getType());
+	}
+	
+	/**
+	 * Tests the moveDepartment method of the Doctor class.
+	 */
+	@Test
+	public void moveDepartmentTest() {
+		// Move the Doctor d2 to the Emergency Department
+		d2.moveDepartment("Emergency");
+		
+		assertEquals("Emergency", d2.getDepartment());
+	}
+}

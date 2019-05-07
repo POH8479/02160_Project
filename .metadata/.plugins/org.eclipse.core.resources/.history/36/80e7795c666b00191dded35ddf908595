@@ -1,0 +1,22 @@
+package gui.controller;
+
+import gui.model.Session;
+import gui.view.AdvancedQueryView;
+
+public class AdvancedQueryController {
+
+	public AdvancedQueryController(Session session) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public void display() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setView(AdvancedQueryView advancedQueryView) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

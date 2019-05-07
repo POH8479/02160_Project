@@ -27,7 +27,7 @@ Feature: create a profile
     Then A new patient is created in the HMS
 
   @tag2
-  Scenario Outline: verify patients profile data
+  Scenario: verify patients profile data
     Given A newly registered patient and a User
     When A User requests their non-medical data 
     Then The correct data is shown
@@ -40,7 +40,7 @@ Feature: create a profile
     Then A new user is created in the HMS
 
   @tag2
-  Scenario Outline: verify user profile data
+  Scenario: verify user profile data
     Given A newly registered User
     When I request their data 
     Then The correct data is shown

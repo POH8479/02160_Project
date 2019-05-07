@@ -1,0 +1,147 @@
+package hospitalmanagementsystem.departments;
+
+import java.util.ArrayList;
+import hospitalmanagementsystem.Bed;
+import hospitalmanagementsystem.Patient;
+import hospitalmanagementsystem.users.*;
+
+/**
+ * 
+ */
+public class Management implements Department {
+	// Static Variables
+    private static Management single_instance = null; 
+    
+    // Instance Variables
+    private ArrayList<User> userList;
+    
+    /**
+     * 
+     */
+	private Management() {
+		userList = new ArrayList<User>();
+	}
+	
+    /**
+     * 
+     * @return
+     */
+    public static Management getInstance() { 
+        if (single_instance == null) {
+            single_instance = new Management();
+        }
+  
+        return single_instance; 
+    }
+
+    /**
+	 * 
+	 * @param User
+	 */
+	public void addUser(User user) {
+		userList.add(user);
+	}
+
+	/**
+	 * 
+	 * @param User
+	 */
+	public void removeUser(User user) {
+		userList.remove(user);
+	}
+
+	/**
+	 * 
+	 * @param patient
+	 */
+	public void addPatient(Patient patient) {
+		// TODO Cannot do
+		throw new UnsupportedOperationException("The Management Department has No Patients.");
+	}
+
+	/**
+	 * 
+	 * @param patient
+	 */
+	public void removePatient(Patient patient) {
+		// TODO Cannot do
+	}
+	
+	/**
+	 * 
+	 * @param bed
+	 */
+	public void addBed(Bed bed) {
+		// TODO Cannot do
+	}
+
+	/**
+	 * 
+	 * @param bed
+	 */
+	public void removeBed(Bed bed) {
+		// TODO Cannot do
+	}
+
+	// GETTER METHODS
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getName() {
+		return "Management";
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<Bed> getBedList(){
+		// TODO Cannot do
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<Patient> getPatientList() {
+		// TODO Cannot do
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<User> getUserList() {
+		return this.userList;
+	}
+
+	// SETTER  METHODS
+	
+	/**
+	 * 
+	 * @param beds
+	 */
+	public void setBedList(ArrayList<Bed> beds) {
+		// TODO Cannot do
+	}
+
+	/**
+	 * 
+	 * @param patients
+	 */
+	public void setPatientList(ArrayList<Patient> patients) {
+		// TODO Cannot do
+	}
+
+	/**
+	 * 
+	 * @param users
+	 */
+	public void setUserList(ArrayList<User> users) {
+		this.userList = users;
+	}
+}

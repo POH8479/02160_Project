@@ -26,7 +26,7 @@ Feature: User Interface
     Then I am able to view the patients data
 
   @tag2
-  Scenario Outline: User Interface
+  Scenario: User Interface
     Given An existing user in the system
     When I change a users information
     Then The information is saved and accepted byt the system

@@ -27,30 +27,30 @@ Feature: Patient Admission
     Then The data is saved in the system and a confirmation is displayed to the user
 
   @tag2
-  Scenario Outline: Bed allocation
+  Scenario: Bed allocation
     Given A nurse and a patient with no allocated bed
     And a bed that is not in use
     When I assign the patient to the bed
     Then The bed is registered as being in use and can no longer be assigned
-    And The department's number of free beds changes
+    And The departments number of free beds changes
 
 
   @tag3
-  Scenario Outline: Calling on a patient (Outpatient clinic)
+  Scenario: Calling on a patient (Outpatient clinic)
     Given A Doctor and a patient
     When I assign a bed to a patient
     Then The patient occupies a bed in the department
     And the number of free beds on the department is updated
     
   @tag4
-  Scenario Outline: Discharging patients
+  Scenario: Discharging patients
     Given A nurse and a patient that is currently admitted to a deparment
     When I discharge the patient
     Then The patient is no longer admitted to a department
     And the number of free beds in the department in incremented by 1
     
   @tag5
-  Scenario Outline: Moving a patient to a new department
+  Scenario: Moving a patient to a new department
     Given A nurse and a patient admited to a department
     And A different department to move them to
     When I dischage the patient from the 1st department
@@ -59,7 +59,7 @@ Feature: Patient Admission
     And All their information is still saved
 
   @tag4
-  Scenario Outline: Moving a patient within a department
+  Scenario: Moving a patient within a department
     Given A nurse and a patient that is currently admitted to a deparment
     And admited to a bed within that department
     When I remove the patient from the 1st bed and assign a new bed to the patient

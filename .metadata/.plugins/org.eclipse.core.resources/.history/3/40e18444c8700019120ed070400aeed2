@@ -1,0 +1,18 @@
+import java.util.ArrayList;
+
+import org.junit.runner.RunWith;
+import cucumber.api.CucumberOptions;
+import cucumber.api.java.Before;
+import cucumber.api.junit.Cucumber;
+import hospitalmanagementsystem.departments.Emergency;
+import hospitalmanagementsystem.users.User;
+
+@RunWith(Cucumber.class)
+@CucumberOptions(
+		features = "src/main/resources")
+public class CucumberTest {
+	@Before
+	public void clean() {
+		Emergency.getInstance().setUserList(new ArrayList<User>());
+	}
+}

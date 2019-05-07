@@ -1,0 +1,94 @@
+import static org.junit.Assert.*;
+import java.util.ArrayList;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import hospitalmanagementsystem.Bed;
+import hospitalmanagementsystem.Patient;
+import hospitalmanagementsystem.departments.*;
+import hospitalmanagementsystem.users.*;
+
+/**
+ * 
+ * @author Karoline
+ */
+class InpatientTest {
+	// Users
+	static Doctor d1;
+	static Nurse n1;
+
+	// Patients
+	static Patient p1;
+	static Patient p2;
+
+	// Departments
+	static Emergency em;
+	static Inpatient inPa;
+	
+	// Beds
+	static Bed b1;
+	
+	/**
+	 * Initialise User variables to use in testing
+	 */
+	@BeforeClass
+	public static void setUpBeforeClass() {
+		// create the Departments
+		em = Emergency.getInstance();
+		inPa = Inpatient.getInstance();
+
+		// create the patients
+		p1 = new Patient("Pieter", "O\'Hearn", "12/01/1990", "259 Nordvej 2800 Kongens Lyngby", "+4562473948");
+		p2 = new Patient("Jack", "Rodman", "28/06/1997", "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
+		
+		// create the Users
+		d1 = new Doctor("Doc", "12345678", null);
+		n1 = new Nurse("Nurse", "12345678", "Emergency");
+		
+		// create the beds
+		b1 = new Bed("Emergency");
+	}
+	
+	/**
+	 * Test the addPatient method of the Inpatient Class.
+	 */
+	@Test
+	public void addPatientTest() {
+		// add p1 to the Inpatient department and test it worked
+		inPa.addPatient(p1);
+		assertTrue(inPa.getPatientList().contains(p1));
+	}
+
+	/**
+	 * Tests the removePatient method of the Inpatient Class.
+	 */
+	@Test
+	public void removePatientTest() {
+		// remove p1 from the Inpatient department and test it worked
+		inPa.removePatient(p1);
+		assertFalse(inPa.getPatientList().contains(p1));
+	}
+	
+	/**
+	 * Tests the getName method of the Inpatient Class.
+	 */
+	@Test
+	public void getNameTest() {
+		// check that "Inpatient" is returned
+		assertEquals("Inpatient",inPa.getName());
+	}
+	
+	/**
+	 * Tests the addUser method of the Inpatient Class.
+	 */
+	@Test
+	public void addUserTest(){
+		inPa.addUser(u1);
+		assertTrue(inPa.getUserList().contains(u1));
+	}
+
+	@Test
+	public void removeUserTest(){
+		inPa.removeUser(u1);
+		assertFalse(inPa.getUserList().contains(u1));
+	}inPa
+}

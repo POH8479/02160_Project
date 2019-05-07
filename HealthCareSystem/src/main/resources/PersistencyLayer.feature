@@ -20,7 +20,7 @@
 Feature: Persistency Layer
 
   @tag1
-  Scenario Outline: Moving patients
+  Scenario: Moving patients
     Given A patient that has previously been admitted and is now discharged
     When I admit the patient to my department
     Then The data from their previous admission is still saved

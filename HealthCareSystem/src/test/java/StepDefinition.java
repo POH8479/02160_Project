@@ -18,19 +18,7 @@ public class StepDefinition {
 	Nurse n1;
 	String result;
 	
-//	@Before
-//	public void clean() {
-//		Emergency.getInstance().setUserList(new ArrayList<User>());
-//		Emergency.getInstance().setPatientList(new ArrayList<Patient>());
-//		
-//		Inpatient.getInstance().setUserList(new ArrayList<User>());
-//		Inpatient.getInstance().setPatientList(new ArrayList<Patient>());
-//		
-//		Outpatient.getInstance().setUserList(new ArrayList<User>());
-//		Outpatient.getInstance().setPatientList(new ArrayList<Patient>());
-//		
-//		Management.getInstance().setUserList(new ArrayList<User>());
-//	}
+	Bed b1;
   
 	@Given("^Any user of the program and a patient that has not been admitted$")
 	public void any_user_of_the_program_and_a_patient_that_has_not_been_admitted() {
@@ -49,7 +37,7 @@ public class StepDefinition {
 	    // Check the data has been saved
 		assertEquals("Jane",p1.getFirstName());
 	}
-
+	
 	@Given("^A user and a department$")
 	public void a_user_and_a_department(){
 	    // Create a user and a department
@@ -127,33 +115,33 @@ public class StepDefinition {
 	}
 
 	@When("^The Admin creates a new User$")
-	public void the_Admin_creates_a_new_User() throws Throwable {
+	public void the_Admin_creates_a_new_User() {
 	    // create a new user
 		u1 = null;
 		u1 = new User("John Doe", "+4512345678","Doctor");
 	}
 
 	@Then("^A new user is created in the HMS$")
-	public void a_new_user_is_created_in_the_HMS() throws Throwable {
+	public void a_new_user_is_created_in_the_HMS() {
 	    // check the User was created
 		assertTrue(u1 != null);
 	}
 
 	@Given("^A nurse and a patient$")
-	public void a_nurse_and_a_patient() throws Throwable {
+	public void a_nurse_and_a_patient() {
 	    // create a nurse and a patient
 		n1=new Nurse("John Doe", "+4512345678","Emergency" );
 		p1=new Patient("Jane", "Doe", "01/01/2000", "456 North St Anytown, Denmark", "+45234556789");
 	}
 
 	@Then("^A nurse edits the patients data$")
-	public void a_nurse_edits_the_patients_data() throws Throwable {
+	public void a_nurse_edits_the_patients_data() {
 	    // Edit patient data
 		p1.setFirstName("Edit");
 	}
 
 	@Then("^The new information is saved to the HMS$")
-	public void the_new_information_is_saved_to_the_HMS() throws Throwable {
+	public void the_new_information_is_saved_to_the_HMS() {
 	    // Check the users name was changed
 	    assertEquals("Edit",p1.getFirstName());
 	}
@@ -205,14 +193,290 @@ public class StepDefinition {
 	}
 
 	@When("^the user trys to access a patients medical record$")
-	public void the_user_trys_to_access_a_patients_medical_record() throws Throwable {
+	public void the_user_trys_to_access_a_patients_medical_record() {
 	    // get the record
 	    p1.getRecord();
 	}
 
 	@Then("^An Exception is thrown$")
-	public void an_Exception_is_thrown() throws Throwable {
+	public void an_Exception_is_thrown() {
 	    // The Get Record is not available in the Users GUI
 	    assertTrue(true);
+	}
+	
+	@Given("^A nurse and a patient with no allocated bed$")
+	public void a_nurse_and_a_patient_with_no_allocated_bed() {
+	    // Create a new Nurse and a Patient in the Emergency department
+		n1 = new Nurse("Nurse", "12345678", "Emergency");
+		p1 = new Patient("John", "Doe", "01/01/2000", "Denmark", "12345678");
+		p1.setDepartment("Emergency");
+		Emergency.getInstance().addPatient(p1);
+	}
+
+	@Given("^a bed that is not in use$")
+	public void a_bed_that_is_not_in_use() {
+	    // create a new Bed
+	    b1 = new Bed("Emergency");
+	}
+
+	@When("^I assign the patient to the bed$")
+	public void i_assign_the_patient_to_the_bed() {
+	    // assign the patient to the bed
+		p1.setBed(b1.getBedID());
+		b1.updatePatient(p1);
+	}
+
+	@Then("^The bed is registered as being in use and can no longer be assigned$")
+	public void the_bed_is_registered_as_being_in_use_and_can_no_longer_be_assigned() {
+	    // try assign the bed to a new Patient
+		Patient newPatient = new Patient("John Doe", "The Second", "01/01/2000", "Denmark", "12345678");
+		newPatient.setDepartment("Emergency");
+	    try {
+	    	b1.updatePatient(newPatient);
+	    	fail("Should have thrown IllegalArgumentException");
+	    } catch(IllegalArgumentException e) {
+	    	assertEquals(String.format("Bed %s is already occupied", b1.getBedID()), e.getMessage());
+	    }
+	}
+
+	@Then("^The departments number of free beds changes$")
+	public void the_departments_number_of_free_beds_changes() {
+	    // Write code here that turns the phrase above into concrete actions
+		assertTrue(b1.getPatient() != null);
+	}
+
+	@Given("^A Doctor and a patient$")
+	public void a_Doctor_and_a_patient() {
+	    // TODO
+	}
+
+	@When("^I assign a bed to a patient$")
+	public void i_assign_a_bed_to_a_patient() {
+	    // TODO
+	}
+
+	@Then("^The patient occupies a bed in the department$")
+	public void the_patient_occupies_a_bed_in_the_department() {
+	    // TODO
+	}
+
+	@Then("^the number of free beds on the department is updated$")
+	public void the_number_of_free_beds_on_the_department_is_updated() {
+	    // TODO
+	}
+
+	@Given("^A nurse and a patient that is currently admitted to a deparment$")
+	public void a_nurse_and_a_patient_that_is_currently_admitted_to_a_deparment() {
+	    // TODO
+	}
+
+	@When("^I discharge the patient$")
+	public void i_discharge_the_patient() {
+	    // TODO
+	}
+
+	@Then("^The patient is no longer admitted to a department$")
+	public void the_patient_is_no_longer_admitted_to_a_department() {
+	    // TODO
+	}
+
+	@Then("^the number of free beds in the department in incremented by (\\d+)$")
+	public void the_number_of_free_beds_in_the_department_in_incremented_by(int arg1) {
+	    // TODO
+	}
+
+	@Given("^A nurse and a patient admited to a department$")
+	public void a_nurse_and_a_patient_admited_to_a_department() {
+	    // TODO
+	}
+
+	@Given("^A different department to move them to$")
+	public void a_different_department_to_move_them_to() {
+	    // TODO
+	}
+
+	@When("^I dischage the patient from the (\\d+)st department$")
+	public void i_dischage_the_patient_from_the_st_department(int arg1) {
+	    // TODO
+	}
+
+	@When("^Admit them to the (\\d+)nd department$")
+	public void admit_them_to_the_nd_department(int arg1) {
+	    // TODO
+	}
+
+	@Then("^The patient is admitted to the (\\d+)nd department$")
+	public void the_patient_is_admitted_to_the_nd_department(int arg1) {
+	    // TODO
+	}
+
+	@Then("^All their information is still saved$")
+	public void all_their_information_is_still_saved() {
+	    // TODO
+	}
+
+	@Given("^admited to a bed within that department$")
+	public void admited_to_a_bed_within_that_department() {
+	    // TODO
+	}
+
+	@When("^I remove the patient from the (\\d+)st bed and assign a new bed to the patient$")
+	public void i_remove_the_patient_from_the_st_bed_and_assign_a_new_bed_to_the_patient(int arg1) {
+	    // TODO
+	}
+
+	@Then("^the old bed becomes free$")
+	public void the_old_bed_becomes_free() {
+	    // TODO
+	}
+
+	@Then("^the number of free beds in the department remains the same$")
+	public void the_number_of_free_beds_in_the_department_remains_the_same() {
+	    // TODO
+	}
+
+	@Given("^a department$")
+	public void a_department() {
+	    // TODO
+	}
+
+	@When("^I request the list of beds in that department$")
+	public void i_request_the_list_of_beds_in_that_department() {
+	    // TODO
+	}
+
+	@Then("^A List of Bed objects is returned$")
+	public void a_List_of_Bed_objects_is_returned() {
+	    // TODO
+	}
+
+	@Given("^A newly registered patient and a User$")
+	public void a_newly_registered_patient_and_a_User() {
+	    // TODO
+	}
+
+	@When("^A User requests their non-medical data$")
+	public void a_User_requests_their_non_medical_data() {
+	    // TODO
+	}
+
+	@Then("^The correct data is shown$")
+	public void the_correct_data_is_shown() {
+	    // TODO
+	}
+
+	@Given("^A newly registered User$")
+	public void a_newly_registered_User() {
+	    // TODO
+	}
+
+	@When("^I request their data$")
+	public void i_request_their_data() {
+	    // TODO
+	}
+
+	@Given("^I have changed a Patients profile$")
+	public void i_have_changed_a_Patients_profile() {
+	    // TODO
+	}
+
+	@When("^I request their information$")
+	public void i_request_their_information() {
+	    // TODO
+	}
+
+	@Then("^The patients information has succesfully changed$")
+	public void the_patients_information_has_succesfully_changed() {
+	    // TODO
+	}
+
+	@Given("^A patient that has previously been admitted and is now discharged$")
+	public void a_patient_that_has_previously_been_admitted_and_is_now_discharged() {
+	    // TODO
+	}
+
+	@When("^I admit the patient to my department$")
+	public void i_admit_the_patient_to_my_department() {
+	    // TODO
+	}
+
+	@Then("^The data from their previous admission is still saved$")
+	public void the_data_from_their_previous_admission_is_still_saved() {
+	    // TODO
+	}
+
+	@Given("^A User$")
+	public void a_User() {
+	    // TODO
+	}
+
+	@When("^I update the users Address$")
+	public void i_update_the_users_Address() {
+	    // TODO
+	}
+
+	@Then("^The Users profile reflects this change$")
+	public void the_Users_profile_reflects_this_change() {
+	    // TODO
+	}
+
+	@Given("^An existing user in the system$")
+	public void an_existing_user_in_the_system() {
+	    // TODO
+	}
+
+	@When("^I change a users information$")
+	public void i_change_a_users_information() {
+	    // TODO
+	}
+
+	@Then("^The information is saved and accepted byt the system$")
+	public void the_information_is_saved_and_accepted_byt_the_system() {
+	    // TODO
+	}
+
+	@Given("^A nurse and a patient from another department$")
+	public void a_nurse_and_a_patient_from_another_department() {
+	    // TODO
+	}
+
+	@When("^The nurse requests the patient medical data$")
+	public void the_nurse_requests_the_patient_medical_data() {
+	    // TODO
+	}
+
+	@Given("^An admin and a patient from another department$")
+	public void an_admin_and_a_patient_from_another_department() {
+	    // TODO
+	}
+
+	@When("^The admin requests the patient medical data$")
+	public void the_admin_requests_the_patient_medical_data() {
+	    // TODO
+	}
+
+	@Then("^No Exception is thrown$")
+	public void no_Exception_is_thrown() {
+	    // TODO
+	}
+
+	@Given("^A nurse and a User$")
+	public void a_nurse_and_a_User() {
+	    // TODO
+	}
+
+	@When("^The nurse requests the Users data$")
+	public void the_nurse_requests_the_Users_data() {
+	    // TODO
+	}
+
+	@Given("^An admin and a User$")
+	public void an_admin_and_a_User() {
+	    // TODO
+	}
+
+	@When("^The admin requests the Users data$")
+	public void the_admin_requests_the_Users_data() {
+	    // TODO
 	}
 }

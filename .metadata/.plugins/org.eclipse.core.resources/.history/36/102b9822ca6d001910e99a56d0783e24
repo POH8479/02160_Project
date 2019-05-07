@@ -1,0 +1,9 @@
+    TODO LIST
+- When discharge remove from bed
+- When add or remove keep dialog open
+- Maybe make Department an Interface instead of an Abstract class
+- Fix Query Class, When there are two answers (e.g. Least Patients & all have same amount)
+- Clean up Class files, remove unnecessary methods
+- Write Clean comments for all files
+- Pass all tests
+- Check criteria for what else needs to be done

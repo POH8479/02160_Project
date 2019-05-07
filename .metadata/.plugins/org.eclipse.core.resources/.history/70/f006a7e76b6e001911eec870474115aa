@@ -1,0 +1,86 @@
+import static org.junit.Assert.*;
+import java.util.ArrayList;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import hospitalmanagementsystem.Bed;
+import hospitalmanagementsystem.Patient;
+import hospitalmanagementsystem.departments.*;
+import hospitalmanagementsystem.users.*;
+
+/**
+ * 
+ * @author Karoline
+ */
+class InpatientTest {
+	// Users
+	static Doctor d1;
+	static Nurse n1;
+
+	// Patients
+	static Patient p1;
+	static Patient p2;
+
+	// Departments
+	static Emergency em;
+	static Inpatient inPa;
+	
+	// Beds
+	static Bed b1;
+	
+	/**
+	 * Initialise User variables to use in testing
+	 */
+	@BeforeClass
+	public static void setUpBeforeClass() {
+		// create the Departments
+		em = Emergency.getInstance();
+		inPa = Inpatient.getInstance();
+
+		// create the patients
+		p1 = new Patient("Pieter", "O\'Hearn", "12/01/1990", "259 Nordvej 2800 Kongens Lyngby", "+4562473948");
+		p2 = new Patient("Jack", "Rodman", "28/06/1997", "259 Nordvej 2800 Kongens Lyngby", "+4562870942");
+		
+		// create the Users
+		d1 = new Doctor("Doc", "12345678", null);
+		n1 = new Nurse("Nurse", "12345678", "Emergency");
+		
+		// create the beds
+		b1 = new Bed("Emergency");
+	}
+	
+	/**
+	 * Test the addPatient method of the Inpatient Class.
+	 */
+	@Test
+	public void addPatientTest() {
+		// add p1 to the Inpatient department and test it worked
+		inPa.addPatient(p1);
+		assertTrue(inPa.getPatientList().contains(p1));
+
+	}
+
+	@Test
+	public void removePatientTest() {
+		
+		in.removePatient(p1);
+		assertFalse(in.getPatientList().contains(p1));
+
+	}
+	@Test
+	public void getNameTest() {
+		assertEquals("Inpatient",in.getName());
+	}
+	
+	@Test
+	public void addUserTest(){
+		in.addUser(u1);
+		assertTrue(in.getUserList().contains(u1));
+	}
+
+	@Test
+	public void removeUserTest(){
+		in.removeUser(u1);
+		assertFalse(in.getUserList().contains(u1));
+	}
+
+}

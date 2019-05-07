@@ -1,0 +1,64 @@
+import static org.junit.Assert.*;
+import java.util.ArrayList;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import hospitalmanagementsystem.Bed;
+import hospitalmanagementsystem.Patient;
+import hospitalmanagementsystem.departments.*;
+import hospitalmanagementsystem.users.*;
+
+/**
+ * 
+ * @author Karoline
+ */
+class InpatientTest {
+	// Users
+	static Doctor d1;
+	static Nurse n1;
+
+	// Patients
+	static Patient p1;
+	static Patient p2;
+
+	// Departments
+	static Emergency em;
+	static Inpatient inPa;
+	static Outpatient outPa;
+	static Management man;
+	
+	// Beds
+	static Bed b1;
+	
+	@Test
+	public void addPatientTest() {
+		
+		in.addPatient(p1);
+		assertTrue(in.getPatientList().contains(p1));
+
+	}
+
+	@Test
+	public void removePatientTest() {
+		
+		in.removePatient(p1);
+		assertFalse(in.getPatientList().contains(p1));
+
+	}
+	@Test
+	public void getNameTest() {
+		assertEquals("Inpatient",in.getName());
+	}
+	
+	@Test
+	public void addUserTest(){
+		in.addUser(u1);
+		assertTrue(in.getUserList().contains(u1));
+	}
+
+	@Test
+	public void removeUserTest(){
+		in.removeUser(u1);
+		assertFalse(in.getUserList().contains(u1));
+	}
+
+}
