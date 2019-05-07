@@ -1,8 +1,0 @@
-1556458973027	Rename field 'managementColtroller'
-1556635553851	Rename field 'surnameSearchField'
-1556635692798	Rename local variable 'patient'
-1556635710464	Rename local variable 'patientsToSearch'
-1556635723543	Rename local variable 'foundPatients'
-1556637244787	Rename field 'surnameSearchField'
-1556637419407	Rename field 'thirdSearchField'
-1556637439817	Rename local variable 'lblThirdSearch'
