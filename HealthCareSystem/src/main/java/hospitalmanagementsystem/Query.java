@@ -25,7 +25,7 @@ public class Query {
 		inSize = Inpatient.getInstance().getPatientList().size();
 		outSize = Outpatient.getInstance().getPatientList().size();
 		emSize = Emergency.getInstance().getPatientList().size();
-		departments = new String[] {"Inpatient", "OutPatient", "Emergency"};
+		departments = new String[] {"Inpatient", "Outpatient", "Emergency"};
 		sizes = new int[] {inSize, outSize, emSize};
 		max = Integer.MIN_VALUE;
 		

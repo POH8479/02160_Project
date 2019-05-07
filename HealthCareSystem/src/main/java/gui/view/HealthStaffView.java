@@ -266,8 +266,8 @@ public class HealthStaffView extends JFrame {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				// When a row is selected enable the following buttons
-				btnDischargePatient.setEnabled((tblPatients.getSelectedRow() >= 0));
-				btnAdmitPatient.setEnabled((tblPatients.getSelectedRow() >= 0));
+				btnDischargePatient.setEnabled((tblPatients.getSelectedRow() >= 0 && tblPatients.getValueAt(tblPatients.getSelectedRow(), 3) != "-"));
+				btnAdmitPatient.setEnabled((tblPatients.getSelectedRow() >= 0 && tblPatients.getValueAt(tblPatients.getSelectedRow(), 3) == "-"));
 				btnEdit.setEnabled((tblPatients.getSelectedRow() >= 0));
 				btnRecord.setEnabled((tblPatients.getSelectedRow() >= 0));
 				btnRemove.setEnabled((tblPatients.getSelectedRow() >= 0));

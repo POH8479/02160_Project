@@ -20,13 +20,6 @@
 Feature: Persistency Layer
 
   @tag1
-  Scenario: Open/close system
-    Given A user that has registerd a new patient
-    When I close the system
-    And reopen the system
-    Then The User and Patient are still saved
-
-  @tag2
   Scenario Outline: Moving patients
     Given A patient that has previously been admitted and is now discharged
     When I admit the patient to my department

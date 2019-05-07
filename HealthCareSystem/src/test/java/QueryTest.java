@@ -142,7 +142,7 @@ public class QueryTest{
 		inPa.setBedList(beds);
 		
 		assertEquals("Inpatient: " + 1 +
-					  "\nEmergency: " + 0, 
+					  "\nEmergency: " + 1, 
 					  testQuery.bedStatus());
 	}
 }

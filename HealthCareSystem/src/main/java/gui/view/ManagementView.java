@@ -345,8 +345,8 @@ public class ManagementView extends JFrame {
 			public void valueChanged(ListSelectionEvent e) {
 				// When a row is selected enable the following buttons
 				btnRemove.setEnabled((tabbedPane.getSelectedIndex() == 1 && tblPatients.getSelectedRow() >= 0));
-				btnDischargePatient.setEnabled((tblPatients.getSelectedRow() >= 0));
-				btnAdmitPatient.setEnabled((tblPatients.getSelectedRow() >= 0));
+				btnDischargePatient.setEnabled((tblPatients.getSelectedRow() >= 0 && tblPatients.getValueAt(tblPatients.getSelectedRow(), 3) != "-"));
+				btnAdmitPatient.setEnabled((tblPatients.getSelectedRow() >= 0 && tblPatients.getValueAt(tblPatients.getSelectedRow(), 3) == "-"));
 				btnEdit.setEnabled((tabbedPane.getSelectedIndex() == 1 && tblPatients.getSelectedRow() >= 0));
 				btnRecord.setEnabled((tblPatients.getSelectedRow() >= 0));
 				btnAssignBed.setEnabled((tblPatients.getSelectedRow() >= 0));
