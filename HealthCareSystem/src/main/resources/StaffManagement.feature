@@ -21,6 +21,6 @@ Feature: create a staff account
 
   @tag1
   Scenario: data 
-    Given A User
+    Given A User of the HMS
     When I update the users Address
     Then The Users profile reflects this change

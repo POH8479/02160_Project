@@ -22,7 +22,7 @@ Feature: check for available beds
 
   @tag1
   Scenario: Number of free beds
-    Given A department
+    Given A department in the hospital
     When I request the number of available beds
     Then an integer is returned with the number of free beds
 

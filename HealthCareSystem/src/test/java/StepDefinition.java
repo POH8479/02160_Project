@@ -2,10 +2,9 @@ import static org.junit.Assert.*;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import hospitalmanagementsystem.*;
-import hospitalmanagementsystem.departments.Emergency;
-import hospitalmanagementsystem.departments.Inpatient;
+import hospitalmanagementsystem.departments.*;
 import hospitalmanagementsystem.users.*;
+import hospitalmanagementsystem.*;
 
 public class StepDefinition {
 
@@ -335,8 +334,8 @@ public class StepDefinition {
 	    // TODO
 	}
 
-	@Given("^a department$")
-	public void a_department() {
+	@Given("^a department in the hospital$")
+	public void a_department_in_the_hospital() {
 	    // TODO
 	}
 
@@ -405,8 +404,8 @@ public class StepDefinition {
 	    // TODO
 	}
 
-	@Given("^A User$")
-	public void a_User() {
+	@Given("^A User of the HMS$")
+	public void a_User_of_the_HMS() {
 	    // TODO
 	}
 
