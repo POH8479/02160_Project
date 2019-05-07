@@ -447,6 +447,12 @@ public class ManagementController {
 		usersToSearch.addAll(Outpatient.getInstance().getUserList());
 		usersToSearch.addAll(Management.getInstance().getUserList());
 		
+		
+		//test
+		for(User user : Inpatient.getInstance().getUserList()) {
+			System.out.println(user.getUserName());
+		}
+		
 		// check all the users in the list
 		for(User user : usersToSearch) {
 			// check user matches the given criteria

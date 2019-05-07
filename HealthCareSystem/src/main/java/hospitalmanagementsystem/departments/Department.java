@@ -1,4 +1,4 @@
-package hospitalmanagementsystem.departments;
+	package hospitalmanagementsystem.departments;
 
 import java.util.ArrayList;
 import hospitalmanagementsystem.Bed;
