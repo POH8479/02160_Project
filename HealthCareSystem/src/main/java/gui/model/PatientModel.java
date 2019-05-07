@@ -58,13 +58,13 @@ public class PatientModel extends AbstractTableModel {
 	 * @param patientId The ID of the Patient
 	 * @param user The User discharging the patient
 	 */
-	public void dischargePatient(String patientId, HealthStaff  user) {
+	public void dischargePatient(String patientId) {
 		// find the patient with that PatientID
 		Patient toDischarge = findPatient(patientId);
-
+		
 		// try and discharge patient from their department
 		try {
-			toDischarge.updateDepartment(null);;
+			toDischarge.updateDepartment(null);
 		} catch (IllegalArgumentException e) {
 			// User does not have access to perform this
 			e.printStackTrace();
@@ -130,6 +130,58 @@ public class PatientModel extends AbstractTableModel {
 		toEdit.setPhoneNo(phone);
 		toEdit.setDOB(dOB);
 
+		// notify the views that data changed
+		fireTableDataChanged();
+	}
+
+	/**
+	 * Remove a Patient from the HMS.
+	 * @param patientID The Patient ID of the Patient
+	 * @param admin The Admin Removing them
+	 */
+	public void removePatient(String patientID) {
+		// Find the patient with this patientID
+		Patient toRemove = findPatient(patientID);
+		
+		// remove from list
+		patients.remove(toRemove);
+		
+		// remove form HMS
+		switch((toRemove.getDepartment()==null) ? "":toRemove.getDepartment()) {
+			case "Emergency":
+				Emergency.getInstance().removePatient(toRemove);
+				if(toRemove.getBed() != null) {
+					for(Bed bed : Emergency.getInstance().getBedList()) {
+						if(bed.getBedID().equals(toRemove.getBed())) {
+							bed.setPatient(null);
+							toRemove.setBed(null);
+							break;
+						}
+					}
+				}
+				toRemove.setDepartment(null);
+				break;
+			case "Outpatient":
+				Inpatient.getInstance().removePatient(toRemove);
+				toRemove.setDepartment(null);
+				break;
+			case "Inpatient":
+				Inpatient.getInstance().removePatient(toRemove);
+				if(toRemove.getBed() != null) {
+					for(Bed bed : Inpatient.getInstance().getBedList()) {
+						if(bed.getBedID().equals(toRemove.getBed())) {
+							bed.setPatient(null);
+							toRemove.setBed(null);
+							break;
+						}
+					}
+				}
+				toRemove.setDepartment(null);
+		}
+
+		// delete from persist
+		persist.delete(toRemove.getPatientID(), toRemove.getDepartment());
+		
 		// notify the views that data changed
 		fireTableDataChanged();
 	}
@@ -201,57 +253,5 @@ public class PatientModel extends AbstractTableModel {
 			return "Bed";
 		}
 		return null;
-	}
-
-	/**
-	 * Remove a Patient from the HMS.
-	 * @param patientID The Patient ID of the Patient
-	 * @param admin The Admin Removing them
-	 */
-	public void removePatient(String patientID, Admin admin) {
-		// Find the patient with this patientID
-		Patient toRemove = findPatient(patientID);
-		
-		// remove from list
-		patients.remove(toRemove);
-		
-		// remove form HMS
-		switch((toRemove.getDepartment()==null) ? "":toRemove.getDepartment()) {
-			case "Emergency":
-				Emergency.getInstance().removePatient(toRemove);
-				if(toRemove.getBed() != null) {
-					for(Bed bed : Emergency.getInstance().getBedList()) {
-						if(bed.getBedID().equals(toRemove.getBed())) {
-							bed.setPatient(null);
-							toRemove.setBed(null);
-							break;
-						}
-					}
-				}
-				toRemove.setDepartment(null);
-				break;
-			case "Outpatient":
-				Inpatient.getInstance().removePatient(toRemove);
-				toRemove.setDepartment(null);
-				break;
-			case "Inpatient":
-				Inpatient.getInstance().removePatient(toRemove);
-				if(toRemove.getBed() != null) {
-					for(Bed bed : Inpatient.getInstance().getBedList()) {
-						if(bed.getBedID().equals(toRemove.getBed())) {
-							bed.setPatient(null);
-							toRemove.setBed(null);
-							break;
-						}
-					}
-				}
-				toRemove.setDepartment(null);
-		}
-
-		// delete from persist
-		persist.delete(toRemove.getPatientID(), toRemove.getDepartment());
-		
-		// notify the views that data changed
-		fireTableDataChanged();
 	}
 }

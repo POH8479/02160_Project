@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -22,7 +21,6 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableModel;
-
 import gui.controller.HealthStaffController;
 import gui.model.Session;
 import hospitalmanagementsystem.Query;
@@ -211,6 +209,17 @@ public class HealthStaffView extends JFrame {
 			}
 		});
 		
+		// Create a new button "Assign Bed" with an Action Listener and set Enabled to false
+		JButton btnAssignBed = new JButton("Assign Bed");
+		btnAssignBed.setEnabled(false);
+		btnAssignBed.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// When clicked assign a new bed to the patient
+				controller.assignBed(tblPatients.getSelectedRow());
+			}
+		});
+		
 		// TOOLBAR
 		// create a new label and set Horizontal Alignment right
 		lblSession = new JLabel();
@@ -221,6 +230,7 @@ public class HealthStaffView extends JFrame {
 		toolbar.add(btnRegisterPatient);
 		toolbar.add(btnAdmitPatient);
 		toolbar.add(btnDischargePatient);
+		toolbar.add(btnAssignBed);
 		toolbar.add(btnEdit);
 		toolbar.add(btnRemove);
 		toolbar.add(btnRecord);
@@ -271,6 +281,7 @@ public class HealthStaffView extends JFrame {
 				btnEdit.setEnabled((tblPatients.getSelectedRow() >= 0));
 				btnRecord.setEnabled((tblPatients.getSelectedRow() >= 0));
 				btnRemove.setEnabled((tblPatients.getSelectedRow() >= 0));
+				btnAssignBed.setEnabled((tblPatients.getSelectedRow() >= 0));
 			}
 		});
 		

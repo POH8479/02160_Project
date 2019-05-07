@@ -10,7 +10,9 @@ import gui.model.PatientModel;
 import gui.model.PatientSearchModel;
 import gui.model.Session;
 import gui.view.HealthStaffView;
+import hospitalmanagementsystem.Bed;
 import hospitalmanagementsystem.Patient;
+import hospitalmanagementsystem.PersistenceLayer;
 import hospitalmanagementsystem.departments.*;
 import hospitalmanagementsystem.users.Admin;
 import hospitalmanagementsystem.users.HealthStaff;
@@ -111,7 +113,7 @@ public class HealthStaffController {
 		if (selectedRow >= 0) {
 			// if so get the patients id and call the dischargePatient method form the patient model
 			String patientID = (String) patientModel.getValueAt(selectedRow, 0);
-			patientModel.dischargePatient(patientID,(HealthStaff) sessionModel.getUser());
+			patientModel.dischargePatient(patientID);
 		}
 	}
 	
@@ -173,7 +175,7 @@ public class HealthStaffController {
 		if (selectedRow >= 0) {
 			// Find the Patient Id of the selected patient and call the removePatient method from the Patient Model
 			String patientID = (String) patientModel.getValueAt(selectedRow, 0);
-			patientModel.removePatient(patientID,(Admin) sessionModel.getUser());
+			patientModel.removePatient(patientID);
 		}
 	}
 	
@@ -217,7 +219,7 @@ public class HealthStaffController {
         // check the confirmation result
         if (confirmation == JOptionPane.OK_OPTION) {
         	// if OK was selected pass the input to the patientModel to update
-        	patientModel.edit((String) patientModel.getValueAt(0, selectedRow), firstName.getText(), lastName.getText(), dOB.getText(), address.getText(), phoneNo.getText());
+        	patientModel.edit((String) patientModel.getValueAt(selectedRow, 0), firstName.getText(), lastName.getText(), dOB.getText(), address.getText(), phoneNo.getText());
         }
 	}
 	
@@ -274,6 +276,59 @@ public class HealthStaffController {
 	public void clearSearch() {
 		// retrieve the original patient model and set it again
 		this.view.setTableModel(patientModel);
+	}
+
+	/**
+	 * 
+	 * @param selectedRow
+	 */
+	public void assignBed(int selectedRow) {
+		// find the user
+		Patient toBed = patientModel.findPatient((String) patientModel.getValueAt(selectedRow, 0));
+		
+		// create a new bed in the users department
+		Department dept;
+		
+		// find the patients department
+		switch((toBed.getDepartment()==null) ? "":toBed.getDepartment()) {
+			case "Emergency":
+				dept = Emergency.getInstance();
+				break;
+			case "Inpatient":
+				dept = Inpatient.getInstance();
+				break;
+			default:
+				this.view.showError(String.format("The %s is Department has no beds.",(toBed.getDepartment()==null) ? "No Department":toBed.getDepartment()));
+				return;
+		}
+		
+		// try set assign the user to this new bed
+		try {
+			// find the first free bed
+			for(Bed bed : dept.getBedList()) {
+				// check if free
+				if(bed.getPatient() == null) {
+					// assign the patient to the bed
+					bed.updatePatient(toBed);
+					toBed.setBed(bed.getBedID());
+					
+					// notify the views that data changed and break
+					patientModel.fireTableDataChanged();
+					break;
+				}
+			}
+			
+			// if no free bed show error
+			if(toBed.getBed() == null) {
+				this.view.showError(String.format("No Free Beds in the %s department",dept.getName()));
+			}
+		} catch(IllegalArgumentException e) {
+			this.view.showError(e.getMessage());
+		}
+		
+		// save the patient
+		PersistenceLayer persist = new PersistenceLayer();
+		persist.save(toBed,toBed.getPatientID(), toBed.getDepartment());
 	}
 }
 

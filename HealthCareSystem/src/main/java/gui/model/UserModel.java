@@ -116,7 +116,7 @@ public class UserModel extends AbstractTableModel {
 				return u;
 			}
 		}
-
+		
 		// else return null
 		return null;
 	}

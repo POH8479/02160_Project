@@ -1,6 +1,6 @@
 package gui.controller;
 
-import gui.model.*;
+import gui.model.Session;
 import gui.view.HealthStaffView;
 import gui.view.ManagementView;
 import gui.view.RecordView;

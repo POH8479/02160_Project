@@ -11,7 +11,10 @@ import gui.model.PatientSearchModel;
 import gui.model.Session;
 import gui.view.UserView;
 import hospitalmanagementsystem.Patient;
-import hospitalmanagementsystem.departments.*;
+import hospitalmanagementsystem.departments.Department;
+import hospitalmanagementsystem.departments.Emergency;
+import hospitalmanagementsystem.departments.Inpatient;
+import hospitalmanagementsystem.departments.Outpatient;
 import hospitalmanagementsystem.users.Admin;
 import hospitalmanagementsystem.users.HealthStaff;
 
@@ -111,7 +114,7 @@ public class UserController {
 		if (selectedRow >= 0) {
 			// if so get the patients id and call the dischargePatient method form the patient model
 			String patientID = (String) patientModel.getValueAt(selectedRow, 0);
-			patientModel.dischargePatient(patientID,(HealthStaff) sessionModel.getUser());
+			patientModel.dischargePatient(patientID);
 		}
 	}
 	
@@ -217,7 +220,7 @@ public class UserController {
         // check the confirmation result
         if (confirmation == JOptionPane.OK_OPTION) {
         	// if OK was selected pass the input to the patientModel to update
-        	patientModel.edit((String) patientModel.getValueAt(0, selectedRow), firstName.getText(), lastName.getText(), dOB.getText(), address.getText(), phoneNo.getText());
+        	patientModel.edit((String) patientModel.getValueAt(selectedRow, 0), firstName.getText(), lastName.getText(), dOB.getText(), address.getText(), phoneNo.getText());
         }
 	}
 	

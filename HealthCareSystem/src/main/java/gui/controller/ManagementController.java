@@ -231,7 +231,7 @@ public class ManagementController {
 		if (selectedRow >= 0) {
 			// if so get the patients id and call the dischargePatient method form the patient model
 			String patientID = (String) patientModel.getValueAt(selectedRow, 0);
-			patientModel.dischargePatient(patientID,(HealthStaff) sessionModel.getUser());
+			patientModel.dischargePatient(patientID);
 		}
 	}
 	
@@ -340,7 +340,7 @@ public class ManagementController {
      // check the confirmation result
         if (confirmation == JOptionPane.OK_OPTION) {
         	// if OK was selected pass the input to the userModel to update
-        	userModel.edit((String) userModel.getValueAt(0, selectedRow), name.getText(), phone.getText(), (String) depList.getSelectedItem());
+        	userModel.edit((String) userModel.getValueAt(selectedRow, 0), name.getText(), phone.getText(), (String) depList.getSelectedItem());
         	
         	// update the Session label
         	view.setSession(this.sessionModel);
@@ -378,7 +378,7 @@ public class ManagementController {
         // check the confirmation result
         if (confirmation == JOptionPane.OK_OPTION) {
         	// if OK was selected pass the input to the patientModel to update
-        	patientModel.edit((String) patientModel.getValueAt(0, selectedRow), firstName.getText(), lastName.getText(), dOB.getText(), address.getText(), phoneNo.getText());
+        	patientModel.edit((String) patientModel.getValueAt(selectedRow,0), firstName.getText(), lastName.getText(), dOB.getText(), address.getText(), phoneNo.getText());
         }
 	}
 	
