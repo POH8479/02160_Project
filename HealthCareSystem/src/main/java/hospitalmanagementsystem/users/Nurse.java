@@ -4,7 +4,9 @@ import hospitalmanagementsystem.PersistenceLayer;
 import hospitalmanagementsystem.departments.*;
 
 /**
- * 
+ * The Nurse Class represents an Nurse User who extends the HealthStaff Interface and 
+ * has the third level of access in the System.
+ * @author Jack Rodman
  */
 public class Nurse extends User implements HealthStaff{
 	// STATIC VARIABLES
@@ -15,10 +17,10 @@ public class Nurse extends User implements HealthStaff{
 
 	// CONSTRUCTORS
 	/**
-	 * 
-	 * @param usersName
-	 * @param phone
-	 * @param department
+	 * Creates a new Doctor of the Hospital Management.
+	 * @param usersName The new Users Name
+	 * @param phone The new Users Phone Number
+	 * @param department The new Users initial Department
 	 */
 	public Nurse(String usersName, String phone, String department) {
 		super(usersName, phone, "N");
@@ -49,14 +51,15 @@ public class Nurse extends User implements HealthStaff{
 	}
 	
 	/**
-	 * 
+	 * Empty Constructor for the Persistence Layer.
 	 */
 	public Nurse() {}
 
 
 	// METHODS
 	/**
-	 * 
+	 * Moves the HealthStaff User from their current department to a new one.
+	 * @param department The new department
 	 */
 	public void moveDepartment(String department) {
 		// update the department lists
@@ -83,27 +86,17 @@ public class Nurse extends User implements HealthStaff{
 	}
 
 	// GETTER METHODS
-	/**
-	 * 
-	 * @return
-	 */
 	@Override
 	public String getType() {
 		return "Nurse";
 	}
-	/**
-	 * 
-	 * @return
-	 */
+
 	@Override
 	public String getDepartment() {
 		return this.department;
 	}
 	
 	// SETTER METHODS
-	/**
-	 * 
-	 */
 	@Override
 	public void setDepartment(String newDepartment) {
 		this.department = newDepartment;

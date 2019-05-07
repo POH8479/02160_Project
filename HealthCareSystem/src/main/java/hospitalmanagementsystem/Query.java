@@ -3,6 +3,10 @@ package hospitalmanagementsystem;
 import java.util.ArrayList;
 import hospitalmanagementsystem.departments.*;
 
+/**
+ * The Query Class is Used to make Advanced Queries about the Hospital.
+ * @author Karoline Østergaard
+ */
 public class Query {
 	// INSTANCE VARIABLES
 	private int inSize;
@@ -17,8 +21,8 @@ public class Query {
 	private int min;
 	
 	/**
-	 * 
-	 * @return returnValue : a string with the department(s) which have the most patients
+	 * Calculates the department or departments with the most Patients.
+	 * @return returnValue The department(s) name
 	 */
 	public String depMostPatients() {
 		//Gets amount of patients in each department (excluding management as it has none)
@@ -60,8 +64,8 @@ public class Query {
 	}
 	
 	/**
-	 * 
-	 * @return returnValue : a string with the department(s) which have the least patients
+	 * Calculates the department or departments with the least Patients.
+	 * @return returnValue The department(s) name
 	 */
 	public String depLeastPatients() {
 		//Gets amount of patients in each department (excluding management as it has none)
@@ -103,8 +107,8 @@ public class Query {
 	}
 	
 	/**
-	 * 
-	 * @return returnValue : a string with the department(s) which have the most users
+	 * Calculates the department or departments with the most Users.
+	 * @return returnValue The department(s) name
 	 */
 	public String depMostUsers() {
 		//Gets amount of users in each department
@@ -147,8 +151,8 @@ public class Query {
 	}
 	
 	/**
-	 * 
-	 * @return returnValue : a string with the department(s) which have the least users
+	 * Calculates the department or departments with the least Uers.
+	 * @return returnValue The department(s) name
 	 */
 	public String depLeastUsers() {
 		//Gets amount of users in each department
@@ -191,7 +195,8 @@ public class Query {
 	}
 	
 	/**
-	 * @return total number of patients in the system
+	 * Calculates the total number of patients in the hospital.
+	 * @return The number of Patients
 	 */
 	public int totPatients() {
 		inSize = Inpatient.getInstance().getPatientList().size();
@@ -201,8 +206,8 @@ public class Query {
 	}
 	
 	/**
-	 * 
-	 * @return total number of users in the system
+	 * Calculates the total number of users in the hospital.
+	 * @return The number of Users
 	 */
 	public int totUsers() {
 		inSize = Inpatient.getInstance().getUserList().size();
@@ -212,6 +217,10 @@ public class Query {
 		return inSize + outSize + emSize + manSize;
 	}
 	
+	/**
+	 * Calculates the total number of Beds for each department.
+	 * @return The name and number of beds for both departments
+	 */
 	public String bedStatus() {
 		inSize = Inpatient.getInstance().getBedList().size();
 		emSize = Emergency.getInstance().getBedList().size();

@@ -3,7 +3,7 @@ package hospitalmanagementsystem;
 import hospitalmanagementsystem.departments.Department;
 
 /**
- * 
+ * The Patient Class represents a Patient in the Hospital.
  * @author Jack Rodman
  */
 public class Patient {
@@ -81,146 +81,79 @@ public class Patient {
 	}
 
 	// GETTER METHODS
-	/**
-	 * 
-	 * @return
-	 */
 	public String getFirstName() {
 		return this.name;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	public String getLastName() {
 		return this.surname;
 	}
-	
-	/**
-	 * 
-	 * @return
-	 */
+
 	public String getPatientID() {
 		return this.patientID;
 	}
-	
-	/**
-	 * 
-	 * @return
-	 */
+
 	public String getDOB() {
 		return this.bday;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	public String getAddress() {
 		return this.address;
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
 	public String getPhoneNo() {
 		return this.phoneNo;
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
 	public String getDeceased() {
 		return this.deceased;
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
 	public String getRecord() {
 		return this.record;
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
 	public String getDepartment() {
 		return this.dept;
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
 	public String getBed() {
 		return this.bed;
 	}
 
 	// SETTER METHODS
-	/**
-	 * 
-	 * @param firstName
-	 */
 	public void setFirstName(String firstName) {
 		this.name = firstName;
 	}
 
-	/**
-	 * 
-	 * @param lastName
-	 */
 	public void setLastName(String lastName) {
 		this.surname = lastName;
 	}
 
-	/**
-	 * 
-	 * @param patientID
-	 */
 	public void setPatientID(String patientID) {
 		this.patientID = patientID;
 	}
 	
-	/**
-	 * 
-	 * @param dOB
-	 */
 	public void setDOB(String dOB) {
 		this.bday = dOB;
 		
 	}
 	
-	/**
-	 * 
-	 * @param newAddress
-	 */
 	public void setAddress(String newAddress) {
 		this.address = newAddress;
 	}
 	
-	/**
-	 * 
-	 * @param phone
-	 */
 	public void setPhoneNo(String phone) {
 		this.phoneNo = phone;
 	}
 
-	/**
-	 * 
-	 * @param deceased
-	 */
 	public void setDeceased(String deceased) {
 		this.deceased = deceased;
 	}
 	
 	/**
-	 * Updates a patients medical record
+	 * Appends the given data to the end of the current Record String with
+	 * a new Line character separating the old and new data.
 	 * @param data
 	 */
 	public void setRecord(String data) {
@@ -231,18 +164,10 @@ public class Patient {
 		}
 	}
 	
-	/**
-	 * 
-	 * @param department
-	 */
 	public void setDepartment(String department) {
 		this.dept = department;
 	}
 
-	/**
-	 * 
-	 * @param bedID
-	 */
 	public void setBed(String bedID) {
 		this.bed = bedID;
 	}

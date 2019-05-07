@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -14,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-
 import gui.model.*;
 import gui.view.ManagementView;
 import hospitalmanagementsystem.Bed;
@@ -174,7 +172,7 @@ public class ManagementController {
 		if (selectedRow >= 0) {
 			// Find the Patient Id of the selected patient and call the removePatient method from the Patient Model
 			String patientID = (String) patientModel.getValueAt(selectedRow, 0);
-			patientModel.removePatient(patientID,(Admin) sessionModel.getUser());
+			patientModel.removePatient(patientID);
 		}
 	}
 	
@@ -337,8 +335,16 @@ public class ManagementController {
 		// Display the JList using a JOptionPane and store the confirmation result
         int confirmation = JOptionPane.showConfirmDialog(null, userPanel, "Update the Users information", JOptionPane.OK_CANCEL_OPTION);
 
-     // check the confirmation result
+        // check the confirmation result
         if (confirmation == JOptionPane.OK_OPTION) {
+        	//check HS input of patient information is in correct format
+        	InputController inputcheck = new InputController();
+        	String error = inputcheck.checkUserInput(name.getText(), phone.getText());
+        	if (error != null) {
+        		view.showError(error);
+        		return;
+        	}
+        	
         	// if OK was selected pass the input to the userModel to update
         	userModel.edit((String) userModel.getValueAt(selectedRow, 0), name.getText(), phone.getText(), (String) depList.getSelectedItem());
         	
@@ -377,6 +383,14 @@ public class ManagementController {
 
         // check the confirmation result
         if (confirmation == JOptionPane.OK_OPTION) {
+        	//check HS input of patient information is in correct format
+        	InputController inputcheck = new InputController();
+        	String error = inputcheck.checkPatientInput(firstName.getText(), lastName.getText(), dOB.getText(), address.getText(), phoneNo.getText());
+        	if (error != null) {
+        		view.showError(error);
+        		return;
+        	}
+        	
         	// if OK was selected pass the input to the patientModel to update
         	patientModel.edit((String) patientModel.getValueAt(selectedRow,0), firstName.getText(), lastName.getText(), dOB.getText(), address.getText(), phoneNo.getText());
         }
@@ -538,7 +552,6 @@ public class ManagementController {
 		JList<String> bedList = new JList<String>(listModel);
 		bedList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		bedList.setSelectedIndex(0);
-//		bedList.setPreferredSize(new Dimension(50, 100));
 		
 		// create a JCombaBox to show the departments
 		String departments[] = {"Emergency", "Inpatient"};
@@ -562,14 +575,14 @@ public class ManagementController {
 			}
 		});
 		
-		// 
+		//  Create a ScrollPane for the Bed Panel
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setPreferredSize(new Dimension(50, 100));
 		scrollPane.setViewportView(bedList);
 		bedPanel.add(scrollPane);
 		bedPanel.add(depList);
 		
-		// 
+		// store the options in an Array
 		String[] options = {"Add", "Remove", "Cancel"};
 		
 		// Display the JList using a JOptionPane and store the confirmation result

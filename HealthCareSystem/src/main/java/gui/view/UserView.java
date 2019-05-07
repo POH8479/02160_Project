@@ -243,7 +243,7 @@ public class UserView extends JFrame {
 	}
 	
 	/**
-	 * Sets the table model for the Patients tables
+	 * Sets the table model for the Patients tables.
 	 * @param patientModel The Model for the Patient table
 	 */
 	public void setTableModel(TableModel patientModel) {
@@ -261,7 +261,7 @@ public class UserView extends JFrame {
 	}
 
 	/**
-	 * Shows an Error Dialog with a given message
+	 * Shows an Error Dialog with a given message.
 	 * @param message The given message
 	 */
 	public void showError(String errorMessage) {

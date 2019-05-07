@@ -4,7 +4,8 @@ import hospitalmanagementsystem.PersistenceLayer;
 import hospitalmanagementsystem.departments.*;
 
 /**
- *
+ * The Doctor Class represents an Doctor User who extends the HealthStaff Interface and 
+ * has the second level of access in the System.
  * @author Jack Rodman
  */
 public class Doctor extends User implements HealthStaff{
@@ -16,10 +17,10 @@ public class Doctor extends User implements HealthStaff{
 
 	// CONSTRUCTORS
 	/**
-	 * 
-	 * @param usersName
-	 * @param phone
-	 * @param department
+	 * Creates a new Doctor of the Hospital Management.
+	 * @param usersName The new Users Name
+	 * @param phone The new Users Phone Number
+	 * @param department The new Users initial Department
 	 */
 	public Doctor(String usersName, String phone, String department) {
 		super(usersName, phone, "D");
@@ -50,13 +51,14 @@ public class Doctor extends User implements HealthStaff{
 	}
 
 	/**
-	 * 
+	 * Empty Constructor for the Persistence Layer.
 	 */
 	public Doctor() {}
 	
 	// METHODS
 	/**
-	 * 
+	 * Moves the HealthStaff User from their current department to a new one.
+	 * @param department The new department
 	 */
 	public void moveDepartment(String department) {
 		// update the department lists
@@ -83,27 +85,17 @@ public class Doctor extends User implements HealthStaff{
 	}
 
 	// GETTER METHODS
-	/**
-	 * 
-	 * @return
-	 */
 	@Override
 	public String getType() {
 		return "Doctor";
 	}
-	/**
-	 * 
-	 * @return
-	 */
+
 	@Override
 	public String getDepartment() {
 		return this.department;
 	}
 	
 	// SETTER METHODS
-	/**
-	 * 
-	 */
 	@Override
 	public void setDepartment(String newDepartment) {
 		this.department = newDepartment;

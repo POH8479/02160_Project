@@ -5,88 +5,62 @@ import hospitalmanagementsystem.Bed;
 import hospitalmanagementsystem.Patient;
 import hospitalmanagementsystem.users.*;
 
+/**
+ * This Interface represents a Department in the Hospital.
+ * @author Pieter O'Hearn
+ */
 public interface Department {
 
 	/**
-	 * 
-	 * @param User
+	 * Adds a User to the Department.
+	 * @param User The user to add
 	 */
 	public void addUser(User User);
 
 	/**
-	 * 
-	 * @param User
+	 * Removes a user from the Department.
+	 * @param User The user to remove
 	 */
 	public void removeUser(User User);
 
 	/**
-	 * 
-	 * @param patient
+	 * Adds a Patient to the Department.
+	 * @param patient The patient to add
 	 */
 	public void addPatient(Patient patient);
 
 	/**
-	 * 
-	 * @param patient
+	 * Removes a Patient to the Department.
+	 * @param patient The patient to remove
 	 */
 	public void removePatient(Patient patient);
 	
 	/**
-	 * 
-	 * @param bed
+	 * Adds a Bed to the Department.
+	 * @param bed The bed to add
 	 */
 	public void addBed(Bed bed);
 
 	/**
-	 * 
-	 * @param bed
+	 * Removes a Bed to the Department.
+	 * @param bed The bed to remove
 	 */
 	public void removeBed(Bed bed);
 	
 
 	// GETTER METHODS
-	
-	/**
-	 * 
-	 * @return
-	 */
 	public String getName();
 	
-	/**
-	 * 
-	 * @return
-	 */
 	public ArrayList<Bed> getBedList();
 	
-	/**
-	 * 
-	 * @return
-	 */
 	public ArrayList<Patient> getPatientList();
 	
-	/**
-	 * 
-	 * @return
-	 */
 	public ArrayList<User> getUserList();
 	
 	// SETTER METHODS
-	
-	/**
-	 * 
-	 * @param beds
-	 */
 	public void setBedList(ArrayList<Bed> beds);
 	
-	/**
-	 * 
-	 * @param patients
-	 */
 	public void setPatientList(ArrayList<Patient> patients);
 	
-	/**
-	 * 
-	 * @param users
-	 */
 	public void setUserList(ArrayList<User> users);
 }

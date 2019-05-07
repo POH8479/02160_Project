@@ -4,7 +4,7 @@ import hospitalmanagementsystem.departments.*;
 import hospitalmanagementsystem.*;
 
 /**
- *
+ * The Admin Class represents an Administrative User who has the Top level of access to the System.
  * @author Pieter O'Hearn
  */
 public class Admin extends User implements HealthStaff{
@@ -16,7 +16,9 @@ public class Admin extends User implements HealthStaff{
 
 	// CONSTRUCTORS
 	/**
-	 * Creates a new Admin of the Hospital Management
+	 * Creates a new Admin of the Hospital Management.
+	 * @param usersName The new Users Name
+	 * @param phone The new Users Phone Number
 	 */
 	public Admin(String usersName, String phone) {
 		// call the super
@@ -42,26 +44,17 @@ public class Admin extends User implements HealthStaff{
 	}
 
 	// GETTER METHODS
-	/**
-	 * 
-	 */
 	@Override
 	public String getDepartment() {
 		return this.department;
 	}
 
-	/**
-	 * 
-	 */
 	@Override
 	public String getType() {
 		return "Admin";
 	}
 	
 	// SETTER METHODS
-	/**
-	 * 
-	 */
 	@Override
 	public void setDepartment(String newDepartment) {
 		this.department = newDepartment;

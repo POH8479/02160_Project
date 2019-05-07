@@ -14,7 +14,6 @@ import hospitalmanagementsystem.Bed;
 import hospitalmanagementsystem.Patient;
 import hospitalmanagementsystem.PersistenceLayer;
 import hospitalmanagementsystem.departments.*;
-import hospitalmanagementsystem.users.Admin;
 import hospitalmanagementsystem.users.HealthStaff;
 
 /**
@@ -218,6 +217,14 @@ public class HealthStaffController {
 
         // check the confirmation result
         if (confirmation == JOptionPane.OK_OPTION) {
+        	//check HS input of patient information is in correct format
+        	InputController inputcheck = new InputController();
+        	String error = inputcheck.checkPatientInput(firstName.getText(), lastName.getText(), dOB.getText(), address.getText(), phoneNo.getText());
+        	if (error != null) {
+        		view.showError(error);
+        		return;
+        	}
+        	
         	// if OK was selected pass the input to the patientModel to update
         	patientModel.edit((String) patientModel.getValueAt(selectedRow, 0), firstName.getText(), lastName.getText(), dOB.getText(), address.getText(), phoneNo.getText());
         }
@@ -331,7 +338,3 @@ public class HealthStaffController {
 		persist.save(toBed,toBed.getPatientID(), toBed.getDepartment());
 	}
 }
-
-
-	
-

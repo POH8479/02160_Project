@@ -402,7 +402,7 @@ public class ManagementView extends JFrame {
 	}
 	
 	/**
-	 * Sets the table model for the Patient and User tables
+	 * Sets the table model for the Patient and User tables.
 	 * @param userModel The Model for the User table
 	 * @param patientModel The Model for the Patient table
 	 */
@@ -422,7 +422,7 @@ public class ManagementView extends JFrame {
 	}
 
 	/**
-	 * Shows an Error Dialog with a given message
+	 * Shows an Error Dialog with a given message.
 	 * @param message The given message
 	 */
 	public void showError(String errorMessage) {

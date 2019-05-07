@@ -15,7 +15,6 @@ import hospitalmanagementsystem.departments.Department;
 import hospitalmanagementsystem.departments.Emergency;
 import hospitalmanagementsystem.departments.Inpatient;
 import hospitalmanagementsystem.departments.Outpatient;
-import hospitalmanagementsystem.users.Admin;
 import hospitalmanagementsystem.users.HealthStaff;
 
 /**
@@ -88,7 +87,7 @@ public class UserController {
 		// Display the JPanel using a JOptionPane and store the confirmation result
         int confirmation = JOptionPane.showConfirmDialog(null, patientPanel, "Please Enter the Patients information", JOptionPane.OK_CANCEL_OPTION);
 
-     // check the confirmation result
+        // check the confirmation result
         if (confirmation == JOptionPane.OK_OPTION) {
         	
         	//check user input of patient information is in correct format
@@ -127,7 +126,7 @@ public class UserController {
 		if (selectedRow >= 0) {
 			// Find the Patient Id of the selected patient and call the removePatient method from the Patient Model
 			String patientID = (String) patientModel.getValueAt(selectedRow, 0);
-			patientModel.removePatient(patientID,(Admin) sessionModel.getUser());
+			patientModel.removePatient(patientID);
 		}
 	}
 	

@@ -8,16 +8,10 @@ package hospitalmanagementsystem.users;
  * @author Pieter O'Hearn
  */
 public interface HealthStaff {
-
-	/**
-	 * This method returns the department of the HealthStaff User
-	 * @return a department object
-	 */
-	public String getDepartment();
 	
 	/**
-	 * Moves the HealthStaff User to another department.
-	 * @param department The name of the new Department
+	 * Moves the HealthStaff User from their current department to a new one.
+	 * @param department The new department
 	 */
 	public void moveDepartment(String department);
 }

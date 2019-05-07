@@ -5,7 +5,9 @@ import hospitalmanagementsystem.*;
 import hospitalmanagementsystem.users.User;
 
 /**
- * 
+ * A Singleton Class Which represents the Outpatient Department at the Hospital.
+ * @author Karoline Østergaard
+ * @author Pieter O'Hearn
  */
 public class Outpatient implements Department {
 	// Static Variables 
@@ -16,7 +18,7 @@ public class Outpatient implements Department {
     private ArrayList<Patient> patientList;
     
     /**
-     * 
+     * The Private Constructor for the Outpatient class.
      */
     private Outpatient() {
     	patientList = new ArrayList<Patient>();
@@ -24,8 +26,8 @@ public class Outpatient implements Department {
     }
 	
     /**
-     * 
-     * @return
+     * Returns the saved instance of the Outpatient Class or creates a one if one has not yet been created.
+     * @return The Outpatient Instance
      */
     public static Outpatient getInstance() 
     { 
@@ -37,84 +39,73 @@ public class Outpatient implements Department {
     }
 
     /**
-	 * 
-	 * @param User
+	 * Adds a User to the Department.
+	 * @param User The User to add
 	 */
 	public void addUser(User user) {
 		userList.add(user);
 	}
 
 	/**
-	 * 
-	 * @param User
+	 * Removes a user from the Department.
+	 * @param User The user to remove
 	 */
 	public void removeUser(User user) {
 		userList.remove(user);
 	}
 
 	/**
-	 * 
-	 * @param patient
+	 * Adds a Patient to the Department.
+	 * @param patient The patient to add
 	 */
 	public void addPatient(Patient patient) {
 		patientList.add(patient);
 	}
 
 	/**
-	 * 
-	 * @param patient
+	 * Removes a Patient to the Department.
+	 * @param patient The patient to remove
 	 */
 	public void removePatient(Patient patient) {
 		patientList.remove(patient);
 	}
 	
 	/**
-	 * 
-	 * @param bed
+	 * Throws an Unsupported Operation Exception as there are no Beds in the Outpatient Department.
+	 * @param bed The bed to add
+	 * @throws UnsupportedOperationException
 	 */
-	public void addBed(Bed bed) {
+	public void addBed(Bed bed) throws UnsupportedOperationException {
 		// throw an UnsupportedOperationException
 		throw new UnsupportedOperationException("The Outpatient Department has No Beds.");
 	}
 
 	/**
-	 * 
-	 * @param bed
+	 * Throws an Unsupported Operation Exception as there are no Beds in the Outpatient Department.
+	 * @param bed The bed to remove
+	 * @throws UnsupportedOperationException
 	 */
-	public void removeBed(Bed bed) {
+	public void removeBed(Bed bed) throws UnsupportedOperationException {
 		throw new UnsupportedOperationException("The Outpatient Department has No Beds.");
 	}
 
 	// GETTER METHODS
-	
-	/**
-	 * 
-	 * @return
-	 */
 	public String getName() {
 		return "Outpatient";
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Throws an Unsupported Operation Exception as there are no Beds in the Outpatient Department.
+	 * @throws UnsupportedOperationException
 	 */
-	public ArrayList<Bed> getBedList(){
+	public ArrayList<Bed> getBedList() throws UnsupportedOperationException {
 		throw new UnsupportedOperationException("The Outpatient Department has No Beds.");
 	}
-	
-	/**
-	 * 
-	 * @return
-	 */
+
 	public ArrayList<Patient> getPatientList() {
 		return this.patientList;
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
 	public ArrayList<User> getUserList() {
 		return this.userList;
 	}
@@ -122,25 +113,18 @@ public class Outpatient implements Department {
 	// SETTER  METHODS
 	
 	/**
-	 * 
-	 * @param beds
+	 * Throws an Unsupported Operation Exception as there are no Beds in the Outpatient Department.
+	 * @param beds The Bed List
+	 * @throws UnsupportedOperationException
 	 */
-	public void setBedList(ArrayList<Bed> beds) {
+	public void setBedList(ArrayList<Bed> beds) throws UnsupportedOperationException {
 		throw new UnsupportedOperationException("The Outpatient Department has No Beds.");
 	}
 
-	/**
-	 * 
-	 * @param patients
-	 */
 	public void setPatientList(ArrayList<Patient> patients) {
 		this.patientList = patients;
 	}
 
-	/**
-	 * 
-	 * @param users
-	 */
 	public void setUserList(ArrayList<User> users) {
 		this.userList = users;
 	}

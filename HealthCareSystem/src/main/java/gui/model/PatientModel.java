@@ -3,7 +3,6 @@ package gui.model;
 import java.util.ArrayList;
 import java.util.Objects;
 import javax.swing.table.AbstractTableModel;
-
 import hospitalmanagementsystem.Bed;
 import hospitalmanagementsystem.Patient;
 import hospitalmanagementsystem.PersistenceLayer;

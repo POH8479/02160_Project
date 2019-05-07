@@ -120,7 +120,7 @@ public class RecordView extends JFrame {
         // add the textArea to the Record Frame
         add(jScrollPane1,BorderLayout.CENTER);
 		
-     // Pack the content to the window and place in the window in the center of the screen
+        // Pack the content to the window and place in the window in the center of the screen
 		pack();
 		setLocationRelativeTo(null);
 	}

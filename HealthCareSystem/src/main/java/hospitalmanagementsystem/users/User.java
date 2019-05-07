@@ -85,91 +85,47 @@ public class User {
 	}
 
 	// GETTER METHODS
-	/**
-	 * Returns the User Class, "User" in this case.
-	 * @return String "User"
-	 */
 	public String getType() {
 		return "User";
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
 	public String getUserName() {
 		return this.name;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	public String getUserID() {
 		return this.userID;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	public String getEmail() {
 		return this.email;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	public String getNumber() {
 		return this.phoneNumber;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	public String getDepartment() {
 		return this.department;
 	}
 
 	// SETTER METHODS
-	/**
-	 * 
-	 * @param newName
-	 */
 	public void setUserName(String newName) {
 		this.name = newName;
 	}
 
-	/**
-	 * 
-	 * @param newID
-	 */
 	public void setUserID(String newID) {
 		this.userID = newID;
 	}
 
-	/**
-	 * 
-	 * @param newEmail
-	 */
 	public void setEmail(String newEmail) {
 		this.email = newEmail;
 	}
 
-	/**
-	 * 
-	 * @param newPhone
-	 */
 	public void setNumber(String newPhone) {
 		this.phoneNumber = newPhone;
 	}
 
-	/**
-	 * 
-	 * @param newDepartment
-	 */
 	public void setDepartment(String newDepartment) {
 		this.department = newDepartment;
 	}

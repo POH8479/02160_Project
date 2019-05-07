@@ -26,7 +26,6 @@ public class Session {
 		patientModel = new PatientModel();
 	}
 	
-	// static method to create instance of Emergency class 
 	/**
 	 * The public static method for the Session class which creates a new Session object
 	 *  or returns the saved instance of a previously created one.

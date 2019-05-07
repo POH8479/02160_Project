@@ -22,7 +22,12 @@ public class ApplicationController {
 	private HealthStaffController healthStaffController;
 	private UserController userController;
 
+	/**
+	 * Constructor for the Application Controller Class.
+	 * This is the main Controller used to control the Application.
+	 */
 	public ApplicationController() {
+		// Load all the saved Files
 		PersistenceLayer persist = new PersistenceLayer();
 		persist.loadDepartment(Emergency.getInstance());
 		persist.loadDepartment(Outpatient.getInstance());

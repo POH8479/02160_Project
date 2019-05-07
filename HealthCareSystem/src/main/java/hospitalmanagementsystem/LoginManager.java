@@ -5,6 +5,7 @@ import hospitalmanagementsystem.departments.*;
 import hospitalmanagementsystem.users.User;
 
 /**
+ * The Login Manager Class is used to manage the users login Credentials.
  * @author Asger Conradsen
  */
 public class LoginManager {
@@ -13,7 +14,7 @@ public class LoginManager {
 	
 	// CONSTRUCTOR
 	/**
-	 * 
+	 * Creates a new Instance of the Login Manager.
 	 */
 	public LoginManager() {
 		Emergency emergency = Emergency.getInstance();
@@ -30,9 +31,9 @@ public class LoginManager {
 	
 	// METHODS
 	/**
-	 * 
-	 * @param userCheck
-	 * @return
+	 * Checks the given ID is a falid ID of a user on file.
+	 * @param userCheck The ID to check
+	 * @return True or False
 	 */
 	public boolean checkID(User userCheck) {
 		for (User user : users) {

@@ -13,7 +13,9 @@ import hospitalmanagementsystem.departments.Department;
 import hospitalmanagementsystem.users.User;
 
 /**
- * @author Asger Conradsen (S151607)
+ * The Persistence Layer Class Saves the Users, Patients and Beds as XML Files in Department folders.
+ * The Class can save, delete and load these files.
+ * @author Asger Conradsen
  */
 public class PersistenceLayer {
 	// STATIC VARIABLES
@@ -57,8 +59,8 @@ public class PersistenceLayer {
 
 	// METHODS
 	/**
-	 * 
-	 * @param department
+	 * Loads a given department into the HMS from file by loading its Users, Patients and Beds.
+	 * @param department The Department to load
 	 */
 	public void loadDepartment(Department department) {
 		//Loads users in the department
@@ -147,8 +149,9 @@ public class PersistenceLayer {
 	}
 	
 	/**
-	 * Loads the Temp
-	 * @return
+	 * Loads the Temp Objects who do not have a department by passing either 'U' for Users, 'P' for Patients or 'B' for Beds.
+	 * @param type A Character 'U', 'P' or 'B' to describe the type of Objects
+	 * @return An ArrayList of Objects
 	 */
 	public ArrayList<Object> loadTemps(char type) {
 		
@@ -188,8 +191,8 @@ public class PersistenceLayer {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Loads the Counter Integer which is used to give each object a Unique ID.
+	 * @return The Counter
 	 */
 	public int loadCounter() {
 		// Gets a list of files in the directory and checks if they are valid
@@ -218,11 +221,11 @@ public class PersistenceLayer {
 	}
 
 	/**
-	 * Saves an object in a specified department to the appropriate folder. Same return as before.
-	 * @param obj
-	 * @param ID
-	 * @param department
-	 * @return
+	 * Saves an object in a specified department to the appropriate folder.
+	 * @param obj The Object you want to save
+	 * @param ID The ID of the Object
+	 * @param department The department of the Object
+	 * @return True or False
 	 */
 	public boolean save(Object obj, String ID, String department) {
 		// if department is null change to Temp
@@ -267,9 +270,9 @@ public class PersistenceLayer {
 	}
 	
 	/**
-	 * 
-	 * @param counter
-	 * @return
+	 * Saves the counter int to file.
+	 * @param counter The Counter
+	 * @return True or False
 	 */
 	public Boolean saveCounter(int counter) {
 		// Creates directory path for the department
@@ -291,10 +294,10 @@ public class PersistenceLayer {
 	}
 
 	/**
-	 * 
-	 * @param ID
-	 * @param department
-	 * @return
+	 * Deletes a specific object from file. 
+	 * @param ID The ID of the Object
+	 * @param department The Department the file is in
+	 * @return True or False
 	 */
 	public Boolean delete(String ID, String department) {
 		// if department is null set to "Temp"

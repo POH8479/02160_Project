@@ -66,8 +66,9 @@ public class Bed {
 	}
 	
 	/**
-	 * 
-	 * @param dep
+	 * Updates the department of the Bed and deletes the XML file from the old
+	 * department folder and saves a new one in the updated department folder.
+	 * @param dep The department to move the Bed to
 	 */
 	public void updateDepartment(String dep) {
 		// assign other variables
@@ -86,51 +87,27 @@ public class Bed {
 	}
 	
 	// GETTER METHODS
-	/**
-	 * 
-	 * @return
-	 */
 	public String getBedID() {
 		return this.bedID;
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
 	public String getDepartment() {
 		return this.department;
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
 	public String getPatient() {
 		return this.patient;
 	}
 	
 	// SETTER METHODS
-	/**
-	 * 
-	 * @param id
-	 */
 	public void setBedID(String id) {
 		this.bedID = id;
 	}
 	
-	/**
-	 * 
-	 * @param dep
-	 */
 	public void setDepartment(String dep) {
 		this.department = dep;
 	}
 	
-	/**
-	 * 
-	 * @param patientID
-	 */
 	public void setPatient(String patientID) {
 		this.patient = patientID;
 	}

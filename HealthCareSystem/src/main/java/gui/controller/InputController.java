@@ -5,14 +5,10 @@ import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
 /**
- * 
+ * The Input Controller is the controller used to ensure the correct format for Date and Phone Numbers is edited.
  * @author Jack Rodman
- *
  */
-
 public class InputController {
-	
-	
 	/**
 	 * This method makes sure a patient data entry follows correct format requirements
 	 * @param first
@@ -75,5 +71,4 @@ public class InputController {
 		}
 		return null;
 	}
-
 }
